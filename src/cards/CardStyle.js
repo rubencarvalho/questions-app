@@ -4,13 +4,13 @@ const StyledCard = styled.section`
   font-size: 14px;
   display: grid;
   grid-template-rows: 40px auto;
-  width: 650px;
+  max-width: 650px;
   min-height: 80px;
-  max-height: 130px;
   padding: 20px 16px 20px 16px;
   color: #555;
   grid-gap: 8px;
   background-color: #fff;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15), 0 3px 6px rgba(0, 0, 0, 0.19);
 
   &:not(:last-child) {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
@@ -62,7 +62,6 @@ const StyledCard = styled.section`
       cursor: pointer;
       background: #eee;
     }
-
     &:focus {
       outline: none;
     }
