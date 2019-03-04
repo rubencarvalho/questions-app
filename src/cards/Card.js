@@ -1,5 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
+import user from './svgs/user.svg'
+import upvote from './svgs/upvote.svg'
 
 const StyledCard = styled.section`
   font-size: 14px;
@@ -31,6 +33,12 @@ const Avatar = styled.div`
   border-radius: 50%;
   justify-content: center;
   align-items: center;
+
+  img {
+    width: 60%;
+    height: 60%;
+    fill: white;
+  }
 `
 const Items = styled.div`
   display: grid;
@@ -56,7 +64,14 @@ const Action = styled.button`
   border-radius: 16px;
   font-size: 12px;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
+
+  img {
+    width: 60%;
+    height: 60%;
+    filter: brightness(0.5);
+  }
+
   &:hover {
     cursor: pointer;
     background: #eee;
@@ -77,12 +92,16 @@ export default function Card() {
   return (
     <StyledCard>
       <Header>
-        <Avatar />
+        <Avatar>
+          <img src={user} alt="Anonymous User" />
+        </Avatar>
         <Items>
           <Author>Anonymous</Author>
           <Date>3 Mar, 2019</Date>
         </Items>
-        <Action>1 u</Action>
+        <Action>
+          1 <img src={upvote} alt="Upvote" />
+        </Action>
       </Header>
       <Message>
         Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates

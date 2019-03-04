@@ -6,7 +6,6 @@ export default function App() {
     <React.Fragment>
       <Card />
       <Card />
-
       <GlobalStyle />
     </React.Fragment>
   )
