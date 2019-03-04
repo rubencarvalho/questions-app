@@ -1,6 +1,12 @@
 import styled from 'styled-components'
 
-const StyledCard = styled.section`
+export const CardHeader = styled.div`
+  display: grid;
+  grid-template-columns: 40px 1fr 56px;
+  align-items: center;
+`
+
+export const StyledCard = styled.section`
   font-size: 14px;
   display: grid;
   grid-template-rows: 40px auto;
@@ -74,5 +80,3 @@ const StyledCard = styled.section`
     overflow-wrap: break-word;
   }
 `
-
-export default StyledCard
