@@ -5,6 +5,8 @@ export default function App() {
   return (
     <React.Fragment>
       <Card />
+      <Card />
+
       <GlobalStyle />
     </React.Fragment>
   )
