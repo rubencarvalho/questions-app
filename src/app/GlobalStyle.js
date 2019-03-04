@@ -8,6 +8,10 @@ export default createGlobalStyle`
   body {
     font-family: sans-serif;
     margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
   }
 
   h1, h2, h3, h4, h5, h6,
