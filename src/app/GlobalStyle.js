@@ -13,6 +13,7 @@ export default createGlobalStyle`
     align-items: center;
     height: 100vh;
     line-height: 1.5;
+    background: #f2f2f2;
   }
 
   h1, h2, h3, h4, h5, h6,

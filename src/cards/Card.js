@@ -10,7 +10,7 @@ export default function Card() {
           <div className="card__author">Anonymous</div>
           <div className="card__date">Mar 1, 2019</div>
         </div>
-        <div className="card__action">1 u</div>
+        <button className="card__action">1 u</button>
       </div>
       <div className="card__message">
         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptates

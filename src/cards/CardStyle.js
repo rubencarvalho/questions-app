@@ -10,7 +10,7 @@ const StyledCard = styled.section`
   padding: 20px 16px 20px 16px;
   color: #555;
   grid-gap: 8px;
-  transition: background 0.3s ease-in-out;
+  background-color: #fff;
 
   &:not(:last-child) {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
@@ -58,6 +58,14 @@ const StyledCard = styled.section`
     font-size: 12px;
     align-items: center;
     justify-content: center;
+    &:hover {
+      cursor: pointer;
+      background: #eee;
+    }
+
+    &:focus {
+      outline: none;
+    }
   }
 
   .card__message {
