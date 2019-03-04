@@ -28,13 +28,6 @@ export default createGlobalStyle`
     padding-left: 4px;
   }
 
-  button {
-    background: #333;
-    border-radius: 4px;
-    color: white;
-    font-weight: bold;
-  }
-
   header {
     overflow: hidden;
   }
