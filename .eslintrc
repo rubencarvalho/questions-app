@@ -1,0 +1,7 @@
+{
+  "env": { "es6": true },
+  "globals": {
+    "cy": true
+  },
+  "extends": ["react-app"]
+}

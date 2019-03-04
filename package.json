@@ -1,0 +1,41 @@
+{
+  "name": "questions-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@babel/core": "7.3.3",
+    "@craco/craco": "3.4.1",
+    "axios": "0.18.0",
+    "babel-loader": "8.0.5",
+    "babel-plugin-jsx-remove-data-test-id": "2.0.0",
+    "babel-plugin-styled-components": "1.10.0",
+    "cypress": "^3.1.5",
+    "docz-theme-default": "^0.13.7",
+    "internal-ip-cli": "^1.0.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.2",
+    "react-dom": "^16.8.2",
+    "react-router-dom": "4.3.1",
+    "react-scripts": "2.1.5",
+    "styled-components": "4.1.3"
+  },
+  "scripts": {
+    "start": "REACT_APP_BACKEND_IP=`./node_modules/internal-ip-cli/cli.js --ipv4` craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "react-scripts eject",
+    "docz:dev": "docz dev",
+    "docz:build": "docz build",
+    "cypress:open": "cypress open",
+    "cypress": "cypress run --spec 'cypress/integration/*'"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}
