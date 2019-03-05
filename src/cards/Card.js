@@ -19,6 +19,7 @@ const StyledCard = styled.section`
   }
 `
 const Header = styled.div`
+  width: 100%;
   display: grid;
   grid-template-columns: 40px 1fr 56px;
   align-items: center;
@@ -57,11 +58,7 @@ const Action = styled.button`
   font-size: 12px;
   align-items: center;
   justify-content: center;
-
-  &:hover {
-    cursor: pointer;
-    background: #eee;
-  }
+  color: rgba(0, 0, 0, 0.4);
   &:focus {
     outline: none;
   }
@@ -86,7 +83,13 @@ export default function Card({ name, message, date, votes }) {
           <Date>{date}</Date>
         </Items>
         <Action>
-          {votes} <SVGIcon name="upvote" fill="#555" height="65%" width="65%" />
+          {votes}
+          <SVGIcon
+            name="upvote"
+            fill="rgba(0, 0, 0, 0.4)"
+            height="65%"
+            width="65%"
+          />
         </Action>
       </Header>
       <Message>{message}</Message>

@@ -1,43 +1,38 @@
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import styled from 'styled-components'
 import uid from 'uid'
 import Card from '../cards/Card'
-import Form from '../cards/Form'
 import CardsHeader from '../cards/CardsHeader'
+import Form from '../cards/Form'
+import { getDataFromStorage, saveDataToStorage } from '../services'
 import GlobalStyle from './GlobalStyle'
 dayjs.extend(relativeTime)
 
 export default function App() {
-  const [data, setData] = useState([
-    {
-      name: 'Anonymous',
-      message: 'Which were your biggest struggles while building your company?',
-      date: '2019-03-05T10:51',
-      votes: 2,
-      id: uid(),
-    },
-    {
-      name: 'Rúben Carvalho',
-      message: 'Does fun = productivity?',
-      date: '2019-03-04T10:51',
-      votes: 0,
-      id: uid(),
-    },
-    {
-      name: 'Lutz',
-      message:
-        'Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur. offi?',
-      date: '2019-03-02T10:51',
-      votes: 5,
-      id: uid(),
-    },
-  ])
+  const [data, setData] = useState(getDataFromStorage())
+  function addQuestion(input) {
+    setData([
+      ...data,
+      {
+        name: input.name,
+        message: input.message,
+        date: dayjs(),
+        votes: 0,
+        id: uid(),
+      },
+    ])
+  }
+
+  useEffect(() => {
+    saveDataToStorage(data)
+  }, [data])
 
   return (
     <React.Fragment>
-      <Form />
-      <CardsHeader />
+      <Form submitForm={addQuestion} />
+      <CardsHeader total={data.length} />
       {data.map(question => (
         <Card
           key={question.id}

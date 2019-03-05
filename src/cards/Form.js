@@ -1,12 +1,13 @@
 import React from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
-import SVGIcon from './Icons.js'
 
 const StyledForm = styled.form`
   font-size: 14px;
   display: grid;
   grid-template-rows: 40px auto;
   max-width: 650px;
+  min-width: 650px;
   min-height: 80px;
   padding: 20px 16px 20px 16px;
   color: #555;
@@ -19,11 +20,28 @@ const StyledForm = styled.form`
   }
 `
 
-export default function Form() {
+export default function Form({ submitForm }) {
+  const [question, setQuestion] = useState({
+    message: '',
+    name: '',
+  })
+
+  function onSubmitHandler(e) {
+    e.preventDefault()
+    submitForm(question)
+  }
   return (
-    <StyledForm>
-      <input type="text" placeholder="your question" />
-      <input type="text" placeholder="name" />
+    <StyledForm onSubmit={onSubmitHandler}>
+      <input
+        type="text"
+        onChange={e => setQuestion({ ...question, message: e.target.value })}
+        placeholder="Type your question"
+      />
+      <input
+        type="text"
+        onChange={e => setQuestion({ ...question, name: e.target.value })}
+        placeholder="name"
+      />
       <button>Send</button>
     </StyledForm>
   )
