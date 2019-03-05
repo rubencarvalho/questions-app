@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import user from './svgs/user.svg'
 import upvote from './svgs/upvote.svg'
+import SVGIcon from './Icons.js'
 
 const StyledCard = styled.section`
   font-size: 14px;
@@ -33,12 +33,6 @@ const Avatar = styled.div`
   border-radius: 50%;
   justify-content: center;
   align-items: center;
-
-  img {
-    width: 60%;
-    height: 60%;
-    fill: white;
-  }
 `
 const Items = styled.div`
   display: grid;
@@ -64,13 +58,7 @@ const Action = styled.button`
   border-radius: 16px;
   font-size: 12px;
   align-items: center;
-  justify-content: space-evenly;
-
-  img {
-    width: 60%;
-    height: 60%;
-    filter: brightness(0.5);
-  }
+  justify-content: center;
 
   &:hover {
     cursor: pointer;
@@ -93,14 +81,14 @@ export default function Card() {
     <StyledCard>
       <Header>
         <Avatar>
-          <img src={user} alt="Anonymous User" />
+          <SVGIcon name="user" fill="#555" height="65%" width="65%" />
         </Avatar>
         <Items>
           <Author>Anonymous</Author>
           <Date>3 Mar, 2019</Date>
         </Items>
         <Action>
-          1 <img src={upvote} alt="Upvote" />
+          1 <SVGIcon name="upvote" fill="#555" height="65%" width="65%" />
         </Action>
       </Header>
       <Message>
