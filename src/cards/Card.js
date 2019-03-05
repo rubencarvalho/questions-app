@@ -7,7 +7,7 @@ const StyledCard = styled.section`
   display: grid;
   grid-template-rows: 40px auto;
   max-width: 650px;
-  min-height: 80px;
+  min-height: 79px;
   padding: 20px 16px 20px 16px;
   color: #555;
   grid-gap: 8px;
