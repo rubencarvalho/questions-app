@@ -4,6 +4,7 @@ import GlobalStyle from './GlobalStyle'
 import Card from '../cards/Card'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
+import uid from 'uid'
 dayjs.extend(relativeTime)
 
 export default function App() {
