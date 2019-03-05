@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import upvote from './svgs/upvote.svg'
 import SVGIcon from './Icons.js'
 
 const StyledCard = styled.section`
@@ -76,7 +75,7 @@ const Message = styled.div`
   overflow-wrap: break-word;
 `
 
-export default function Card() {
+export default function Card({ name, message, date, votes }) {
   return (
     <StyledCard>
       <Header>
@@ -84,18 +83,14 @@ export default function Card() {
           <SVGIcon name="user" fill="#555" height="65%" width="65%" />
         </Avatar>
         <Items>
-          <Author>Anonymous</Author>
-          <Date>3 Mar, 2019</Date>
+          <Author>{name}</Author>
+          <Date>{date}</Date>
         </Items>
         <Action>
-          1 <SVGIcon name="upvote" fill="#555" height="65%" width="65%" />
+          {votes} <SVGIcon name="upvote" fill="#555" height="65%" width="65%" />
         </Action>
       </Header>
-      <Message>
-        Lorem, ipsum dolor sit amet consectetur dipisicing elit. Voluptates
-        officiis nulla, molestiae tenetur. officiis nulla, molestiae tenetur.
-        offi?
-      </Message>
+      <Message>{message}</Message>
     </StyledCard>
   )
 }
