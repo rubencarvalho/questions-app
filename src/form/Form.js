@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import styled from 'styled-components'
 import Textarea from 'react-textarea-autosize'
+import FormHeader from './FormHeader'
 
 const StyledForm = styled.form`
   font-size: 14px;
@@ -9,7 +10,7 @@ const StyledForm = styled.form`
   margin: 0 auto;
   max-width: 650px;
   display: grid;
-  grid-template-rows: 40px auto;
+  grid-template-rows: auto auto;
   max-width: 650px;
   min-height: 80px;
   padding: 20px 16px 20px 16px;
@@ -52,22 +53,25 @@ export default function Form({ submitForm }) {
   }
 
   return (
-    <StyledForm onSubmit={onSubmitHandler}>
-      <textarea
-        required
-        style={{ resize: 'none' }}
-        value={question.message}
-        onChange={messageOnChange}
-        placeholder="Type your question"
-      />
-      <input
-        type="text"
-        value={question.name}
-        onChange={e => setQuestion({ ...question, name: e.target.value })}
-        placeholder="Your name (optional)"
-      />
-      <button>Send</button>
-      <p>{160 - question.message.length}</p>
-    </StyledForm>
+    <React.Fragment>
+      <FormHeader />
+      <StyledForm onSubmit={onSubmitHandler}>
+        <Textarea
+          required
+          style={{ resize: 'none' }}
+          value={question.message}
+          onChange={messageOnChange}
+          placeholder="Type your question"
+        />
+        <input
+          type="text"
+          value={question.name}
+          onChange={e => setQuestion({ ...question, name: e.target.value })}
+          placeholder="Your name (optional)"
+        />
+        <button>Send</button>
+        <p>{160 - question.message.length}</p>
+      </StyledForm>
+    </React.Fragment>
   )
 }

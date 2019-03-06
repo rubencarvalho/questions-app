@@ -9,7 +9,6 @@ export default createGlobalStyle`
     font-family: Roboto,sans-serif;
     line-height: 1.5;
     background: #f2f2f2;
-    margin-top: 20px;
     margin-right: 5px;
     margin-left: 5px;
     

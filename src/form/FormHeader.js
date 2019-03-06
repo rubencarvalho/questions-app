@@ -8,11 +8,11 @@ const Header = styled.div`
   display: flex;
   width: 100%;
   margin: 0 auto;
-  max-width: 650px;
   line-height: 17.5px;
+  max-width: 650px;
   padding: 25px 16px 14px 16px;
   justify-content: space-between;
 `
-export default function CardsHeader({ total }) {
-  return <Header>{total} questions</Header>
+export default function FormHeader() {
+  return <Header>Ask the speaker</Header>
 }
