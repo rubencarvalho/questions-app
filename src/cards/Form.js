@@ -4,10 +4,12 @@ import styled from 'styled-components'
 
 const StyledForm = styled.form`
   font-size: 14px;
+  width: 100%;
+  margin: 0 auto;
+  max-width: 650px;
   display: grid;
   grid-template-rows: 40px auto;
   max-width: 650px;
-  min-width: 650px;
   min-height: 80px;
   padding: 20px 16px 20px 16px;
   color: #555;
@@ -19,7 +21,6 @@ const StyledForm = styled.form`
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   }
 `
-
 export default function Form({ submitForm }) {
   const [question, setQuestion] = useState({
     message: '',

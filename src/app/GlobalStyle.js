@@ -7,11 +7,11 @@ export default createGlobalStyle`
 
   body {
     font-family: Roboto,sans-serif;
-    display: flex;
     line-height: 1.5;
     background: #f2f2f2;
-    justify-content: center;
-    align-items: center;
+    margin-top: 20px;
+    margin-right: 5px;
+    margin-left: 5px;
   }
 
   h1, h2, h3, h4, h5, h6,

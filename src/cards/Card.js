@@ -6,8 +6,9 @@ const StyledCard = styled.section`
   font-size: 14px;
   display: grid;
   grid-template-rows: 40px auto;
+  width: 100%;
+  margin: 0 auto;
   max-width: 650px;
-  min-height: 79px;
   padding: 20px 16px 20px 16px;
   color: #555;
   grid-gap: 8px;
@@ -58,7 +59,9 @@ const Action = styled.button`
   font-size: 12px;
   align-items: center;
   justify-content: center;
-  color: rgba(0, 0, 0, 0.4);
+  color: rgba(0, 0, 0, 0.4) !important;
+  -webkit-appearance: none;
+
   &:focus {
     outline: none;
   }
@@ -70,8 +73,16 @@ const Message = styled.div`
   word-wrap: break-word;
   overflow-wrap: break-word;
 `
+function onClickHandler(event) {}
 
-export default function Card({ name, message, date, votes }) {
+export default function Card({
+  name,
+  message,
+  date,
+  votes,
+  liked,
+  onClickHandler,
+}) {
   return (
     <StyledCard>
       <Header>
@@ -82,7 +93,7 @@ export default function Card({ name, message, date, votes }) {
           <Author>{name}</Author>
           <Date>{date}</Date>
         </Items>
-        <Action>
+        <Action onClick={onClickHandler}>
           {votes}
           <SVGIcon
             name="upvote"

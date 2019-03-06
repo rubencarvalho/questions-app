@@ -21,6 +21,7 @@ export default function App() {
         date: dayjs(),
         votes: 0,
         id: uid(),
+        liked: false,
       },
     ])
   }
@@ -28,6 +29,16 @@ export default function App() {
   useEffect(() => {
     saveDataToStorage(data)
   }, [data])
+
+  function upvote(question) {
+    if (question.liked) {
+      question.votes -= 1
+      question.liked = !question.liked
+    } else {
+      question.votes += 1
+      question.liked = !question.liked
+    }
+  }
 
   return (
     <React.Fragment>
@@ -40,6 +51,8 @@ export default function App() {
           message={question.message}
           date={dayjs().to(question.date)}
           votes={question.votes}
+          liked={question.liked}
+          onClickHandler={upvote}
         />
       ))}
       <GlobalStyle />
