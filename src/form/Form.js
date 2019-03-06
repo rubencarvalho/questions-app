@@ -1,9 +1,8 @@
-import React from 'react'
-import { useState } from 'react'
-import styled from 'styled-components'
+import React, { useState } from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
-import FormHeader from './FormHeader'
+import styled from 'styled-components'
 import SVGIcon from '../utilities/Icons'
+import FormHeader from './FormHeader'
 
 const StyledForm = styled.form`
   font-size: 14px;
@@ -96,7 +95,9 @@ const Action = styled.button`
     }
   }
 `
-const Length = styled.p``
+const Length = styled.p`
+  position: relative;
+`
 
 const errorMessage = styled.p`
   text-align: left;
@@ -136,7 +137,6 @@ export default function Form({ submitForm }) {
   return (
     <React.Fragment>
       <FormHeader />
-
       <StyledForm onSubmit={onSubmitHandler}>
         <StyledTextarea
           required
@@ -166,5 +166,3 @@ export default function Form({ submitForm }) {
     </React.Fragment>
   )
 }
-
-//        <p></p>
