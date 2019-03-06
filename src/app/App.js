@@ -1,7 +1,6 @@
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
 import uid from 'uid'
 import Card from '../cards/Card'
 import CardsHeader from '../cards/CardsHeader'
@@ -30,13 +29,22 @@ export default function App() {
     saveDataToStorage(data)
   }, [data])
 
-  function upvote(question) {
+  function upvote(id) {
+    const question = data.find(question => question.id === id)
+    const i = data.indexOf(question)
+    console.log(data)
     if (question.liked) {
-      question.votes -= 1
-      question.liked = !question.liked
+      setData([
+        ...data.slice(0, i),
+        { ...question, liked: !question.liked, votes: question.votes - 1 },
+        ...data.slice(i + 1),
+      ])
     } else {
-      question.votes += 1
-      question.liked = !question.liked
+      setData([
+        ...data.slice(0, i),
+        { ...question, liked: !question.liked, votes: question.votes + 1 },
+        ...data.slice(i + 1),
+      ])
     }
   }
 
@@ -47,12 +55,13 @@ export default function App() {
       {data.map(question => (
         <Card
           key={question.id}
+          id={question.id}
           name={question.name}
           message={question.message}
           date={dayjs().to(question.date)}
           votes={question.votes}
           liked={question.liked}
-          onClickHandler={upvote}
+          onClick={upvote}
         />
       ))}
       <GlobalStyle />

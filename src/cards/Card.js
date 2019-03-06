@@ -54,14 +54,20 @@ const Action = styled.button`
   display: flex;
   width: 100%;
   height: 26px;
-  border: 1px solid #eee;
+  border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 16px;
   font-size: 12px;
-  align-items: center;
-  justify-content: center;
   color: rgba(0, 0, 0, 0.4) !important;
   -webkit-appearance: none;
-
+  justify-content: center;
+  align-items: center;
+  &:first-child {
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+  }
+  &:hover {
+    background: rgba(0, 0, 0, 0.05);
+  }
   &:focus {
     outline: none;
   }
@@ -73,7 +79,6 @@ const Message = styled.div`
   word-wrap: break-word;
   overflow-wrap: break-word;
 `
-function onClickHandler(event) {}
 
 export default function Card({
   name,
@@ -81,8 +86,11 @@ export default function Card({
   date,
   votes,
   liked,
-  onClickHandler,
+  id,
+  onClick,
 }) {
+  const color = liked ? '#2181c2' : 'rgba(0, 0, 0, 0.4)'
+
   return (
     <StyledCard>
       <Header>
@@ -93,14 +101,9 @@ export default function Card({
           <Author>{name}</Author>
           <Date>{date}</Date>
         </Items>
-        <Action onClick={onClickHandler}>
-          {votes}
-          <SVGIcon
-            name="upvote"
-            fill="rgba(0, 0, 0, 0.4)"
-            height="65%"
-            width="65%"
-          />
+        <Action onClick={() => onClick(id)}>
+          <span style={liked ? { color } : null}>{votes}</span>
+          <SVGIcon name="upvote" fill={color} height="65%" width="65%" />
         </Action>
       </Header>
       <Message>{message}</Message>
