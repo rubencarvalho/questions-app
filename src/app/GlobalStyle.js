@@ -6,7 +6,9 @@ export default createGlobalStyle`
   }
 
   body {
-    font-family: Roboto,sans-serif;
+  font-weight: 400;
+
+    font-family: Roboto, sans-serif;
     line-height: 1.5;
     background: #f2f2f2;
     margin-right: 5px;

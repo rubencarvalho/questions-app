@@ -9,7 +9,7 @@ const StyledCard = styled.section`
   width: 100%;
   margin: 0 auto;
   max-width: 650px;
-  padding: 20px 16px 20px 16px;
+  padding: 16px 20px 16px 20px;
   color: #555;
   grid-gap: 8px;
   background-color: #fff;
@@ -20,7 +20,6 @@ const StyledCard = styled.section`
   }
 `
 const Header = styled.div`
-  width: 100%;
   display: grid;
   grid-template-columns: 40px 1fr 56px;
   align-items: center;
@@ -56,7 +55,7 @@ const Action = styled.div`
   height: 26px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   font-size: 12px;
-  color: rgba(0, 0, 0, 0.4) !important;
+  color: rgba(0, 0, 0, 0.4);
   -webkit-appearance: none;
   align-items: center;
   justify-content: center;
@@ -65,6 +64,7 @@ const Action = styled.div`
   }
   @media (hover: hover) {
     &:hover {
+      cursor: pointer;
       background: rgba(0, 0, 0, 0.05);
     }
   }
