@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import uid from 'uid'
 import Card from '../cards/Card'
 import CardsHeader from '../cards/CardsHeader'
-import Form from '../cards/Form'
+import Form from '../form/Form'
 import { getDataFromStorage, saveDataToStorage } from '../services'
 import GlobalStyle from './GlobalStyle'
 dayjs.extend(relativeTime)

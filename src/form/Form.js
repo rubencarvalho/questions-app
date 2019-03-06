@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 import styled from 'styled-components'
+import Textarea from 'react-textarea-autosize'
 
 const StyledForm = styled.form`
   font-size: 14px;
@@ -21,30 +22,52 @@ const StyledForm = styled.form`
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   }
 `
+
 export default function Form({ submitForm }) {
   const [question, setQuestion] = useState({
     message: '',
     name: '',
+    valid: false,
   })
 
   function onSubmitHandler(e) {
     e.preventDefault()
-    submitForm(question)
-    setQuestion({ message: '', name: '' })
+    if (question.valid) {
+      submitForm(question)
+      setQuestion({ message: '', name: '' })
+    } else {
+    }
   }
+
+  function messageOnChange(e) {
+    if (question.message.length > 160) {
+      setQuestion({
+        ...question,
+        message: e.target.value,
+        valid: false,
+      })
+    } else {
+      setQuestion({ ...question, message: e.target.value, valid: true })
+    }
+  }
+
   return (
     <StyledForm onSubmit={onSubmitHandler}>
-      <input
-        type="text"
-        onChange={e => setQuestion({ ...question, message: e.target.value })}
+      <textarea
+        required
+        style={{ resize: 'none' }}
+        value={question.message}
+        onChange={messageOnChange}
         placeholder="Type your question"
       />
       <input
         type="text"
+        value={question.name}
         onChange={e => setQuestion({ ...question, name: e.target.value })}
         placeholder="Your name (optional)"
       />
       <button>Send</button>
+      <p>{160 - question.message.length}</p>
     </StyledForm>
   )
 }

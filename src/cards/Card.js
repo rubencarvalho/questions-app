@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import SVGIcon from './Icons.js'
+import SVGIcon from '../utilities/Icons.js'
 
 const StyledCard = styled.section`
   font-size: 14px;
@@ -63,9 +63,12 @@ const Action = styled.div`
   &:last-child {
     border-radius: 50px;
   }
-  &:hover {
-    background: rgba(0, 0, 0, 0.05);
+  @media (hover: hover) {
+    &:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
   }
+
   &:focus {
     outline: none;
   }
