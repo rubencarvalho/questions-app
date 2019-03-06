@@ -30,6 +30,7 @@ export default function Form({ submitForm }) {
   function onSubmitHandler(e) {
     e.preventDefault()
     submitForm(question)
+    setQuestion({ message: '', name: '' })
   }
   return (
     <StyledForm onSubmit={onSubmitHandler}>
@@ -41,7 +42,7 @@ export default function Form({ submitForm }) {
       <input
         type="text"
         onChange={e => setQuestion({ ...question, name: e.target.value })}
-        placeholder="name"
+        placeholder="Your name (optional)"
       />
       <button>Send</button>
     </StyledForm>

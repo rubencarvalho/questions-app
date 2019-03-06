@@ -12,8 +12,10 @@ dayjs.extend(relativeTime)
 export default function App() {
   const [data, setData] = useState(getDataFromStorage())
   function addQuestion(input) {
+    if (input.name === '') {
+      input.name = 'Anonymous'
+    }
     setData([
-      ...data,
       {
         name: input.name,
         message: input.message,
@@ -22,6 +24,7 @@ export default function App() {
         id: uid(),
         liked: false,
       },
+      ...data,
     ])
   }
 
@@ -32,7 +35,6 @@ export default function App() {
   function upvote(id) {
     const question = data.find(question => question.id === id)
     const i = data.indexOf(question)
-    console.log(data)
     if (question.liked) {
       setData([
         ...data.slice(0, i),

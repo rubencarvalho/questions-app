@@ -50,20 +50,18 @@ const Date = styled.div`
   font-size: 12px;
 `
 
-const Action = styled.button`
-  display: flex;
+const Action = styled.div`
   width: 100%;
+  display: flex;
   height: 26px;
   border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 16px;
   font-size: 12px;
   color: rgba(0, 0, 0, 0.4) !important;
   -webkit-appearance: none;
-  justify-content: center;
   align-items: center;
-  &:first-child {
-    border-top-left-radius: 50px;
-    border-bottom-left-radius: 50px;
+  justify-content: center;
+  &:last-child {
+    border-radius: 50px;
   }
   &:hover {
     background: rgba(0, 0, 0, 0.05);
@@ -78,6 +76,10 @@ const Message = styled.div`
   width: 100%;
   word-wrap: break-word;
   overflow-wrap: break-word;
+`
+const Votes = styled.div`
+  min-width: 16px;
+  text-align: right;
 `
 
 export default function Card({
@@ -95,15 +97,20 @@ export default function Card({
     <StyledCard>
       <Header>
         <Avatar>
-          <SVGIcon name="user" fill="#555" height="65%" width="65%" />
+          <SVGIcon
+            name="user"
+            fill="rgba(0,0,0,0.4)"
+            height="65%"
+            width="65%"
+          />
         </Avatar>
         <Items>
           <Author>{name}</Author>
           <Date>{date}</Date>
         </Items>
         <Action onClick={() => onClick(id)}>
-          <span style={liked ? { color } : null}>{votes}</span>
-          <SVGIcon name="upvote" fill={color} height="65%" width="65%" />
+          <Votes style={liked ? { color } : null}>{votes}</Votes>
+          <SVGIcon name="upvote" fill={color} height="60%" width="60%" />
         </Action>
       </Header>
       <Message>{message}</Message>

@@ -12,6 +12,11 @@ export default createGlobalStyle`
     margin-top: 20px;
     margin-right: 5px;
     margin-left: 5px;
+    
+    @media (max-width: 651px) { 
+      margin: 0;
+     }
+
   }
 
   h1, h2, h3, h4, h5, h6,
