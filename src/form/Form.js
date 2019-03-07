@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
 import styled from 'styled-components'
-import SVGIcon from '../utilities/Icons'
+import Icon from '../utilities/Icons'
 import FormHeader from './FormHeader'
 
 const StyledForm = styled.form`
@@ -79,6 +79,7 @@ const Action = styled.button`
   align-items: center;
   justify-content: center;
   padding: 0 20px 0 20px;
+  transition: all 0.3s ease;
 
   &:last-child {
     border-radius: 50px;
@@ -89,6 +90,8 @@ const Action = styled.button`
   }
   @media (hover: hover) {
     &:hover {
+      transition: all 0.3s ease;
+
       cursor: pointer;
       background: rgb(99, 177, 65);
     }
@@ -106,6 +109,12 @@ const ErrorMessage = styled.p`
   position: absolute;
   left: 20px;
   bottom: 60px;
+`
+
+const StyledIcon = styled(Icon)`
+  &:hover {
+    fill: rgb(0, 0, 0);
+  }
 `
 
 export default function Form({ submitForm }) {
@@ -142,12 +151,7 @@ export default function Form({ submitForm }) {
         <ErrorMessage>{length < 0 ? errorMessage : null}</ErrorMessage>
         <NameSection>
           <Avatar>
-            <SVGIcon
-              name="user"
-              fill="rgba(0,0,0,0.4)"
-              height="65%"
-              width="65%"
-            />
+            <Icon name="user" fill="rgba(0,0,0,0.4)" height="65%" width="65%" />
           </Avatar>
           <StyledInput
             type="text"

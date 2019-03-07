@@ -6,6 +6,8 @@ const getViewBox = name => {
       return '0 0 24 24'
     case 'user':
       return '0 0 24 24'
+    case 'dropdown':
+      return '0 0 24 24'
     default:
       return '0 0 32 32'
   }
@@ -27,12 +29,22 @@ const getPath = (name, props) => {
           d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
         />
       )
+    case 'dropdown':
+      return (
+        <React.Fragment>
+          <path
+            {...props}
+            d="m 7,11.212051 4.999999,-5.0000008 5,5.0000008 z"
+          />
+          <path {...props} d="m 7,12.788 4.999998,5 5,-5 z" />
+        </React.Fragment>
+      )
     default:
       return <path />
   }
 }
 
-const SVGIcon = ({
+const Icon = ({
   name = '',
   style = {},
   fill = '#000',
@@ -54,4 +66,4 @@ const SVGIcon = ({
   </svg>
 )
 
-export default SVGIcon
+export default Icon

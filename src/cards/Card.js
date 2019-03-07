@@ -3,6 +3,18 @@ import styled from 'styled-components'
 import SVGIcon from '../utilities/Icons.js'
 
 const StyledCard = styled.section`
+  @keyframes background {
+    0% {
+      background-color: #fef8ca;
+    }
+    70% {
+      background-color: #fef8ca;
+    }
+    100% {
+      background-color: white;
+    }
+  }
+  animation: background 2s ease-in-out;
   font-size: 14px;
   display: grid;
   grid-template-rows: 40px auto;
@@ -28,7 +40,7 @@ const Avatar = styled.div`
   display: flex;
   width: 30px;
   height: 30px;
-  background: #eee;
+  background: rgba(0, 0, 0, 0.1);
   border-radius: 50%;
   justify-content: center;
   align-items: center;
