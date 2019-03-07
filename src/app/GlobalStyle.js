@@ -12,6 +12,7 @@ export default createGlobalStyle`
     line-height: 1.5;
     background: #f2f2f2;
     margin: 0 5px 40px 5px;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 
     @media (max-width: 651px) { 
       margin: 0;
@@ -43,7 +44,6 @@ export default createGlobalStyle`
   &:hover &__no-hover {
     opacity: 0;
     transition: all 0.3s ease;
-
   }
 
   &:hover &__hover {
@@ -56,29 +56,11 @@ export default createGlobalStyle`
     top: 0;
     opacity: 0;
     transition: all 0.3s ease;
-
   }
 
   &__no-hover {
     opacity: 1;
     transition: all 0.3s ease;
-
   }
 }
 `
-
-// const cssHSL = "hsl(" + 360 * Math.random() + ',' +
-//(25 + 70 * Math.random()) + '%,' +
-//(85 + 10 * Math.random()) + '%)';
-
-/*function newColor() {
-  const hBase = Math.random();
-  const newH = Math.floor(hBase * 360);
-  const newL = Math.floor(Math.random() * 16) + 75;
-  
-  colors.bgColor = `hsl(${newH}, 100%, ${newL}%)`;
-  colors.txtColor = `hsl(${newH}, 100%, 5%)`;
-  colors.btnColor = `hsl(${newH}, 100%, 98%)`;
-  colors.btnFocus = `hsl(${newH}, 100%, 95%)`;
-  
-  const [ r, g, b ] = HSLtoRGB(hBase, 1, newL*.01);*/

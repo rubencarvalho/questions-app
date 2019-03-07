@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import SVGIcon from '../utilities/Icons.js'
-
+import Icon from '../utilities/Icons.js'
+import { newColor } from '../utilities/RandomColor'
 const StyledCard = styled.section`
   font-size: 14px;
   display: grid;
@@ -42,7 +42,7 @@ const Avatar = styled.div`
   display: flex;
   font-weight: 700;
   font-size: 12px;
-  color: rgba(0, 0, 0, 0.4);
+  color: white;
   width: 30px;
   height: 30px;
   background: rgba(0, 0, 0, 0.1);
@@ -125,20 +125,20 @@ export default function Card({
   }
 
   function AvatarContent() {
-    if (name != 'Anonymous') {
+    if (name !== 'Anonymous') {
       return getInitials()
     } else {
       return (
-        <SVGIcon name="user" fill="rgba(0,0,0,0.4)" height="65%" width="65%" />
+        <Icon name="user" fill="rgba(0,0,0,0.4)" height="65%" width="65%" />
       )
     }
   }
-
+  const backgroundColor = newColor()
   const color = liked ? '#2181c2' : 'rgba(0, 0, 0, 0.4)'
   return (
     <StyledCard>
       <Header>
-        <Avatar>
+        <Avatar style={name !== 'Anonymous' ? { backgroundColor } : null}>
           <AvatarContent />
         </Avatar>
         <Items>
@@ -147,7 +147,7 @@ export default function Card({
         </Items>
         <Action onClick={() => onClick(id)}>
           <Votes style={liked ? { color } : null}>{votes}</Votes>
-          <SVGIcon name="upvote" fill={color} height="60%" width="60%" />
+          <Icon name="upvote" fill={color} height="60%" width="60%" />
         </Action>
       </Header>
       <Message>{message}</Message>
