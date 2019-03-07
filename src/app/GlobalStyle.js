@@ -66,3 +66,19 @@ export default createGlobalStyle`
   }
 }
 `
+
+// const cssHSL = "hsl(" + 360 * Math.random() + ',' +
+//(25 + 70 * Math.random()) + '%,' +
+//(85 + 10 * Math.random()) + '%)';
+
+/*function newColor() {
+  const hBase = Math.random();
+  const newH = Math.floor(hBase * 360);
+  const newL = Math.floor(Math.random() * 16) + 75;
+  
+  colors.bgColor = `hsl(${newH}, 100%, ${newL}%)`;
+  colors.txtColor = `hsl(${newH}, 100%, 5%)`;
+  colors.btnColor = `hsl(${newH}, 100%, 98%)`;
+  colors.btnFocus = `hsl(${newH}, 100%, 95%)`;
+  
+  const [ r, g, b ] = HSLtoRGB(hBase, 1, newL*.01);*/

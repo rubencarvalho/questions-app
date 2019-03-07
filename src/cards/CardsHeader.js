@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import Icon from '../utilities/Icons'
 import { Hover } from './Hover'
+
 const Header = styled.div`
   margin: 0;
   display: flex;
@@ -48,23 +49,17 @@ const Select = styled.div`
   }
 `
 
-const StyledHover = styled(Hover)`
-  transition: all 0.3s ease;
-  &:hover {
-    transition: all 0.3s ease;
-  }
-`
-
-export default function CardsHeader({ total }) {
+export default function CardsHeader({ sortData, total }) {
   function onClickHandler(e) {
     console.log(e)
+    sortData()
   }
 
   return (
     <React.Fragment>
       <Header>
         <Total>{total} questions</Total>
-        <StyledHover
+        <Hover
           onHover={
             <SelectorContainer onClick={onClickHandler}>
               <Select
@@ -90,7 +85,7 @@ export default function CardsHeader({ total }) {
               height="20px"
             />
           </SelectorContainer>
-        </StyledHover>
+        </Hover>
       </Header>
     </React.Fragment>
   )

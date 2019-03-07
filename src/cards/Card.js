@@ -3,18 +3,6 @@ import styled from 'styled-components'
 import SVGIcon from '../utilities/Icons.js'
 
 const StyledCard = styled.section`
-  @keyframes background {
-    0% {
-      background-color: #fef8ca;
-    }
-    70% {
-      background-color: #fef8ca;
-    }
-    100% {
-      background-color: white;
-    }
-  }
-  animation: background 2s ease-in-out;
   font-size: 14px;
   display: grid;
   grid-template-rows: 40px auto;
@@ -27,10 +15,24 @@ const StyledCard = styled.section`
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.11), 0 2px 4px rgba(0, 0, 0, 0.15);
 
+  @keyframes background {
+    0% {
+      background-color: #fef8ca;
+    }
+    70% {
+      background-color: #fef8ca;
+    }
+    100% {
+      background-color: white;
+    }
+  }
+  animation: background 2s ease-in-out;
+
   &:not(:last-child) {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   }
 `
+
 const Header = styled.div`
   display: grid;
   grid-template-columns: 40px 1fr 56px;
@@ -38,6 +40,9 @@ const Header = styled.div`
 `
 const Avatar = styled.div`
   display: flex;
+  font-weight: 700;
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.4);
   width: 30px;
   height: 30px;
   background: rgba(0, 0, 0, 0.1);
@@ -110,18 +115,31 @@ export default function Card({
   id,
   onClick,
 }) {
-  const color = liked ? '#2181c2' : 'rgba(0, 0, 0, 0.4)'
+  function getInitials() {
+    let names = name.split(' ')
+    let initials = names[0].substring(0, 1).toUpperCase()
+    if (names.length > 1) {
+      initials += names[names.length - 1].substring(0, 1).toUpperCase()
+    }
+    return initials
+  }
 
+  function AvatarContent() {
+    if (name != 'Anonymous') {
+      return getInitials()
+    } else {
+      return (
+        <SVGIcon name="user" fill="rgba(0,0,0,0.4)" height="65%" width="65%" />
+      )
+    }
+  }
+
+  const color = liked ? '#2181c2' : 'rgba(0, 0, 0, 0.4)'
   return (
     <StyledCard>
       <Header>
         <Avatar>
-          <SVGIcon
-            name="user"
-            fill="rgba(0,0,0,0.4)"
-            height="65%"
-            width="65%"
-          />
+          <AvatarContent />
         </Avatar>
         <Items>
           <Author>{name}</Author>

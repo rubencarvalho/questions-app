@@ -23,6 +23,7 @@ export default function App() {
         votes: 0,
         id: uid(),
         liked: false,
+        firstRender: true,
       },
       ...data,
     ])
@@ -50,11 +51,18 @@ export default function App() {
     }
   }
 
+  function sortData() {
+    const newData = data.sort(function(a, b) {
+      return b.votes - a.votes
+    })
+    return newData
+  }
+
   return (
     <React.Fragment>
       <Form submitForm={addQuestion} />
-      <CardsHeader total={data.length} />
-      {data.map(question => (
+      <CardsHeader sortData={sortData} total={data.length} />
+      {sortData().map(question => (
         <Card
           key={question.id}
           id={question.id}

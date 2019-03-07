@@ -111,12 +111,6 @@ const ErrorMessage = styled.p`
   bottom: 60px;
 `
 
-const StyledIcon = styled(Icon)`
-  &:hover {
-    fill: rgb(0, 0, 0);
-  }
-`
-
 export default function Form({ submitForm }) {
   const [question, setQuestion] = useState({
     message: '',
