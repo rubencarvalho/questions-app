@@ -71,11 +71,15 @@ const Action = styled.div`
   -webkit-appearance: none;
   align-items: center;
   justify-content: center;
+  transition: all 0.3s ease;
+
   &:last-child {
     border-radius: 50px;
   }
   @media (hover: hover) {
     &:hover {
+      transition: all 0.3s ease;
+
       cursor: pointer;
       background: rgba(0, 0, 0, 0.05);
     }

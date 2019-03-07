@@ -48,6 +48,13 @@ const Select = styled.div`
   }
 `
 
+const StyledHover = styled(Hover)`
+  transition: all 0.3s ease;
+  &:hover {
+    transition: all 0.3s ease;
+  }
+`
+
 export default function CardsHeader({ total }) {
   function onClickHandler(e) {
     console.log(e)
@@ -57,10 +64,14 @@ export default function CardsHeader({ total }) {
     <React.Fragment>
       <Header>
         <Total>{total} questions</Total>
-        <Hover
+        <StyledHover
           onHover={
             <SelectorContainer onClick={onClickHandler}>
-              <Select style={{ color: 'rgb(0,0,0)' }}>Recent Questions</Select>
+              <Select
+                style={{ color: 'rgb(0,0,0)', transition: 'all 0.3s ease' }}
+              >
+                Recent Questions
+              </Select>
               <Icon
                 fill="rgb(0,0,0)"
                 name="dropdown"
@@ -79,7 +90,7 @@ export default function CardsHeader({ total }) {
               height="20px"
             />
           </SelectorContainer>
-        </Hover>
+        </StyledHover>
       </Header>
     </React.Fragment>
   )

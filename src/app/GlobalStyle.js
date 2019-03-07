@@ -42,20 +42,27 @@ export default createGlobalStyle`
 
   &:hover &__no-hover {
     opacity: 0;
+    transition: all 0.3s ease;
+
   }
 
   &:hover &__hover {
     opacity: 1;
+    transition: all 0.3s ease;
   }
 
   &__hover {
     position: absolute;
     top: 0;
     opacity: 0;
+    transition: all 0.3s ease;
+
   }
 
   &__no-hover {
     opacity: 1;
+    transition: all 0.3s ease;
+
   }
 }
 `
