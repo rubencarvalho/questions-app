@@ -57,21 +57,29 @@ export default function CardsHeader({ total }) {
     <React.Fragment>
       <Header>
         <Total>{total} questions</Total>
-        <SelectorContainer onClick={onClickHandler}>
-          <Hover
-            onHover={
-              <SelectorContainer onClick={onClickHandler}>
-                <Select>Recent Questions</Select>
-                <Icon fill="blue" name="dropdown" width="20px" height="20px" />
-              </SelectorContainer>
-            }
-          >
+        <Hover
+          onHover={
             <SelectorContainer onClick={onClickHandler}>
-              <Select>Recent Questions</Select>
-              <Icon fill="red" name="dropdown" width="20px" height="20px" />
+              <Select style={{ color: 'rgb(0,0,0)' }}>Recent Questions</Select>
+              <Icon
+                fill="rgb(0,0,0)"
+                name="dropdown"
+                width="20px"
+                height="20px"
+              />
             </SelectorContainer>
-          </Hover>
-        </SelectorContainer>
+          }
+        >
+          <SelectorContainer onClick={onClickHandler}>
+            <Select>Recent Questions</Select>
+            <Icon
+              fill="rgb(85, 85, 85)"
+              name="dropdown"
+              width="20px"
+              height="20px"
+            />
+          </SelectorContainer>
+        </Hover>
       </Header>
     </React.Fragment>
   )
