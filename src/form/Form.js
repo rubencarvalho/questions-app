@@ -5,6 +5,7 @@ import SVGIcon from '../utilities/Icons'
 import FormHeader from './FormHeader'
 
 const StyledForm = styled.form`
+  position: relative;
   font-size: 14px;
   width: 100%;
   margin: 0 auto;
@@ -15,10 +16,12 @@ const StyledForm = styled.form`
   min-height: 80px;
   color: #555;
   background-color: #fff;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15), 0 3px 6px rgba(0, 0, 0, 0.19);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.11), 0 2px 4px rgba(0, 0, 0, 0.15);
+
   &:not(:last-child) {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   }
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 `
 const StyledTextarea = styled(TextareaAutosize)`
   font-size: 16px;
@@ -27,6 +30,7 @@ const StyledTextarea = styled(TextareaAutosize)`
   padding: 30px 20px 44px 20px;
   border: transparent;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  min-height: 80px;
   &:focus {
     outline: none;
   }
@@ -55,11 +59,6 @@ const Avatar = styled.div`
   border-radius: 50%;
   justify-content: center;
   align-items: center;
-`
-
-const MessageSection = styled.section`
-  display: grid;
-  grid-template-columns: 1fr 56px;
 `
 
 const NameSection = styled.section`
@@ -96,55 +95,51 @@ const Action = styled.button`
   }
 `
 const Length = styled.p`
-  position: relative;
+  position: absolute;
+  color: rgba(0, 0, 0, 0.4);
+  right: 20px;
+  bottom: 60px;
 `
 
-const errorMessage = styled.p`
-  text-align: left;
-  position: relative;
+const ErrorMessage = styled.p`
+  color: #f44336;
+  position: absolute;
   left: 20px;
-  bottom: 40px;
-  color: red;
+  bottom: 60px;
 `
 
 export default function Form({ submitForm }) {
   const [question, setQuestion] = useState({
     message: '',
     name: '',
-    valid: false,
   })
 
   function onSubmitHandler(e) {
     e.preventDefault()
-    if (question.valid) {
+    if (question.message.length <= 160) {
       submitForm(question)
       setQuestion({ message: '', name: '' })
-    } else {
-    }
-  }
-  function messageOnChange(e) {
-    if (question.message.length > 160) {
-      setQuestion({
-        ...question,
-        message: e.target.value,
-        valid: false,
-      })
-    } else {
-      setQuestion({ ...question, message: e.target.value, valid: true })
     }
   }
 
+  const length = 160 - question.message.length
+  const errorMessage = 'Too many characters'
   return (
     <React.Fragment>
       <FormHeader />
       <StyledForm onSubmit={onSubmitHandler}>
         <StyledTextarea
           required
+          minRows={2}
           style={{ resize: 'none' }}
           value={question.message}
-          onChange={messageOnChange}
+          onChange={e => setQuestion({ ...question, message: e.target.value })}
           placeholder="Type your question"
         />
+        <Length style={length < 0 ? { color: '#f44336' } : null}>
+          {length}
+        </Length>
+        <ErrorMessage>{length < 0 ? errorMessage : null}</ErrorMessage>
         <NameSection>
           <Avatar>
             <SVGIcon
@@ -160,7 +155,12 @@ export default function Form({ submitForm }) {
             onChange={e => setQuestion({ ...question, name: e.target.value })}
             placeholder="Your name (optional)"
           />
-          <Action>SEND</Action>
+          <Action
+            disabled={length < 0}
+            style={length < 0 ? { backgroundColor: '#c1ddae' } : null}
+          >
+            SEND
+          </Action>
         </NameSection>
       </StyledForm>
     </React.Fragment>

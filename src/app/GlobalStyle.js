@@ -6,13 +6,12 @@ export default createGlobalStyle`
   }
 
   body {
-  font-weight: 400;
-
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
     font-family: Roboto, sans-serif;
     line-height: 1.5;
     background: #f2f2f2;
-    margin-right: 5px;
-    margin-left: 5px;
+    margin: 0 5px 40px 5px;
     
     @media (max-width: 651px) { 
       margin: 0;
