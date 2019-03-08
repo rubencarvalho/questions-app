@@ -1,7 +1,6 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import Icon from '../utilities/Icons.js'
-import { newColor } from '../utilities/RandomColor'
 const StyledCard = styled.section`
   font-size: 14px;
   display: grid;
@@ -14,8 +13,7 @@ const StyledCard = styled.section`
   grid-gap: 8px;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.11), 0 2px 4px rgba(0, 0, 0, 0.15);
-
-  @keyframes background {
+  @keyframes card-background {
     0% {
       background-color: #fef8ca;
     }
@@ -26,7 +24,6 @@ const StyledCard = styled.section`
       background-color: white;
     }
   }
-  animation: background 2s ease-in-out;
 
   &:not(:last-child) {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
@@ -98,8 +95,8 @@ const Action = styled.div`
 const Message = styled.div`
   display: flex;
   width: 100%;
-  word-wrap: break-word;
   overflow-wrap: break-word;
+  word-break: break-word;
 `
 const Votes = styled.div`
   min-width: 16px;
@@ -114,6 +111,9 @@ export default function Card({
   liked,
   id,
   onClick,
+  avatar,
+  isNew,
+  changeNew,
 }) {
   function getInitials() {
     let names = name.split(' ')
@@ -133,12 +133,19 @@ export default function Card({
       )
     }
   }
-  const backgroundColor = newColor()
+  useEffect(() => {
+    changeNew(id)
+  }, [])
+
   const color = liked ? '#2181c2' : 'rgba(0, 0, 0, 0.4)'
   return (
-    <StyledCard>
+    <StyledCard
+      style={isNew ? { animation: 'card-background 2s ease-in-out' } : null}
+    >
       <Header>
-        <Avatar style={name !== 'Anonymous' ? { backgroundColor } : null}>
+        <Avatar
+          style={name !== 'Anonymous' ? { backgroundColor: avatar } : null}
+        >
           <AvatarContent />
         </Avatar>
         <Items>

@@ -20,6 +20,7 @@ const Total = styled.div`
   color: rgba(0, 0, 0, 0.4);
 `
 const SelectorContainer = styled.div`
+  user-select: none;
   display: flex;
   align-items: center;
   @media (hover: hover) {

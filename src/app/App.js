@@ -8,6 +8,8 @@ import Form from '../form/Form'
 import { getDataFromStorage, saveDataToStorage } from '../services'
 import Sort from '../sort/Sort'
 import GlobalStyle from './GlobalStyle'
+import { newColor } from '../utilities/RandomColor'
+
 dayjs.extend(relativeTime)
 
 export default function App() {
@@ -28,6 +30,8 @@ export default function App() {
         votes: 0,
         id: uid(),
         liked: false,
+        avatar: newColor(),
+        isNew: true,
       },
       ...data,
     ])
@@ -82,10 +86,21 @@ export default function App() {
 
   function Modal() {
     if (openModal) {
-      return <Sort closeModal={closeModal} onSortClick={onSortClick} />
+      return (
+        <Sort
+          activeCriteria={sortCriteria}
+          closeModal={closeModal}
+          onSortClick={onSortClick}
+        />
+      )
     } else {
       return null
     }
+  }
+
+  function changeNew(id) {
+    const question = data.find(question => question.id === id)
+    if (question.isNew) question.isNew = false
   }
   return (
     <React.Fragment>
@@ -97,6 +112,7 @@ export default function App() {
       />
       {sortData(sortCriteria).map(question => (
         <Card
+          avatar={question.avatar}
           key={question.id}
           id={question.id}
           name={question.name}
@@ -105,10 +121,11 @@ export default function App() {
           votes={question.votes}
           liked={question.liked}
           onClick={upvote}
+          isNew={question.isNew}
+          changeNew={changeNew}
         />
       ))}
       <Modal />
-
       <GlobalStyle />
     </React.Fragment>
   )

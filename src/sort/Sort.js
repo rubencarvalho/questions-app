@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import Icon from '../utilities/Icons'
 
 const ModalSort = styled.section`
   display: grid;
@@ -12,9 +13,17 @@ const ModalSort = styled.section`
   top: auto !important;
   left: 0 !important;
   bottom: 0;
-  transform: translateY(0);
   max-height: 80%;
   overflow-y: auto;
+  @keyframes slide {
+    0% {
+      transform: translateY(100%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+  animation: slide 0.2s linear;
 `
 
 const ModalTitle = styled.div`
@@ -43,31 +52,56 @@ const ModalCriteria = styled.div`
 
 const Backdrop = styled.div`
   z-index: 1;
-  background-color: rgba(0, 0, 0, 0.4) !important;
+  background-color: rgba(0, 0, 0, 0.4);
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  opacity: 1;
   transition: opacity 0.2s ease-in-out;
+  @keyframes modalBackdrop {
+    0% {
+      background-color: transparent;
+    }
+    100% {
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+  }
+  animation: modalBackdrop 0.2s ease-in-out;
 `
 
 export default function Sort({ activeCriteria, onSortClick, closeModal }) {
+  console.log(activeCriteria)
   return (
     <Backdrop onClick={closeModal}>
       <ModalSort>
         <ModalTitle onClick={e => e.stopPropagation()}>
           Sort questions
         </ModalTitle>
-        <ModalCriteria onClick={() => onSortClick('popular')}>
-          Popular questions
+        <ModalCriteria
+          style={activeCriteria === 'popular' ? { fontWeight: 700 } : null}
+          onClick={() => onSortClick('popular')}
+        >
+          <p>Popular questions</p>
+          <Icon
+            name="check"
+            fill="red"
+            height="60%"
+            width="60%"
+            style={activeCriteria === 'popular' ? null : { display: 'none' }}
+          />
         </ModalCriteria>
-        <ModalCriteria onClick={() => onSortClick('recent')}>
-          Recent questions
+        <ModalCriteria
+          style={activeCriteria === 'recent' ? { fontWeight: 700 } : null}
+          onClick={() => onSortClick('recent')}
+        >
+          <p>Recent questions</p>
         </ModalCriteria>
-        <ModalCriteria onClick={() => onSortClick('myquestions')}>
-          My questions
+        <ModalCriteria
+          style={activeCriteria === 'myquestions' ? { fontWeight: 700 } : null}
+          onClick={() => onSortClick('myquestions')}
+        >
+          <p>My questions</p>
         </ModalCriteria>
       </ModalSort>
     </Backdrop>
