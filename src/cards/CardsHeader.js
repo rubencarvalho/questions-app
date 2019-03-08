@@ -49,10 +49,15 @@ const Select = styled.div`
   }
 `
 
-export default function CardsHeader({ sortData, total }) {
-  function onClickHandler(e) {
-    console.log(e)
-    sortData()
+export default function CardsHeader({ sortCriteria, total, onOpenModalClick }) {
+  let sort = 'Recent'
+
+  if (sortCriteria === 'recent') {
+    sort = 'Recent'
+  } else if (sortCriteria === 'popular') {
+    sort = 'Popular'
+  } else if (sortCriteria === 'myquestions') {
+    sort = 'My questions'
   }
 
   return (
@@ -61,11 +66,11 @@ export default function CardsHeader({ sortData, total }) {
         <Total>{total} questions</Total>
         <Hover
           onHover={
-            <SelectorContainer onClick={onClickHandler}>
+            <SelectorContainer onClick={onOpenModalClick}>
               <Select
                 style={{ color: 'rgb(0,0,0)', transition: 'all 0.3s ease' }}
               >
-                Recent Questions
+                {sort}
               </Select>
               <Icon
                 fill="rgb(0,0,0)"
@@ -76,8 +81,8 @@ export default function CardsHeader({ sortData, total }) {
             </SelectorContainer>
           }
         >
-          <SelectorContainer onClick={onClickHandler}>
-            <Select>Recent Questions</Select>
+          <SelectorContainer onClick={onOpenModalClick}>
+            <Select>{sort}</Select>
             <Icon
               fill="rgb(85, 85, 85)"
               name="dropdown"

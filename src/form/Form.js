@@ -99,7 +99,7 @@ const Action = styled.button`
 `
 const Length = styled.p`
   position: absolute;
-  color: rgba(0, 0, 0, 0.4);
+  color: ${p => (p.length < 0 ? '#f44336' : 'rgba(0, 0, 0, 0.4)')};
   right: 20px;
   bottom: 60px;
 `
@@ -126,7 +126,15 @@ export default function Form({ submitForm }) {
   }
 
   const length = 160 - question.message.length
-  const errorMessage = 'Too many characters'
+
+  function ErrorMsg() {
+    if (length < 0) {
+      return <ErrorMessage>Too many characters</ErrorMessage>
+    } else {
+      return null
+    }
+  }
+
   return (
     <React.Fragment>
       <FormHeader />
@@ -139,10 +147,8 @@ export default function Form({ submitForm }) {
           onChange={e => setQuestion({ ...question, message: e.target.value })}
           placeholder="Type your question"
         />
-        <Length style={length < 0 ? { color: '#f44336' } : null}>
-          {length}
-        </Length>
-        <ErrorMessage>{length < 0 ? errorMessage : null}</ErrorMessage>
+        <Length length={length}>{length}</Length>
+        <ErrorMsg />
         <NameSection>
           <Avatar>
             <Icon name="user" fill="rgba(0,0,0,0.4)" height="65%" width="65%" />

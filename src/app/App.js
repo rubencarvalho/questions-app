@@ -6,13 +6,16 @@ import Card from '../cards/Card'
 import CardsHeader from '../cards/CardsHeader'
 import Form from '../form/Form'
 import { getDataFromStorage, saveDataToStorage } from '../services'
-import GlobalStyle from './GlobalStyle'
 import Sort from '../sort/Sort'
+import GlobalStyle from './GlobalStyle'
 dayjs.extend(relativeTime)
 
 export default function App() {
   const [data, setData] = useState(getDataFromStorage())
   const [sortCriteria, setSortCriteria] = useState('recent')
+
+  const [openModal, setOpenModal] = useState(false)
+
   function addQuestion(input) {
     if (input.name === '') {
       input.name = 'Anonymous'
@@ -25,7 +28,6 @@ export default function App() {
         votes: 0,
         id: uid(),
         liked: false,
-        firstRender: true,
       },
       ...data,
     ])
@@ -55,26 +57,42 @@ export default function App() {
 
   function sortData(sortCriteria) {
     if (sortCriteria === 'recent') {
-      const newData = data.sort(function(a, b) {
+      return data.sort(function(a, b) {
         return dayjs(b.date) - dayjs(a.date)
       })
-      return newData
     } else if (sortCriteria === 'popular') {
-      const newData = data.sort(function(a, b) {
+      return data.sort(function(a, b) {
         return b.votes - a.votes
       })
-      return newData
+    } else {
+      return data
     }
   }
 
-  function onSortClick() {}
+  function onSortClick(newSortCriteria) {
+    setOpenModal(false)
+    setSortCriteria(newSortCriteria)
+  }
+  function closeModal() {
+    setOpenModal(false)
+  }
+  function onOpenModalClick() {
+    setOpenModal(!openModal)
+  }
 
+  function Modal() {
+    if (openModal) {
+      return <Sort closeModal={closeModal} onSortClick={onSortClick} />
+    } else {
+      return null
+    }
+  }
   return (
     <React.Fragment>
       <Form submitForm={addQuestion} />
       <CardsHeader
-        onSortClick={onSortClick}
-        sortData={sortData}
+        onOpenModalClick={onOpenModalClick}
+        sortCriteria={sortCriteria}
         total={data.length}
       />
       {sortData(sortCriteria).map(question => (
@@ -89,6 +107,7 @@ export default function App() {
           onClick={upvote}
         />
       ))}
+      <Modal />
 
       <GlobalStyle />
     </React.Fragment>

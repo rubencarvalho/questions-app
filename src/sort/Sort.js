@@ -18,6 +18,7 @@ const ModalSort = styled.section`
 `
 
 const ModalTitle = styled.div`
+  z-index: 10;
   font-size: 14px;
   line-height: 1.2;
   color: rgba(0, 0, 0, 0.4);
@@ -32,9 +33,16 @@ const ModalCriteria = styled.div`
   color: rgba(0, 0, 0, 0.7);
   padding: 16px 20px 16px 20px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  @media (hover: hover) {
+    &:hover {
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+  }
 `
 
 const Backdrop = styled.div`
+  z-index: 1;
   background-color: rgba(0, 0, 0, 0.4) !important;
   position: fixed;
   top: 0;
@@ -45,14 +53,22 @@ const Backdrop = styled.div`
   transition: opacity 0.2s ease-in-out;
 `
 
-export default function Sort({ activeCriteria, onSortClick }) {
+export default function Sort({ activeCriteria, onSortClick, closeModal }) {
   return (
-    <Backdrop>
+    <Backdrop onClick={closeModal}>
       <ModalSort>
-        <ModalTitle>Sort questions</ModalTitle>
-        <ModalCriteria>Popular questions</ModalCriteria>
-        <ModalCriteria>Recent questions</ModalCriteria>
-        <ModalCriteria>My questions</ModalCriteria>
+        <ModalTitle onClick={e => e.stopPropagation()}>
+          Sort questions
+        </ModalTitle>
+        <ModalCriteria onClick={() => onSortClick('popular')}>
+          Popular questions
+        </ModalCriteria>
+        <ModalCriteria onClick={() => onSortClick('recent')}>
+          Recent questions
+        </ModalCriteria>
+        <ModalCriteria onClick={() => onSortClick('myquestions')}>
+          My questions
+        </ModalCriteria>
       </ModalSort>
     </Backdrop>
   )
