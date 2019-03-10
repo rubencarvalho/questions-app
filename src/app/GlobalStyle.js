@@ -6,8 +6,18 @@ export default createGlobalStyle`
   }
 
   body {
-    font-family: sans-serif;
-    margin: 0;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    font-family: Roboto, sans-serif;
+    line-height: 1.5;
+    background: #f2f2f2;
+    margin: 0 0 40px 0;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+    @media (max-width: 651px) { 
+      margin: 0;
+     }
+
   }
 
   h1, h2, h3, h4, h5, h6,
@@ -24,14 +34,33 @@ export default createGlobalStyle`
     padding-left: 4px;
   }
 
-  button {
-    background: #333;
-    border-radius: 4px;
-    color: white;
-    font-weight: bold;
-  }
-
   header {
     overflow: hidden;
   }
+
+  .hover {
+  position: relative;
+
+  &:hover &__no-hover {
+    opacity: 0;
+    transition: all 0.3s ease;
+  }
+
+  &:hover &__hover {
+    opacity: 1;
+    transition: all 0.3s ease;
+  }
+
+  &__hover {
+    position: absolute;
+    top: 0;
+    opacity: 0;
+    transition: all 0.3s ease;
+  }
+
+  &__no-hover {
+    opacity: 1;
+    transition: all 0.3s ease;
+  }
+}
 `

@@ -1,3 +1,21 @@
-import axios from 'axios'
-const ip = process.env.REACT_APP_BACKEND_IP
-const svPath = `http://${ip}:4000/`
+export function getDataFromStorage() {
+  return getFromStorage('questions') || []
+}
+
+export function saveDataToStorage(questions) {
+  saveToStorage('questions', questions)
+}
+
+export function saveToStorage(name, data) {
+  const dataString = JSON.stringify(data)
+  localStorage.setItem(name, dataString)
+}
+
+export function getFromStorage(name) {
+  const dataString = localStorage.getItem(name)
+  try {
+    return JSON.parse(dataString)
+  } catch (error) {
+    console.error(error.message)
+  }
+}
