@@ -38,6 +38,7 @@ const ModalTitle = styled.div`
 const ModalCriteria = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   font-size: 14px;
   color: rgba(0, 0, 0, 0.7);
   padding: 16px 20px 16px 20px;
@@ -71,7 +72,6 @@ const Backdrop = styled.div`
 `
 
 export default function Sort({ activeCriteria, onSortClick, closeModal }) {
-  console.log(activeCriteria)
   return (
     <Backdrop onClick={closeModal}>
       <ModalSort>
@@ -82,12 +82,12 @@ export default function Sort({ activeCriteria, onSortClick, closeModal }) {
           style={activeCriteria === 'popular' ? { fontWeight: 700 } : null}
           onClick={() => onSortClick('popular')}
         >
-          <p>Popular questions</p>
+          <div>Popular questions</div>
           <Icon
             name="check"
-            fill="red"
-            height="60%"
-            width="60%"
+            fill="rgba(0, 0, 0, 0.4)"
+            height="18px"
+            width="18px"
             style={activeCriteria === 'popular' ? null : { display: 'none' }}
           />
         </ModalCriteria>
@@ -95,13 +95,29 @@ export default function Sort({ activeCriteria, onSortClick, closeModal }) {
           style={activeCriteria === 'recent' ? { fontWeight: 700 } : null}
           onClick={() => onSortClick('recent')}
         >
-          <p>Recent questions</p>
+          <div>Recent questions</div>
+          <Icon
+            name="check"
+            fill="rgba(0, 0, 0, 0.4)"
+            height="18px"
+            width="18px"
+            style={activeCriteria === 'recent' ? null : { display: 'none' }}
+          />
         </ModalCriteria>
         <ModalCriteria
           style={activeCriteria === 'myquestions' ? { fontWeight: 700 } : null}
           onClick={() => onSortClick('myquestions')}
         >
-          <p>My questions</p>
+          <div>My questions</div>
+          <Icon
+            name="check"
+            fill="rgba(0, 0, 0, 0.4)"
+            height="18px"
+            width="18px"
+            style={
+              activeCriteria === 'myquestions' ? null : { display: 'none' }
+            }
+          />
         </ModalCriteria>
       </ModalSort>
     </Backdrop>

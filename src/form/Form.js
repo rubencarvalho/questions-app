@@ -31,6 +31,7 @@ const StyledTextarea = styled(TextareaAutosize)`
   border: transparent;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   min-height: 80px;
+  font-family: Roboto, sans-serif;
   &:focus {
     outline: none;
   }

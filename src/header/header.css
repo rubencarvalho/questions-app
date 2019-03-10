@@ -1,0 +1,36 @@
+.headroom-wrapper {
+  height: 56px !important;
+}
+
+.headroom {
+  height: 56px;
+  width: 100%;
+  display: flex;
+  top: 0;
+  left: 0;
+  position: fixed;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background: linear-gradient(-45deg, #216796, #2182c4);
+  z-index: 1;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.14), 0 4px 8px rgba(0, 0, 0, 0.28);
+  overflow: hidden;
+}
+.headroom--unfixed {
+  position: relative;
+  transform: translateY(0);
+}
+.headroom--scrolled {
+  transition: transform 200ms ease-in-out;
+}
+
+.headroom--unpinned {
+  position: fixed;
+  transform: translateY(-100%);
+  box-shadow: none;
+}
+.headroom--pinned {
+  position: fixed;
+  transform: translateY(0%);
+}

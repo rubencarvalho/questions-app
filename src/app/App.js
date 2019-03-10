@@ -7,9 +7,9 @@ import CardsHeader from '../cards/CardsHeader'
 import Form from '../form/Form'
 import { getDataFromStorage, saveDataToStorage } from '../services'
 import Sort from '../sort/Sort'
-import GlobalStyle from './GlobalStyle'
 import { newColor } from '../utilities/RandomColor'
-
+import GlobalStyle from './GlobalStyle'
+import AppHeader from '../header/Header'
 dayjs.extend(relativeTime)
 
 export default function App() {
@@ -104,6 +104,7 @@ export default function App() {
   }
   return (
     <React.Fragment>
+      <AppHeader />
       <Form submitForm={addQuestion} />
       <CardsHeader
         onOpenModalClick={onOpenModalClick}
