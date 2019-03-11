@@ -7,13 +7,48 @@ import CardsHeader from '../cards/CardsHeader'
 import Form from '../form/Form'
 import CForm from '../form/CForm'
 import AppHeader from '../header/Header'
-import { getDataFromStorage, saveDataToStorage } from '../services'
+import {
+  getDataFromStorage,
+  saveDataToStorage,
+  getAllQuestions,
+  postNewQuestion,
+  voteQuestion,
+} from '../services'
 import Sort from '../sort/Sort'
 import GlobalStyle from './GlobalStyle'
 dayjs.extend(relativeTime)
 
 export default function App() {
   const [data, setData] = useState(getDataFromStorage())
+
+  const [questions, setQuestions] = useState(getFromServer())
+
+  function getFromServer() {
+    getAllQuestions().then(res => {
+      return res
+    })
+  }
+
+  function createQuestion(question) {
+    postNewQuestion(question).then(res => {
+      setQuestions([...questions, res])
+    })
+  }
+
+  function upvote(id) {
+    const question = questions.find(question => question.id === id)
+    voteQuestion(question)
+      .then(res => {
+        const index = questions.indexOf(question)
+        setQuestions([
+          ...questions.slice(0, index),
+          { ...res },
+          ...questions.slice(index + 1),
+        ])
+      })
+      .catch(err => console.log(err))
+  }
+
   const [sortCriteria, setSortCriteria] = useState('recent')
 
   const [openModal, setOpenModal] = useState(false)
@@ -41,7 +76,7 @@ export default function App() {
     saveDataToStorage(data)
   }, [data])
 
-  function upvote(id) {
+  /*function upvote(id) {
     const question = data.find(question => question.id === id)
     const i = data.indexOf(question)
     if (question.liked) {
@@ -57,7 +92,7 @@ export default function App() {
         ...data.slice(i + 1),
       ])
     }
-  }
+  }*/
 
   function sortData(sortCriteria) {
     if (sortCriteria === 'recent') {
@@ -111,13 +146,13 @@ export default function App() {
     setExpandendForm(false)
   }
 
-  function AddQuestionForm() {
+  /*function AddQuestionForm() {
     if (!expandedForm) {
       return <CForm onFocusHandler={onFocusHandler} />
     } else {
       return <Form onBlurHandler={onBlurHandler} submitForm={addQuestion} />
     }
-  }
+  }*/
 
   return (
     <React.Fragment>

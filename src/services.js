@@ -1,3 +1,7 @@
+import axios from 'axios'
+const IP = process.env.REACT_APP_BACKEND_IP
+const questionsPath = `http://${IP}:4000/questions`
+
 export function getDataFromStorage() {
   return getFromStorage('questions') || []
 }
@@ -17,5 +21,27 @@ export function getFromStorage(name) {
     return JSON.parse(dataString)
   } catch (error) {
     console.error(error.message)
+  }
+}
+
+export function getAllQuestions() {
+  return axios.get(questionsPath)
+}
+
+export function postNewQuestion(question) {
+  return axios.post(questionsPath, question)
+}
+
+export function voteQuestion(question) {
+  if (question.liked) {
+    return axios.patch(`${questionsPath}/${question._id}`, {
+      ...question,
+      votes: question.votes - 1,
+    })
+  } else {
+    return axios.patch(`${questionsPath}/${question._id}`, {
+      ...question,
+      votes: question.votes + 1,
+    })
   }
 }
