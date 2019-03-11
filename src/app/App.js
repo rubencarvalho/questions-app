@@ -5,13 +5,12 @@ import uid from 'uid'
 import Card from '../cards/Card'
 import CardsHeader from '../cards/CardsHeader'
 import Form from '../form/Form'
-import CForm from '../form/CForm'
 import AppHeader from '../header/Header'
 import {
-  getDataFromStorage,
-  saveDataToStorage,
   getAllQuestions,
+  getDataFromStorage,
   postNewQuestion,
+  saveDataToStorage,
   voteQuestion,
 } from '../services'
 import Sort from '../sort/Sort'
@@ -21,22 +20,24 @@ dayjs.extend(relativeTime)
 export default function App() {
   const [data, setData] = useState(getDataFromStorage())
 
-  const [questions, setQuestions] = useState(getFromServer())
+  const [questions, setQuestions] = useState(getDataFromStorage())
 
-  function getFromServer() {
+  useEffect(() => {
     getAllQuestions().then(res => {
-      return res
+      setQuestions(res.data)
     })
-  }
+  }, [])
 
   function createQuestion(question) {
+    console.log(questions)
     postNewQuestion(question).then(res => {
-      setQuestions([...questions, res])
+      console.log(res.data)
+      setQuestions([...questions, res.data])
     })
   }
 
   function upvote(id) {
-    const question = questions.find(question => question.id === id)
+    const question = questions.find(question => question._id === id)
     voteQuestion(question)
       .then(res => {
         const index = questions.indexOf(question)
@@ -52,11 +53,13 @@ export default function App() {
   const [sortCriteria, setSortCriteria] = useState('recent')
 
   const [openModal, setOpenModal] = useState(false)
-  const [expandedForm, setExpandendForm] = useState(false)
+
   function addQuestion(input) {
     if (input.name === '') {
       input.name = 'Anonymous'
     }
+    input.avatar = input.color
+    createQuestion(input)
     setData([
       {
         name: input.name,
@@ -66,7 +69,7 @@ export default function App() {
         id: uid(),
         liked: false,
         avatar: input.color,
-        isNew: true,
+        isnew: true,
       },
       ...data,
     ])
@@ -96,11 +99,11 @@ export default function App() {
 
   function sortData(sortCriteria) {
     if (sortCriteria === 'recent') {
-      return data.sort(function(a, b) {
+      return questions.sort(function(a, b) {
         return dayjs(b.date) - dayjs(a.date)
       })
     } else if (sortCriteria === 'popular') {
-      return data.sort(function(a, b) {
+      return questions.sort(function(a, b) {
         return b.votes - a.votes
       })
     } else {
@@ -134,47 +137,32 @@ export default function App() {
   }
 
   function changeNew(id) {
-    const question = data.find(question => question.id === id)
-    if (question.isNew) question.isNew = false
+    const question = questions.find(question => question._id === id)
+    if (question.isnew) question.isnew = false
   }
-
-  function onFocusHandler() {
-    setExpandendForm(true)
-  }
-
-  function onBlurHandler() {
-    setExpandendForm(false)
-  }
-
-  /*function AddQuestionForm() {
-    if (!expandedForm) {
-      return <CForm onFocusHandler={onFocusHandler} />
-    } else {
-      return <Form onBlurHandler={onBlurHandler} submitForm={addQuestion} />
-    }
-  }*/
 
   return (
     <React.Fragment>
       <AppHeader />
-      <Form onBlurHandler={onBlurHandler} submitForm={addQuestion} />{' '}
+      <Form submitForm={addQuestion} />
       <CardsHeader
         onOpenModalClick={onOpenModalClick}
         sortCriteria={sortCriteria}
         total={data.length}
       />
+
       {sortData(sortCriteria).map(question => (
         <Card
+          key={question._id}
           avatar={question.avatar}
-          key={question.id}
-          id={question.id}
+          id={question._id}
           name={question.name}
           message={question.message}
           date={dayjs().to(question.date)}
           votes={question.votes}
           liked={question.liked}
           onClick={upvote}
-          isNew={question.isNew}
+          isnew={question.isnew}
           changeNew={changeNew}
         />
       ))}

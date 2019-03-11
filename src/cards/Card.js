@@ -13,12 +13,15 @@ const StyledCard = styled.section`
   grid-gap: 8px;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.11), 0 2px 4px rgba(0, 0, 0, 0.15);
-  &:first-of-type {
-    border-radius: 4px 4px 0 0;
+  @media (min-width: 651px) {
+    &:first-of-type {
+      border-radius: 4px 4px 0 0;
+    }
+    &:last-of-type {
+      border-radius: 0 0 4px 4px;
+    }
   }
-  &:last-of-type {
-    border-radius: 0 0 4px 4px;
-  }
+
   @keyframes card-background {
     0% {
       background-color: #fef8ca;
@@ -118,7 +121,7 @@ export default function Card({
   id,
   onClick,
   avatar,
-  isNew,
+  isnew,
   changeNew,
 }) {
   function getInitials() {
@@ -146,7 +149,7 @@ export default function Card({
   const color = liked ? '#2181c2' : 'rgba(0, 0, 0, 0.4)'
   return (
     <StyledCard
-      style={isNew ? { animation: 'card-background 2s ease-in-out' } : null}
+      style={isnew ? { animation: 'card-background 2s ease-in-out' } : null}
     >
       <Header>
         <Avatar

@@ -15,11 +15,13 @@ const StyledForm = styled.form`
   grid-auto-rows: auto;
   max-width: 650px;
   min-height: 80px;
-  border-radius: 4px;
   color: #555;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.11), 0 2px 4px rgba(0, 0, 0, 0.15);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  @media (min-width: 651px) {
+    border-radius: 4px;
+  }
 `
 const StyledTextarea = styled(TextareaAutosize)`
   font-size: 16px;
@@ -111,7 +113,7 @@ const ErrorMessage = styled.p`
   bottom: 60px;
 `
 
-export default function Form({ submitForm, onBlurHandler }) {
+export default function Form({ submitForm }) {
   const [question, setQuestion] = useState({
     message: '',
     name: '',
@@ -167,21 +169,11 @@ export default function Form({ submitForm, onBlurHandler }) {
     }
   }
 
-  function onBlurEvent() {
-    if (question.message === '') {
-      onBlurHandler()
-    } else {
-      return null
-    }
-  }
-
   return (
     <React.Fragment>
       <FormHeader />
       <StyledForm onSubmit={onSubmitHandler}>
         <StyledTextarea
-          autoFocus
-          onBlur={onBlurEvent}
           onKeyUp={handleOnKeyUp}
           required
           minRows={2}
