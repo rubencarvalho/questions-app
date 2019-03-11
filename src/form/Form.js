@@ -19,7 +19,6 @@ const StyledForm = styled.form`
   color: #555;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.11), 0 2px 4px rgba(0, 0, 0, 0.15);
-
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 `
 const StyledTextarea = styled(TextareaAutosize)`
@@ -82,7 +81,6 @@ const Action = styled.button`
   justify-content: center;
   padding: 0 20px 0 20px;
   transition: all 0.3s ease;
-
   &:last-child {
     border-radius: 50px;
   }
@@ -113,7 +111,7 @@ const ErrorMessage = styled.p`
   bottom: 60px;
 `
 
-export default function Form({ submitForm }) {
+export default function Form({ submitForm, onBlurHandler }) {
   const [question, setQuestion] = useState({
     message: '',
     name: '',
@@ -169,11 +167,21 @@ export default function Form({ submitForm }) {
     }
   }
 
+  function onBlurEvent() {
+    if (question.message === '') {
+      onBlurHandler()
+    } else {
+      return null
+    }
+  }
+
   return (
     <React.Fragment>
       <FormHeader />
       <StyledForm onSubmit={onSubmitHandler}>
         <StyledTextarea
+          autoFocus
+          onBlur={onBlurEvent}
           onKeyUp={handleOnKeyUp}
           required
           minRows={2}

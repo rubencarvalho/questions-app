@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
 import styled from 'styled-components'
 import Icon from '../utilities/Icons'
@@ -12,10 +12,7 @@ const StyledForm = styled.div`
   max-width: 650px;
   display: grid;
   grid-template-columns: 42px 1fr;
-  padding: 20px;
   grid-auto-rows: auto;
-  max-width: 650px;
-  min-height: 80px;
   color: #555;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.11), 0 2px 4px rgba(0, 0, 0, 0.15);
@@ -27,6 +24,7 @@ const StyledTextarea = styled(TextareaAutosize)`
   line-height: 24px;
   border: transparent;
   align-self: center;
+  padding: 20px 30px 20px 30px;
   color: rgb(85, 85, 85);
   &:focus {
     outline: none;
@@ -43,7 +41,7 @@ const Avatar = styled.div`
   align-items: center;
 `
 
-export default function CForm() {
+export default function CForm({ onFocusHandler }) {
   return (
     <React.Fragment>
       <FormHeader />
@@ -58,6 +56,7 @@ export default function CForm() {
           />
         </Avatar>
         <StyledTextarea
+          onFocus={onFocusHandler}
           required
           style={{ resize: 'none' }}
           placeholder="Type your question"

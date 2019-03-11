@@ -17,7 +17,7 @@ export default function App() {
   const [sortCriteria, setSortCriteria] = useState('recent')
 
   const [openModal, setOpenModal] = useState(false)
-
+  const [expandedForm, setExpandendForm] = useState(false)
   function addQuestion(input) {
     if (input.name === '') {
       input.name = 'Anonymous'
@@ -102,11 +102,27 @@ export default function App() {
     const question = data.find(question => question.id === id)
     if (question.isNew) question.isNew = false
   }
+
+  function onFocusHandler() {
+    setExpandendForm(true)
+  }
+
+  function onBlurHandler() {
+    setExpandendForm(false)
+  }
+
+  function AddQuestionForm() {
+    if (!expandedForm) {
+      return <CForm onFocusHandler={onFocusHandler} />
+    } else {
+      return <Form onBlurHandler={onBlurHandler} submitForm={addQuestion} />
+    }
+  }
+
   return (
     <React.Fragment>
       <AppHeader />
-      <Form submitForm={addQuestion} />
-      <CForm submitForm={addQuestion} />
+      <Form onBlurHandler={onBlurHandler} submitForm={addQuestion} />{' '}
       <CardsHeader
         onOpenModalClick={onOpenModalClick}
         sortCriteria={sortCriteria}
