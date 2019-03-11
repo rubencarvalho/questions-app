@@ -27,6 +27,9 @@ const ModalSort = styled.section`
 `
 
 const ModalTitle = styled.div`
+  max-width: 650px;
+  margin: auto;
+  width: 100%;
   z-index: 10;
   font-size: 14px;
   line-height: 1.2;
@@ -36,6 +39,8 @@ const ModalTitle = styled.div`
 `
 
 const ModalCriteria = styled.div`
+  margin: auto;
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -49,6 +54,15 @@ const ModalCriteria = styled.div`
       cursor: pointer;
     }
   }
+`
+const Criteria = styled.div`
+  margin: auto;
+  padding: 0 16px 0 16px;
+  width: 100%;
+  max-width: 650px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `
 
 const Backdrop = styled.div`
@@ -82,42 +96,48 @@ export default function Sort({ activeCriteria, onSortClick, closeModal }) {
           style={activeCriteria === 'popular' ? { fontWeight: 700 } : null}
           onClick={() => onSortClick('popular')}
         >
-          <div>Popular questions</div>
-          <Icon
-            name="check"
-            fill="rgba(0, 0, 0, 0.4)"
-            height="18px"
-            width="18px"
-            style={activeCriteria === 'popular' ? null : { display: 'none' }}
-          />
+          <Criteria>
+            Popular questions
+            <Icon
+              name="check"
+              fill="rgba(0, 0, 0, 0.4)"
+              height="18px"
+              width="18px"
+              style={activeCriteria === 'popular' ? null : { display: 'none' }}
+            />
+          </Criteria>
         </ModalCriteria>
         <ModalCriteria
           style={activeCriteria === 'recent' ? { fontWeight: 700 } : null}
           onClick={() => onSortClick('recent')}
         >
-          <div>Recent questions</div>
-          <Icon
-            name="check"
-            fill="rgba(0, 0, 0, 0.4)"
-            height="18px"
-            width="18px"
-            style={activeCriteria === 'recent' ? null : { display: 'none' }}
-          />
+          <Criteria>
+            Recent questions
+            <Icon
+              name="check"
+              fill="rgba(0, 0, 0, 0.4)"
+              height="18px"
+              width="18px"
+              style={activeCriteria === 'recent' ? null : { display: 'none' }}
+            />
+          </Criteria>
         </ModalCriteria>
         <ModalCriteria
           style={activeCriteria === 'myquestions' ? { fontWeight: 700 } : null}
           onClick={() => onSortClick('myquestions')}
         >
-          <div>My questions</div>
-          <Icon
-            name="check"
-            fill="rgba(0, 0, 0, 0.4)"
-            height="18px"
-            width="18px"
-            style={
-              activeCriteria === 'myquestions' ? null : { display: 'none' }
-            }
-          />
+          <Criteria>
+            My questions
+            <Icon
+              name="check"
+              fill="rgba(0, 0, 0, 0.4)"
+              height="18px"
+              width="18px"
+              style={
+                activeCriteria === 'myquestions' ? null : { display: 'none' }
+              }
+            />
+          </Criteria>
         </ModalCriteria>
       </ModalSort>
     </Backdrop>

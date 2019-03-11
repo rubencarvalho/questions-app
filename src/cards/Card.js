@@ -13,6 +13,12 @@ const StyledCard = styled.section`
   grid-gap: 8px;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.11), 0 2px 4px rgba(0, 0, 0, 0.15);
+  &:first-of-type {
+    border-radius: 4px 4px 0 0;
+  }
+  &:last-of-type {
+    border-radius: 0 0 4px 4px;
+  }
   @keyframes card-background {
     0% {
       background-color: #fef8ca;

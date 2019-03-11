@@ -5,11 +5,11 @@ import uid from 'uid'
 import Card from '../cards/Card'
 import CardsHeader from '../cards/CardsHeader'
 import Form from '../form/Form'
+import CForm from '../form/CForm'
+import AppHeader from '../header/Header'
 import { getDataFromStorage, saveDataToStorage } from '../services'
 import Sort from '../sort/Sort'
-import { newColor } from '../utilities/RandomColor'
 import GlobalStyle from './GlobalStyle'
-import AppHeader from '../header/Header'
 dayjs.extend(relativeTime)
 
 export default function App() {
@@ -30,7 +30,7 @@ export default function App() {
         votes: 0,
         id: uid(),
         liked: false,
-        avatar: newColor(),
+        avatar: input.color,
         isNew: true,
       },
       ...data,
@@ -106,6 +106,7 @@ export default function App() {
     <React.Fragment>
       <AppHeader />
       <Form submitForm={addQuestion} />
+      <CForm submitForm={addQuestion} />
       <CardsHeader
         onOpenModalClick={onOpenModalClick}
         sortCriteria={sortCriteria}
