@@ -64,24 +64,6 @@ export default function App() {
     saveDataToStorage(questions)
   }, [questions])
 
-  /*function upvote(id) {
-    const question = data.find(question => question.id === id)
-    const i = data.indexOf(question)
-    if (question.liked) {
-      setData([
-        ...data.slice(0, i),
-        { ...question, liked: !question.liked, votes: question.votes - 1 },
-        ...data.slice(i + 1),
-      ])
-    } else {
-      setData([
-        ...data.slice(0, i),
-        { ...question, liked: !question.liked, votes: question.votes + 1 },
-        ...data.slice(i + 1),
-      ])
-    }
-  }*/
-
   function sortData(sortCriteria) {
     if (sortCriteria === 'recent') {
       return questions.sort(function(a, b) {

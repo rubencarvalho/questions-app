@@ -147,7 +147,7 @@ export default function Card({
     changeNew(id)
   }, [])
 
-  const color = liked ? '#2181c2' : 'rgba(0, 0, 0, 0.4)'
+  const color = liked === true ? '#2181c2' : 'rgba(0, 0, 0, 0.4)'
   return (
     <StyledCard
       style={isnew ? { animation: 'card-background 2s ease-in-out' } : null}
