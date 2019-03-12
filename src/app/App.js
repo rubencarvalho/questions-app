@@ -1,7 +1,6 @@
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import React, { useEffect, useState } from 'react'
-import uid from 'uid'
 import Card from '../cards/Card'
 import CardsHeader from '../cards/CardsHeader'
 import Form from '../form/Form'
@@ -11,6 +10,8 @@ import {
   getDataFromStorage,
   postNewQuestion,
   saveDataToStorage,
+  saveUserDataToStorage,
+  getUserDataFromStorage,
   voteQuestion,
 } from '../services'
 import Sort from '../sort/Sort'
@@ -18,8 +19,6 @@ import GlobalStyle from './GlobalStyle'
 dayjs.extend(relativeTime)
 
 export default function App() {
-  const [data, setData] = useState(getDataFromStorage())
-
   const [questions, setQuestions] = useState(getDataFromStorage())
 
   useEffect(() => {
@@ -29,9 +28,7 @@ export default function App() {
   }, [])
 
   function createQuestion(question) {
-    console.log(questions)
     postNewQuestion(question).then(res => {
-      console.log(res.data)
       setQuestions([...questions, res.data])
     })
   }
@@ -40,10 +37,11 @@ export default function App() {
     const question = questions.find(question => question._id === id)
     voteQuestion(question)
       .then(res => {
+        console.log(res)
         const index = questions.indexOf(question)
         setQuestions([
           ...questions.slice(0, index),
-          { ...res },
+          { ...res.data },
           ...questions.slice(index + 1),
         ])
       })
@@ -60,24 +58,11 @@ export default function App() {
     }
     input.avatar = input.color
     createQuestion(input)
-    setData([
-      {
-        name: input.name,
-        message: input.message,
-        date: dayjs(),
-        votes: 0,
-        id: uid(),
-        liked: false,
-        avatar: input.color,
-        isnew: true,
-      },
-      ...data,
-    ])
   }
 
   useEffect(() => {
-    saveDataToStorage(data)
-  }, [data])
+    saveDataToStorage(questions)
+  }, [questions])
 
   /*function upvote(id) {
     const question = data.find(question => question.id === id)
@@ -107,7 +92,7 @@ export default function App() {
         return b.votes - a.votes
       })
     } else {
-      return data
+      return questions
     }
   }
 
@@ -148,7 +133,7 @@ export default function App() {
       <CardsHeader
         onOpenModalClick={onOpenModalClick}
         sortCriteria={sortCriteria}
-        total={data.length}
+        total={questions.length}
       />
 
       {sortData(sortCriteria).map(question => (

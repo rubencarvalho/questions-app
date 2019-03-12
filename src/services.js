@@ -1,4 +1,5 @@
 import axios from 'axios'
+import uid from 'uid'
 //const ip = process.env.REACT_APP_BACKEND_IP
 //const questionsPath = `http://${ip}:4000/questions`
 const questionsPath = `http://localhost:4000/questions`
@@ -9,6 +10,14 @@ export function getDataFromStorage() {
 
 export function saveDataToStorage(questions) {
   saveToStorage('questions', questions)
+}
+
+export function saveUserDataToStorage(userid) {
+  saveToStorage('userid', userid)
+}
+
+export function getUserDataFromStorage() {
+  return getFromStorage('userid') || uid()
 }
 
 export function saveToStorage(name, data) {

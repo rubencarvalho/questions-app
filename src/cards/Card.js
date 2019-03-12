@@ -142,6 +142,7 @@ export default function Card({
       )
     }
   }
+
   useEffect(() => {
     changeNew(id)
   }, [])
