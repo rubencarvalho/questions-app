@@ -23,10 +23,14 @@ export default function App() {
   const [userData, setUserData] = useState(getUserDataFromStorage())
 
   useEffect(() => {
-    console.log(userData)
     getAllQuestions().then(res => {
       setQuestions(res.data)
     })
+  }, [])
+
+  useEffect(() => {
+    console.log(userData)
+    saveUserDataToStorage(questions)
   }, [])
 
   function createQuestion(question) {
