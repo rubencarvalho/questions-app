@@ -20,8 +20,10 @@ dayjs.extend(relativeTime)
 
 export default function App() {
   const [questions, setQuestions] = useState(getDataFromStorage())
+  const [userData, setUserData] = useState(getUserDataFromStorage())
 
   useEffect(() => {
+    console.log(userData)
     getAllQuestions().then(res => {
       setQuestions(res.data)
     })
