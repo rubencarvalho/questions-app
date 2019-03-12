@@ -13,7 +13,7 @@ export default createGlobalStyle`
     background: #f2f2f2;
     margin: 0 0 40px 0;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-
+    touch-action: manipulation;
     @media (max-width: 651px) { 
       margin: 0;
      }

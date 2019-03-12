@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react'
-import styled from 'styled-components'
-import Icon from '../utilities/Icons.js'
+import React from 'react'
 import Headroom from 'react-headroom'
+import styled from 'styled-components'
 import './header.css'
 
 const Title = styled.h1`

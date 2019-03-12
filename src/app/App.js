@@ -1,19 +1,52 @@
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import React, { useEffect, useState } from 'react'
-import uid from 'uid'
 import Card from '../cards/Card'
 import CardsHeader from '../cards/CardsHeader'
 import Form from '../form/Form'
-import { getDataFromStorage, saveDataToStorage } from '../services'
-import Sort from '../sort/Sort'
-import { newColor } from '../utilities/RandomColor'
-import GlobalStyle from './GlobalStyle'
 import AppHeader from '../header/Header'
+import {
+  getAllQuestions,
+  getDataFromStorage,
+  postNewQuestion,
+  saveDataToStorage,
+  saveUserDataToStorage,
+  getUserDataFromStorage,
+  voteQuestion,
+} from '../services'
+import Sort from '../sort/Sort'
+import GlobalStyle from './GlobalStyle'
 dayjs.extend(relativeTime)
 
 export default function App() {
-  const [data, setData] = useState(getDataFromStorage())
+  const [questions, setQuestions] = useState(getDataFromStorage())
+
+  useEffect(() => {
+    getAllQuestions().then(res => {
+      setQuestions(res.data)
+    })
+  }, [])
+
+  function createQuestion(question) {
+    postNewQuestion(question).then(res => {
+      setQuestions([...questions, res.data])
+    })
+  }
+
+  function upvote(id) {
+    const question = questions.find(question => question._id === id)
+    voteQuestion(question)
+      .then(res => {
+        const index = questions.indexOf(question)
+        setQuestions([
+          ...questions.slice(0, index),
+          { ...res.data },
+          ...questions.slice(index + 1),
+        ])
+      })
+      .catch(err => console.log(err))
+  }
+
   const [sortCriteria, setSortCriteria] = useState('recent')
 
   const [openModal, setOpenModal] = useState(false)
@@ -22,54 +55,25 @@ export default function App() {
     if (input.name === '') {
       input.name = 'Anonymous'
     }
-    setData([
-      {
-        name: input.name,
-        message: input.message,
-        date: dayjs(),
-        votes: 0,
-        id: uid(),
-        liked: false,
-        avatar: newColor(),
-        isNew: true,
-      },
-      ...data,
-    ])
+    input.avatar = input.color
+    createQuestion(input)
   }
 
   useEffect(() => {
-    saveDataToStorage(data)
-  }, [data])
-
-  function upvote(id) {
-    const question = data.find(question => question.id === id)
-    const i = data.indexOf(question)
-    if (question.liked) {
-      setData([
-        ...data.slice(0, i),
-        { ...question, liked: !question.liked, votes: question.votes - 1 },
-        ...data.slice(i + 1),
-      ])
-    } else {
-      setData([
-        ...data.slice(0, i),
-        { ...question, liked: !question.liked, votes: question.votes + 1 },
-        ...data.slice(i + 1),
-      ])
-    }
-  }
+    saveDataToStorage(questions)
+  }, [questions])
 
   function sortData(sortCriteria) {
     if (sortCriteria === 'recent') {
-      return data.sort(function(a, b) {
+      return questions.sort(function(a, b) {
         return dayjs(b.date) - dayjs(a.date)
       })
     } else if (sortCriteria === 'popular') {
-      return data.sort(function(a, b) {
+      return questions.sort(function(a, b) {
         return b.votes - a.votes
       })
     } else {
-      return data
+      return questions
     }
   }
 
@@ -99,9 +103,10 @@ export default function App() {
   }
 
   function changeNew(id) {
-    const question = data.find(question => question.id === id)
-    if (question.isNew) question.isNew = false
+    const question = questions.find(question => question._id === id)
+    if (question.isnew) question.isnew = false
   }
+
   return (
     <React.Fragment>
       <AppHeader />
@@ -109,20 +114,21 @@ export default function App() {
       <CardsHeader
         onOpenModalClick={onOpenModalClick}
         sortCriteria={sortCriteria}
-        total={data.length}
+        total={questions.length}
       />
+
       {sortData(sortCriteria).map(question => (
         <Card
+          key={question._id}
           avatar={question.avatar}
-          key={question.id}
-          id={question.id}
+          id={question._id}
           name={question.name}
           message={question.message}
           date={dayjs().to(question.date)}
           votes={question.votes}
-          liked={question.liked}
+          liked={JSON.parse(question.liked)}
           onClick={upvote}
-          isNew={question.isNew}
+          isnew={JSON.parse(question.isnew)}
           changeNew={changeNew}
         />
       ))}
