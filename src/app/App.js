@@ -37,7 +37,6 @@ export default function App() {
     const question = questions.find(question => question._id === id)
     voteQuestion(question)
       .then(res => {
-        console.log(res)
         const index = questions.indexOf(question)
         setQuestions([
           ...questions.slice(0, index),
@@ -127,9 +126,9 @@ export default function App() {
           message={question.message}
           date={dayjs().to(question.date)}
           votes={question.votes}
-          liked={question.liked}
+          liked={JSON.parse(question.liked)}
           onClick={upvote}
-          isnew={question.isnew}
+          isnew={JSON.parse(question.isnew)}
           changeNew={changeNew}
         />
       ))}

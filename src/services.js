@@ -43,7 +43,7 @@ export function postNewQuestion(question) {
 }
 
 export function voteQuestion(question) {
-  if (question.liked === true) {
+  if (question.liked === 'true') {
     return axios.patch(`${questionsPath}/${question._id}`, {
       ...question,
       votes: question.votes - 1,
