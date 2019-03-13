@@ -21,16 +21,20 @@ dayjs.extend(relativeTime)
 export default function App() {
   const [questions, setQuestions] = useState(getDataFromStorage())
   const [userData, setUserData] = useState(getUserDataFromStorage())
-
   useEffect(() => {
     getAllQuestions().then(res => {
       setQuestions(res.data)
     })
+    // getLiked()
   }, [])
 
   useEffect(() => {
+    setUserData(getUserDataFromStorage())
+  }, [userData])
+
+  useEffect(() => {
+    saveUserDataToStorage(userData)
     console.log(userData)
-    saveUserDataToStorage(questions)
   }, [])
 
   function createQuestion(question) {
@@ -38,12 +42,23 @@ export default function App() {
       setQuestions([...questions, res.data])
     })
   }
-
+  function getLiked() {
+    const likedQuestions = questions.map(question => {
+      if (question.voteids.includes(userData)) {
+        question.liked = true
+      } else {
+        question.liked = false
+      }
+    })
+    console.log(likedQuestions)
+  }
   function upvote(id) {
     const question = questions.find(question => question._id === id)
+    question.userid = userData
     voteQuestion(question)
       .then(res => {
         const index = questions.indexOf(question)
+        console.log(res.data)
         setQuestions([
           ...questions.slice(0, index),
           { ...res.data },
