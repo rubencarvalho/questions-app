@@ -16,19 +16,19 @@ import {
 } from '../services'
 import Sort from '../sort/Sort'
 import GlobalStyle from './GlobalStyle'
+import io from 'socket.io-client'
 dayjs.extend(relativeTime)
+
+const socket = io('http://localhost:4000')
 
 export default function App() {
   const [questions, setQuestions] = useState(getDataFromStorage())
   const [userData, setUserData] = useState(getUserDataFromStorage())
-  useEffect(() => {
-    getAllQuestions().then(res => {
-      setQuestions(res.data)
-    })
-    // getLiked()
-  }, [])
 
   useEffect(() => {
+    socket.on('data1', res => {
+      console.log(res)
+    })
     setUserData(getUserDataFromStorage())
   }, [userData])
 
@@ -55,6 +55,7 @@ export default function App() {
       }
     })
   }
+
   function upvote(id) {
     const question = questions.find(question => question._id === id)
     question.userid = userData
