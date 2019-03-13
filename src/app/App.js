@@ -33,6 +33,10 @@ export default function App() {
   }, [userData])
 
   useEffect(() => {
+    saveDataToStorage(questions)
+  }, [questions])
+
+  useEffect(() => {
     saveUserDataToStorage(userData)
     console.log(userData)
   }, [])
@@ -50,15 +54,16 @@ export default function App() {
         question.liked = false
       }
     })
-    console.log(likedQuestions)
   }
   function upvote(id) {
     const question = questions.find(question => question._id === id)
     question.userid = userData
+    if (question.voteids.indexOf(userData) === -1) {
+      question.voteids.push(userData)
+    }
     voteQuestion(question)
       .then(res => {
         const index = questions.indexOf(question)
-        console.log(res.data)
         setQuestions([
           ...questions.slice(0, index),
           { ...res.data },
