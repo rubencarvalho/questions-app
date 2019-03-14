@@ -19,16 +19,16 @@ import GlobalStyle from './GlobalStyle'
 import io from 'socket.io-client'
 dayjs.extend(relativeTime)
 
-const socket = io('http://localhost:4000')
-
 export default function App() {
+  const socket = io('http://localhost:4000')
+  const [sortCriteria, setSortCriteria] = useState('recent')
+  const [openModal, setOpenModal] = useState(false)
   const [questions, setQuestions] = useState(getDataFromStorage())
   const [userData, setUserData] = useState(getUserDataFromStorage())
-
+  socket.on('data1', res => {
+    console.log(res)
+  })
   useEffect(() => {
-    socket.on('data1', res => {
-      console.log(res)
-    })
     setUserData(getUserDataFromStorage())
   }, [userData])
 
@@ -46,43 +46,14 @@ export default function App() {
       setQuestions([...questions, res.data])
     })
   }
-  function getLiked() {
-    const likedQuestions = questions.map(question => {
-      if (question.voteids.includes(userData)) {
-        question.liked = true
-      } else {
-        question.liked = false
-      }
-    })
-  }
 
-  function upvote(id) {
-    const question = questions.find(question => question._id === id)
-    question.userid = userData
-    if (question.voteids.indexOf(userData) === -1) {
-      question.voteids.push(userData)
-    }
-    voteQuestion(question)
-      .then(res => {
-        const index = questions.indexOf(question)
-        setQuestions([
-          ...questions.slice(0, index),
-          { ...res.data },
-          ...questions.slice(index + 1),
-        ])
-      })
+  function upvote(question) {
+    voteQuestion(question, userData)
+      .then()
       .catch(err => console.log(err))
   }
 
-  const [sortCriteria, setSortCriteria] = useState('recent')
-
-  const [openModal, setOpenModal] = useState(false)
-
   function addQuestion(input) {
-    if (input.name === '') {
-      input.name = 'Anonymous'
-    }
-    input.avatar = input.color
     createQuestion(input)
   }
 
@@ -139,6 +110,7 @@ export default function App() {
       <AppHeader />
       <Form submitForm={addQuestion} />
       <CardsHeader
+        questions={questions}
         onOpenModalClick={onOpenModalClick}
         sortCriteria={sortCriteria}
         total={questions.length}

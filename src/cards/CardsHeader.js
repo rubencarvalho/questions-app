@@ -50,7 +50,12 @@ const Select = styled.div`
   }
 `
 
-export default function CardsHeader({ sortCriteria, total, onOpenModalClick }) {
+export default function CardsHeader({
+  sortCriteria,
+  total,
+  onOpenModalClick,
+  questions,
+}) {
   let sort = 'Recent'
 
   if (sortCriteria === 'recent') {
@@ -61,10 +66,9 @@ export default function CardsHeader({ sortCriteria, total, onOpenModalClick }) {
     sort = 'My questions'
   }
 
-  return (
-    <React.Fragment>
-      <Header>
-        <Total>{total} questions</Total>
+  function ConditionalHover() {
+    if (questions.length > 0) {
+      return (
         <Hover
           onHover={
             <SelectorContainer onClick={onOpenModalClick}>
@@ -92,6 +96,17 @@ export default function CardsHeader({ sortCriteria, total, onOpenModalClick }) {
             />
           </SelectorContainer>
         </Hover>
+      )
+    } else {
+      return null
+    }
+  }
+
+  return (
+    <React.Fragment>
+      <Header>
+        <Total>{total} questions</Total>
+        <ConditionalHover />
       </Header>
     </React.Fragment>
   )

@@ -42,16 +42,7 @@ export function postNewQuestion(question) {
   return axios.post(questionsPath, question)
 }
 
-export function voteQuestion(question) {
-  if (question.liked === 'true') {
-    return axios.patch(`${questionsPath}/${question._id}`, {
-      ...question,
-      votes: question.votes - 1,
-    })
-  } else {
-    return axios.patch(`${questionsPath}/${question._id}`, {
-      ...question,
-      votes: question.votes + 1,
-    })
-  }
+export function voteQuestion(question, userData) {
+  question.authorid = userData
+  return axios.post(`${questionsPath}/${question._id}`, question)
 }
