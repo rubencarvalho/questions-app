@@ -14,7 +14,7 @@ const Header = styled.div`
   justify-content: space-between;
 `
 
-const Total = styled.div`
+const TotalText = styled.div`
   font-size: 14px;
   font-weight: 400;
   color: rgba(0, 0, 0, 0.4);
@@ -65,7 +65,13 @@ export default function CardsHeader({
   } else if (sortCriteria === 'myquestions') {
     sort = 'My questions'
   }
-
+  function Total() {
+    if (total === 1) {
+      return <TotalText>1 question</TotalText>
+    } else {
+      return <TotalText>{total} question</TotalText>
+    }
+  }
   function ConditionalHover() {
     if (questions.length > 0) {
       return (

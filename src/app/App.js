@@ -1,53 +1,52 @@
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import React, { useEffect, useState } from 'react'
+import io from 'socket.io-client'
 import Card from '../cards/Card'
 import CardsHeader from '../cards/CardsHeader'
 import Form from '../form/Form'
 import AppHeader from '../header/Header'
 import {
-  getAllQuestions,
-  getDataFromStorage,
-  postNewQuestion,
-  saveDataToStorage,
-  saveUserDataToStorage,
   getUserDataFromStorage,
+  postNewQuestion,
+  saveUserDataToStorage,
   voteQuestion,
+  seenQuestion,
 } from '../services'
 import Sort from '../sort/Sort'
 import GlobalStyle from './GlobalStyle'
-import io from 'socket.io-client'
 dayjs.extend(relativeTime)
 
 export default function App() {
   const socket = io('http://localhost:4000')
   const [sortCriteria, setSortCriteria] = useState('recent')
   const [openModal, setOpenModal] = useState(false)
-  const [questions, setQuestions] = useState(getDataFromStorage())
+  const [questions, setQuestions] = useState([])
   const [userData, setUserData] = useState(getUserDataFromStorage())
-  socket.on('data1', res => {
-    console.log(res)
-  })
-  useEffect(() => {
-    setUserData(getUserDataFromStorage())
-  }, [userData])
+
+  function handleEmit(res) {
+    setQuestions(res)
+  }
 
   useEffect(() => {
-    saveDataToStorage(questions)
-  }, [questions])
+    socket.on('questions', res => handleEmit(res))
+    return () => {
+      socket.removeListener('questions')
+    }
+  }, [])
 
   useEffect(() => {
     saveUserDataToStorage(userData)
-    console.log(userData)
   }, [])
 
   function createQuestion(question) {
-    postNewQuestion(question).then(res => {
+    postNewQuestion(question, userData).then(res => {
       setQuestions([...questions, res.data])
     })
   }
 
-  function upvote(question) {
+  function upvote(id) {
+    const question = questions.find(question => question._id === id)
     voteQuestion(question, userData)
       .then()
       .catch(err => console.log(err))
@@ -57,10 +56,6 @@ export default function App() {
     createQuestion(input)
   }
 
-  useEffect(() => {
-    saveDataToStorage(questions)
-  }, [questions])
-
   function sortData(sortCriteria) {
     if (sortCriteria === 'recent') {
       return questions.sort(function(a, b) {
@@ -68,10 +63,13 @@ export default function App() {
       })
     } else if (sortCriteria === 'popular') {
       return questions.sort(function(a, b) {
-        return b.votes - a.votes
+        return b.votes.length - a.votes.length
       })
-    } else {
-      return questions
+    } else if (sortCriteria === 'myquestions') {
+      const myquestions = questions.filter(
+        question => question.authorid === userData
+      )
+      return myquestions
     }
   }
 
@@ -102,7 +100,9 @@ export default function App() {
 
   function changeNew(id) {
     const question = questions.find(question => question._id === id)
-    if (question.isnew) question.isnew = false
+    seenQuestion(question, userData)
+      .then()
+      .catch(err => console.log(err))
   }
 
   return (
@@ -113,21 +113,21 @@ export default function App() {
         questions={questions}
         onOpenModalClick={onOpenModalClick}
         sortCriteria={sortCriteria}
-        total={questions.length}
+        total={sortData(sortCriteria).length}
       />
 
       {sortData(sortCriteria).map(question => (
         <Card
           key={question._id}
-          avatar={question.avatar}
+          avatar={question.color}
           id={question._id}
           name={question.name}
           message={question.message}
           date={dayjs().to(question.date)}
-          votes={question.votes}
-          liked={JSON.parse(question.liked)}
+          votes={question.votes.length}
+          liked={question.votes.some(item => item.user === userData)}
           onClick={upvote}
-          isnew={JSON.parse(question.isnew)}
+          isnew={!question.seen.some(item => item.user === userData)}
           changeNew={changeNew}
         />
       ))}

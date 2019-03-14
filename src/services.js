@@ -38,11 +38,17 @@ export function getAllQuestions() {
   return axios.get(questionsPath)
 }
 
-export function postNewQuestion(question) {
+export function postNewQuestion(question, userData) {
+  question.authorid = userData
   return axios.post(questionsPath, question)
 }
 
 export function voteQuestion(question, userData) {
-  question.authorid = userData
+  question.userid = userData
   return axios.post(`${questionsPath}/${question._id}`, question)
+}
+
+export function seenQuestion(question, userData) {
+  question.userid = userData
+  return axios.post(`${questionsPath}/seen/${question._id}`, question)
 }
