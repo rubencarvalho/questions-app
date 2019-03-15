@@ -7,7 +7,6 @@ const ModalSort = styled.section`
   grid-auto-rows: auto;
   background: white;
   box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.15);
-  transition: all 0.2s ease-in-out;
   position: fixed;
   width: 100%;
   top: auto !important;
@@ -15,7 +14,7 @@ const ModalSort = styled.section`
   bottom: 0;
   max-height: 80%;
   overflow-y: auto;
-  @keyframes slide {
+  /* @keyframes slide {
     0% {
       transform: translateY(100%);
     }
@@ -23,7 +22,7 @@ const ModalSort = styled.section`
       transform: translateY(0);
     }
   }
-  animation: slide 0.2s linear;
+  animation: slide 0.2s linear;*/
 `
 
 const ModalTitle = styled.div`
@@ -73,8 +72,7 @@ const Backdrop = styled.div`
   right: 0;
   bottom: 0;
   left: 0;
-  transition: opacity 0.2s ease-in-out;
-  @keyframes modalBackdrop {
+  /* @keyframes modalBackdrop {
     0% {
       background-color: transparent;
     }
@@ -82,7 +80,7 @@ const Backdrop = styled.div`
       background-color: rgba(0, 0, 0, 0.4);
     }
   }
-  animation: modalBackdrop 0.2s ease-in-out;
+  animation: modalBackdrop 0.2s ease-in-out;*/
 `
 
 export default function Sort({ activeCriteria, onSortClick, closeModal }) {

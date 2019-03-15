@@ -132,7 +132,6 @@ export default function Card({
     }
     return initials
   }
-
   function AvatarContent() {
     if (name !== 'Anonymous') {
       return getInitials()

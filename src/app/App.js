@@ -12,9 +12,12 @@ import {
   saveUserDataToStorage,
   voteQuestion,
   seenQuestion,
+  saveDataToStorage,
+  getAllQuestions,
 } from '../services'
 import Sort from '../sort/Sort'
 import GlobalStyle from './GlobalStyle'
+import './app.css'
 dayjs.extend(relativeTime)
 
 export default function App() {
@@ -24,31 +27,39 @@ export default function App() {
   const [questions, setQuestions] = useState([])
   const [userData, setUserData] = useState(getUserDataFromStorage())
 
-  function handleEmit(res) {
-    setQuestions(res)
+  socket.on('newQuestion', res => console.log(res))
+  //socket.on('allQuestions', res => console.log(res))
+
+  function handleNewQuestion(res) {
+    console.log(res)
+    setQuestions([res, ...questions])
   }
+  //useEffect(() => {
+  // return () => {
+  //   socket.removeListener('questions')
+  // }
+  //}, [])
 
   useEffect(() => {
-    socket.on('questions', res => handleEmit(res))
-    return () => {
-      socket.removeListener('questions')
-    }
-  }, [])
-
-  useEffect(() => {
+    getAllQuestions().then(res => setQuestions(res.data))
     saveUserDataToStorage(userData)
   }, [])
 
   function createQuestion(question) {
-    postNewQuestion(question, userData).then(res => {
-      setQuestions([...questions, res.data])
-    })
+    postNewQuestion(question, userData)
   }
 
   function upvote(id) {
     const question = questions.find(question => question._id === id)
+    const index = questions.indexOf(question)
     voteQuestion(question, userData)
-      .then()
+      .then(res =>
+        setQuestions([
+          ...questions.slice(0, index),
+          res.data,
+          ...questions.slice(index + 1),
+        ])
+      )
       .catch(err => console.log(err))
   }
 
@@ -66,10 +77,7 @@ export default function App() {
         return b.votes.length - a.votes.length
       })
     } else if (sortCriteria === 'myquestions') {
-      const myquestions = questions.filter(
-        question => question.authorid === userData
-      )
-      return myquestions
+      return questions.filter(question => question.authorid === userData)
     }
   }
 
@@ -115,7 +123,6 @@ export default function App() {
         sortCriteria={sortCriteria}
         total={sortData(sortCriteria).length}
       />
-
       {sortData(sortCriteria).map(question => (
         <Card
           key={question._id}
