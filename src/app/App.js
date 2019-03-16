@@ -7,17 +7,16 @@ import CardsHeader from '../cards/CardsHeader'
 import Form from '../form/Form'
 import AppHeader from '../header/Header'
 import {
+  getAllQuestions,
   getUserDataFromStorage,
   postNewQuestion,
   saveUserDataToStorage,
-  voteQuestion,
   seenQuestion,
-  saveDataToStorage,
-  getAllQuestions,
+  voteQuestion,
 } from '../services'
 import Sort from '../sort/Sort'
-import GlobalStyle from './GlobalStyle'
 import './app.css'
+import GlobalStyle from './GlobalStyle'
 dayjs.extend(relativeTime)
 
 export default function App() {
@@ -25,29 +24,15 @@ export default function App() {
   const [sortCriteria, setSortCriteria] = useState('recent')
   const [openModal, setOpenModal] = useState(false)
   const [questions, setQuestions] = useState([])
-  const [userData, setUserData] = useState(getUserDataFromStorage())
-
-  //socket.on('allQuestions', res => console.log(res))
-
-  function handleNewQuestion(question) {
-    console.log(question)
-  }
-  //useEffect(() => {
-  // return () => {
-  //   socket.removeListener('newQuestion')
-  // }
-  //}, [])
+  const [userData] = useState(getUserDataFromStorage())
 
   useEffect(() => {
-    console.log('im here')
     getAllQuestions().then(res => setQuestions(res.data))
     saveUserDataToStorage(userData)
   }, [])
 
   useEffect(() => {
-    console.log('now im here')
     socket.on('newQuestion', res => {
-      console.log(questions)
       setQuestions([res, ...questions])
     })
     return () => socket.removeListener('newQuestion')
@@ -115,10 +100,23 @@ export default function App() {
   }
 
   function changeNew(id) {
-    const question = questions.find(question => question._id === id)
+    const question = questions.find(q => q._id === id)
+    const index = questions.indexOf(question)
+
     seenQuestion(question, userData)
-      .then()
+      .then(res =>
+        setTimeout(
+          () =>
+            setQuestions([
+              ...questions.slice(0, index),
+              res.data,
+              ...questions.slice(index + 1),
+            ]),
+          2200
+        )
+      )
       .catch(err => console.log(err))
+    console.log(question)
   }
 
   return (
