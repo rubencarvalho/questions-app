@@ -27,23 +27,31 @@ export default function App() {
   const [questions, setQuestions] = useState([])
   const [userData, setUserData] = useState(getUserDataFromStorage())
 
-  socket.on('newQuestion', res => console.log(res))
   //socket.on('allQuestions', res => console.log(res))
 
-  function handleNewQuestion(res) {
-    console.log(res)
-    setQuestions([res, ...questions])
+  function handleNewQuestion(question) {
+    console.log(question)
   }
   //useEffect(() => {
   // return () => {
-  //   socket.removeListener('questions')
+  //   socket.removeListener('newQuestion')
   // }
   //}, [])
 
   useEffect(() => {
+    console.log('im here')
     getAllQuestions().then(res => setQuestions(res.data))
     saveUserDataToStorage(userData)
   }, [])
+
+  useEffect(() => {
+    console.log('now im here')
+    socket.on('newQuestion', res => {
+      console.log(questions)
+      setQuestions([res, ...questions])
+    })
+    return () => socket.removeListener('newQuestion')
+  }, [questions])
 
   function createQuestion(question) {
     postNewQuestion(question, userData)
