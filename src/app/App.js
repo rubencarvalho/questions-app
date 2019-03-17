@@ -102,21 +102,24 @@ export default function App() {
   function changeNew(id) {
     const question = questions.find(q => q._id === id)
     const index = questions.indexOf(question)
-
-    seenQuestion(question, userData)
-      .then(res =>
-        setTimeout(
-          () =>
-            setQuestions([
-              ...questions.slice(0, index),
-              res.data,
-              ...questions.slice(index + 1),
-            ]),
-          2200
-        )
-      )
-      .catch(err => console.log(err))
-    console.log(question)
+    if (
+      question.seen.filter(seen => seen.user.toString() === userData).length ===
+      0
+    ) {
+      seenQuestion(question, userData)
+        .then(res => {
+          setTimeout(
+            () =>
+              setQuestions([
+                ...questions.slice(0, index),
+                res.data,
+                ...questions.slice(index + 1),
+              ]),
+            2200
+          )
+        })
+        .catch(err => console.log(err))
+    }
   }
 
   return (
