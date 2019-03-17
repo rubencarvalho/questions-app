@@ -69,7 +69,7 @@ export default function CardsHeader({
     if (total === 1) {
       return <TotalText>1 question</TotalText>
     } else {
-      return <TotalText>{total} question</TotalText>
+      return <TotalText>{total} questions</TotalText>
     }
   }
   function ConditionalHover() {

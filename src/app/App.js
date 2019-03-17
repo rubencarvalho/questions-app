@@ -35,7 +35,20 @@ export default function App() {
     socket.on('newQuestion', res => {
       setQuestions([res, ...questions])
     })
-    return () => socket.removeListener('newQuestion')
+
+    socket.on('newLike', res => {
+      const question = questions.find(q => q._id === res._id)
+      const index = questions.indexOf(question)
+      setQuestions([
+        ...questions.slice(0, index),
+        res,
+        ...questions.slice(index + 1),
+      ])
+    })
+    return () => {
+      socket.removeListener('newQuestion')
+      socket.removeListener('newLike')
+    }
   }, [questions])
 
   function createQuestion(question) {
@@ -44,15 +57,8 @@ export default function App() {
 
   function upvote(id) {
     const question = questions.find(question => question._id === id)
-    const index = questions.indexOf(question)
     voteQuestion(question, userData)
-      .then(res =>
-        setQuestions([
-          ...questions.slice(0, index),
-          res.data,
-          ...questions.slice(index + 1),
-        ])
-      )
+      .then()
       .catch(err => console.log(err))
   }
 
