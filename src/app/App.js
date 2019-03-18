@@ -20,7 +20,7 @@ import GlobalStyle from './GlobalStyle'
 dayjs.extend(relativeTime)
 
 export default function App() {
-  const socket = io('http://localhost:4000')
+  //const socket = io('http://localhost:4000')
   const [sortCriteria, setSortCriteria] = useState('recent')
   const [openModal, setOpenModal] = useState(false)
   const [questions, setQuestions] = useState([])
@@ -28,14 +28,14 @@ export default function App() {
 
   useEffect(() => {
     getAllQuestions().then(res => setQuestions(res.data))
+    if (!userData) {
+      console.log('no user data')
+      getUserDataFromStorage()
+    }
     saveUserDataToStorage(userData)
   }, [])
 
-  useEffect(() => {
-    socket.on('newQuestion', res => {
-      setQuestions([res, ...questions])
-    })
-
+  /*useEffect(() => {
     socket.on('newLike', res => {
       const question = questions.find(q => q._id === res._id)
       const index = questions.indexOf(question)
@@ -47,15 +47,35 @@ export default function App() {
     })
     return () => {
       socket.removeListener('newQuestion')
-      socket.removeListener('newLike')
     }
   }, [questions])
 
+  useEffect(() => {
+    socket.on('newQuestion', res => {
+      setQuestions([res, ...questions])
+    })
+    socket.on('newLike', res => {
+      const question = questions.find(q => q._id === res._id)
+      const index = questions.indexOf(question)
+      console.log(question)
+      setQuestions([
+        ...questions.slice(0, index),
+        res,
+        ...questions.slice(index + 1),
+      ])
+    })
+    return () => {
+      console.log('socket removed')
+      socket.removeListener('newLike')
+    }
+  }, [questions])
+*/
   function createQuestion(question) {
     postNewQuestion(question, userData)
   }
 
   function upvote(id) {
+    console.log(id)
     const question = questions.find(question => question._id === id)
     voteQuestion(question, userData)
       .then()
