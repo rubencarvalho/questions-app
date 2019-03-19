@@ -143,7 +143,9 @@ export default function Card({
   }
 
   useEffect(() => {
-    changeNew(id)
+    if (isnew) {
+      changeNew(id)
+    }
   }, [])
 
   function getColor() {

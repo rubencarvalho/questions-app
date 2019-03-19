@@ -40,6 +40,7 @@ export function getAllQuestions() {
 
 export function postNewQuestion(question, userData) {
   question.authorid = userData
+  console.log(question)
   return axios.post(questionsPath, question)
 }
 

@@ -17,65 +17,48 @@ import {
 import Sort from '../sort/Sort'
 import './app.css'
 import GlobalStyle from './GlobalStyle'
+import axios from 'axios'
 dayjs.extend(relativeTime)
+const questionsPath = `http://localhost:4000/questions`
+const socket = io('http://localhost:4000')
 
 export default function App() {
-  //const socket = io('http://localhost:4000')
   const [sortCriteria, setSortCriteria] = useState('recent')
   const [openModal, setOpenModal] = useState(false)
   const [questions, setQuestions] = useState([])
   const [userData] = useState(getUserDataFromStorage())
 
+  // getAllQuestions().then(res => setQuestions(res.data))
+
+  async function fetchQuestions() {
+    const result = await axios.get(questionsPath)
+    console.log(result.data)
+    setQuestions(res.data)
+  }
+
   useEffect(() => {
-    getAllQuestions().then(res => setQuestions(res.data))
+    fetchQuestions()
     if (!userData) {
-      console.log('no user data')
       getUserDataFromStorage()
     }
     saveUserDataToStorage(userData)
-  }, [])
-
-  /*useEffect(() => {
-    socket.on('newLike', res => {
-      const question = questions.find(q => q._id === res._id)
-      const index = questions.indexOf(question)
-      setQuestions([
-        ...questions.slice(0, index),
-        res,
-        ...questions.slice(index + 1),
-      ])
-    })
-    return () => {
-      socket.removeListener('newQuestion')
-    }
-  }, [questions])
-
-  useEffect(() => {
+    fetchQuestions()
     socket.on('newQuestion', res => {
       setQuestions([res, ...questions])
     })
     socket.on('newLike', res => {
       const question = questions.find(q => q._id === res._id)
       const index = questions.indexOf(question)
-      console.log(question)
       setQuestions([
         ...questions.slice(0, index),
         res,
         ...questions.slice(index + 1),
       ])
     })
-    return () => {
-      console.log('socket removed')
-      socket.removeListener('newLike')
-    }
-  }, [questions])
-*/
-  function createQuestion(question) {
-    postNewQuestion(question, userData)
-  }
+    return () => {}
+  }, [])
 
   function upvote(id) {
-    console.log(id)
     const question = questions.find(question => question._id === id)
     voteQuestion(question, userData)
       .then()
@@ -83,7 +66,7 @@ export default function App() {
   }
 
   function addQuestion(input) {
-    createQuestion(input)
+    postNewQuestion(input, userData)
   }
 
   function sortData(sortCriteria) {
