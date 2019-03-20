@@ -60,7 +60,7 @@ export default function App() {
       console.log(error)
     }
     return () => {
-      socket.close()
+      // socket.close()
     }
   }, [])
 
