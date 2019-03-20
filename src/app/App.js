@@ -7,7 +7,6 @@ import CardsHeader from '../cards/CardsHeader'
 import Form from '../form/Form'
 import AppHeader from '../header/Header'
 import {
-  getAllQuestions,
   getUserDataFromStorage,
   postNewQuestion,
   saveUserDataToStorage,
@@ -17,9 +16,8 @@ import {
 import Sort from '../sort/Sort'
 import './app.css'
 import GlobalStyle from './GlobalStyle'
-import axios from 'axios'
+
 dayjs.extend(relativeTime)
-const questionsPath = `http://localhost:4000/questions`
 const socket = io('http://localhost:4000')
 
 export default function App() {
@@ -28,38 +26,56 @@ export default function App() {
   const [questions, setQuestions] = useState([])
   const [userData] = useState(getUserDataFromStorage())
 
-  // getAllQuestions().then(res => setQuestions(res.data))
+  function handleNewLike(res) {
+    setQuestions(questions => [
+      ...questions.slice(
+        0,
+        questions.indexOf(questions.find(q => q._id === res._id))
+      ),
+      {
+        ...questions.find(q => q._id === res._id),
+        ...res,
+      },
+      ...questions.slice(
+        questions.indexOf(questions.find(q => q._id === res._id)) + 1
+      ),
+    ])
+  }
 
-  async function fetchQuestions() {
-    const result = await axios.get(questionsPath)
-    console.log(result.data)
-    setQuestions(res.data)
+  function handleNewQuestion(res) {
+    setQuestions(questions => [res, ...questions])
   }
 
   useEffect(() => {
-    fetchQuestions()
+    try {
+      socket.open()
+      socket.emit('load questions')
+      socket.on('questions are here', questions => {
+        setQuestions(questions)
+      })
+      socket.on('newQuestion', res => handleNewQuestion(res))
+      socket.on('newLike', res => handleNewLike(res))
+    } catch (error) {
+      console.log(error)
+    }
+    return () => {
+      socket.close()
+    }
+  }, [])
+
+  useEffect(() => {
     if (!userData) {
       getUserDataFromStorage()
     }
     saveUserDataToStorage(userData)
-    fetchQuestions()
-    socket.on('newQuestion', res => {
-      setQuestions([res, ...questions])
-    })
-    socket.on('newLike', res => {
-      const question = questions.find(q => q._id === res._id)
-      const index = questions.indexOf(question)
-      setQuestions([
-        ...questions.slice(0, index),
-        res,
-        ...questions.slice(index + 1),
-      ])
-    })
+
     return () => {}
   }, [])
 
   function upvote(id) {
-    const question = questions.find(question => question._id === id)
+    console.log(questions)
+    console.log(id)
+    const question = questions.find(q => q._id === id)
     voteQuestion(question, userData)
       .then()
       .catch(err => console.log(err))
@@ -70,16 +86,20 @@ export default function App() {
   }
 
   function sortData(sortCriteria) {
+    const arrayToSort = [].concat(questions)
+    if (questions.length === 0) {
+      return []
+    }
     if (sortCriteria === 'recent') {
-      return questions.sort(function(a, b) {
+      return arrayToSort.sort((a, b) => {
         return dayjs(b.date) - dayjs(a.date)
       })
     } else if (sortCriteria === 'popular') {
-      return questions.sort(function(a, b) {
+      return arrayToSort.sort((a, b) => {
         return b.votes.length - a.votes.length
       })
     } else if (sortCriteria === 'myquestions') {
-      return questions.filter(question => question.authorid === userData)
+      return arrayToSort.filter(question => question.authorid === userData)
     }
   }
 
@@ -117,31 +137,20 @@ export default function App() {
     ) {
       seenQuestion(question, userData)
         .then(res => {
-          setTimeout(
-            () =>
-              setQuestions([
-                ...questions.slice(0, index),
-                res.data,
-                ...questions.slice(index + 1),
-              ]),
-            2200
-          )
+          setTimeout(() => {
+            setQuestions([
+              ...questions.slice(0, index),
+              res.data,
+              ...questions.slice(index + 1),
+            ])
+          }, 2500)
         })
         .catch(err => console.log(err))
     }
   }
-
-  return (
-    <React.Fragment>
-      <AppHeader />
-      <Form submitForm={addQuestion} />
-      <CardsHeader
-        questions={questions}
-        onOpenModalClick={onOpenModalClick}
-        sortCriteria={sortCriteria}
-        total={sortData(sortCriteria).length}
-      />
-      {sortData(sortCriteria).map(question => (
+  function SortedCards() {
+    if (questions.length > 0) {
+      return sortData(sortCriteria).map((question, index) => (
         <Card
           key={question._id}
           avatar={question.color}
@@ -155,7 +164,23 @@ export default function App() {
           isnew={!question.seen.some(item => item.user === userData)}
           changeNew={changeNew}
         />
-      ))}
+      ))
+    } else {
+      return null
+    }
+  }
+  return (
+    <React.Fragment>
+      <AppHeader />
+      <Form submitForm={addQuestion} />
+      <CardsHeader
+        questions={questions}
+        onOpenModalClick={onOpenModalClick}
+        sortCriteria={sortCriteria}
+        total={sortData(sortCriteria).length}
+      />
+
+      <SortedCards />
       <Modal />
       <GlobalStyle />
     </React.Fragment>

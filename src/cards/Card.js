@@ -144,6 +144,7 @@ export default function Card({
 
   useEffect(() => {
     if (isnew) {
+      console.log(id)
       changeNew(id)
     }
   }, [])
