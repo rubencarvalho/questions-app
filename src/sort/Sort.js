@@ -56,7 +56,7 @@ const ModalCriteria = styled.div`
 `
 const Criteria = styled.div`
   margin: auto;
-  padding: 0 16px 0 16px;
+  padding: 0;
   width: 100%;
   max-width: 650px;
   display: flex;
