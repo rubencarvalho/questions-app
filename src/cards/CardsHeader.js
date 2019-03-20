@@ -14,7 +14,7 @@ const Header = styled.div`
   justify-content: space-between;
 `
 
-const Total = styled.div`
+const TotalText = styled.div`
   font-size: 14px;
   font-weight: 400;
   color: rgba(0, 0, 0, 0.4);
@@ -50,7 +50,12 @@ const Select = styled.div`
   }
 `
 
-export default function CardsHeader({ sortCriteria, total, onOpenModalClick }) {
+export default function CardsHeader({
+  sortCriteria,
+  total,
+  onOpenModalClick,
+  questions,
+}) {
   let sort = 'Recent'
 
   if (sortCriteria === 'recent') {
@@ -60,11 +65,16 @@ export default function CardsHeader({ sortCriteria, total, onOpenModalClick }) {
   } else if (sortCriteria === 'myquestions') {
     sort = 'My questions'
   }
-
-  return (
-    <React.Fragment>
-      <Header>
-        <Total>{total} questions</Total>
+  function Total() {
+    if (total === 1) {
+      return <TotalText>1 question</TotalText>
+    } else {
+      return <TotalText>{total} questions</TotalText>
+    }
+  }
+  function ConditionalHover() {
+    if (questions.length > 0) {
+      return (
         <Hover
           onHover={
             <SelectorContainer onClick={onOpenModalClick}>
@@ -92,6 +102,17 @@ export default function CardsHeader({ sortCriteria, total, onOpenModalClick }) {
             />
           </SelectorContainer>
         </Hover>
+      )
+    } else {
+      return null
+    }
+  }
+
+  return (
+    <React.Fragment>
+      <Header>
+        <Total>{total} questions</Total>
+        <ConditionalHover />
       </Header>
     </React.Fragment>
   )

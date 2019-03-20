@@ -132,7 +132,6 @@ export default function Card({
     }
     return initials
   }
-
   function AvatarContent() {
     if (name !== 'Anonymous') {
       return getInitials()
@@ -144,7 +143,10 @@ export default function Card({
   }
 
   useEffect(() => {
-    changeNew(id)
+    if (isnew) {
+      console.log(id)
+      changeNew(id)
+    }
   }, [])
 
   function getColor() {
