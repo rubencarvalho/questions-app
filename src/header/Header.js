@@ -16,10 +16,10 @@ const Title = styled.h1`
   align-items: center;
 `
 
-export default function AppHeader() {
+export default function AppHeader({ currentRoute }) {
   return (
     <Headroom disableInlineStyles={true} wrapperStyle={{ height: '56px' }}>
-      <Title>Questions</Title>
+      <Title>{currentRoute}</Title>
     </Headroom>
   )
 }

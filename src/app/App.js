@@ -1,30 +1,31 @@
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import React, { useEffect, useState } from 'react'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import io from 'socket.io-client'
-import Card from '../cards/Card'
-import CardsHeader from '../cards/CardsHeader'
-import Form from '../form/Form'
 import AppHeader from '../header/Header'
+import Home from '../routes/Home'
+import Admin from '../routes/Admin'
 import {
+  getAllQuestions,
   getUserDataFromStorage,
   postNewQuestion,
   saveUserDataToStorage,
   seenQuestion,
   voteQuestion,
-  getAllQuestions,
 } from '../services'
-import Sort from '../sort/Sort'
 import './app.css'
 import GlobalStyle from './GlobalStyle'
 
 dayjs.extend(relativeTime)
-const socket = io('http://172.16.100.141:4000')
+const socket = io('http://localhost:4000')
 
 export default function App() {
   const [sortCriteria, setSortCriteria] = useState('recent')
   const [openModal, setOpenModal] = useState(false)
   const [questions, setQuestions] = useState([])
+  const [currentRoute, setCurrentRoute] = useState('Questions')
+
   const [userData] = useState(getUserDataFromStorage())
 
   function handleNewLike(res) {
@@ -50,17 +51,10 @@ export default function App() {
   useEffect(() => {
     try {
       getAllQuestions().then(res => setQuestions(res.data))
-      //socket.emit('load questions')
-      //socket.on('questions are here', questions => {
-      //   setQuestions(questions)
-      // })
       socket.on('newQuestion', res => handleNewQuestion(res))
       socket.on('newLike', res => handleNewLike(res))
     } catch (error) {
       console.log(error)
-    }
-    return () => {
-      // socket.close()
     }
   }, [])
 
@@ -69,8 +63,6 @@ export default function App() {
       getUserDataFromStorage()
     }
     saveUserDataToStorage(userData)
-
-    return () => {}
   }, [])
 
   function upvote(id) {
@@ -113,20 +105,6 @@ export default function App() {
     setOpenModal(!openModal)
   }
 
-  function Modal() {
-    if (openModal) {
-      return (
-        <Sort
-          activeCriteria={sortCriteria}
-          closeModal={closeModal}
-          onSortClick={onSortClick}
-        />
-      )
-    } else {
-      return null
-    }
-  }
-
   function changeNew(id) {
     const question = questions.find(q => q._id === id)
     if (
@@ -134,45 +112,42 @@ export default function App() {
       0
     ) {
       seenQuestion(question, userData)
-        .then(question.seen.push({ user: userData })) //res => {
+        .then(question.seen.push({ user: userData }))
         .catch(err => console.log(err))
     }
   }
-  function SortedCards() {
-    if (questions.length > 0) {
-      return sortData(sortCriteria).map((question, index) => (
-        <Card
-          key={question._id}
-          avatar={question.color}
-          id={question._id}
-          name={question.name}
-          message={question.message}
-          date={dayjs().to(question.date)}
-          votes={question.votes.length}
-          liked={question.votes.some(item => item.user === userData)}
-          onClick={upvote}
-          isnew={!question.seen.some(item => item.user === userData)}
-          changeNew={changeNew}
-        />
-      ))
-    } else {
-      return null
-    }
-  }
-  return (
-    <React.Fragment>
-      <AppHeader />
-      <Form submitForm={addQuestion} />
-      <CardsHeader
-        questions={questions}
-        onOpenModalClick={onOpenModalClick}
-        sortCriteria={sortCriteria}
-        total={sortData(sortCriteria).length}
-      />
 
-      <SortedCards />
-      <Modal />
-      <GlobalStyle />
-    </React.Fragment>
+  return (
+    <Router>
+      <React.Fragment>
+        <AppHeader currentRoute={currentRoute} />
+        <Route
+          exact
+          path="/"
+          render={() => (
+            <Home
+              setCurrentRoute={newRoute => setCurrentRoute(newRoute)}
+              userData={userData}
+              addQuestion={addQuestion}
+              onOpenModalClick={onOpenModalClick}
+              questions={questions}
+              sortCriteria={sortCriteria}
+              sortData={sortData}
+              openModal={openModal}
+              closeModal={closeModal}
+              onSortClick={onSortClick}
+              upvote={upvote}
+              changeNew={changeNew}
+            />
+          )}
+        />
+        <Route
+          exact
+          path="/admin"
+          render={() => <Admin setCurrentRoute={setCurrentRoute} />}
+        />
+        <GlobalStyle />
+      </React.Fragment>
+    </Router>
   )
 }
