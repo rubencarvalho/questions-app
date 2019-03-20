@@ -12,13 +12,14 @@ import {
   saveUserDataToStorage,
   seenQuestion,
   voteQuestion,
+  getAllQuestions,
 } from '../services'
 import Sort from '../sort/Sort'
 import './app.css'
 import GlobalStyle from './GlobalStyle'
 
 dayjs.extend(relativeTime)
-const socket = io('http://localhost:4000')
+const socket = io('http://172.16.100.141:4000')
 
 export default function App() {
   const [sortCriteria, setSortCriteria] = useState('recent')
@@ -48,11 +49,11 @@ export default function App() {
 
   useEffect(() => {
     try {
-      socket.open()
-      socket.emit('load questions')
-      socket.on('questions are here', questions => {
-        setQuestions(questions)
-      })
+      getAllQuestions().then(res => setQuestions(res.data))
+      //socket.emit('load questions')
+      //socket.on('questions are here', questions => {
+      //   setQuestions(questions)
+      // })
       socket.on('newQuestion', res => handleNewQuestion(res))
       socket.on('newLike', res => handleNewLike(res))
     } catch (error) {
@@ -73,8 +74,6 @@ export default function App() {
   }, [])
 
   function upvote(id) {
-    console.log(questions)
-    console.log(id)
     const question = questions.find(q => q._id === id)
     voteQuestion(question, userData)
       .then()
@@ -130,21 +129,12 @@ export default function App() {
 
   function changeNew(id) {
     const question = questions.find(q => q._id === id)
-    const index = questions.indexOf(question)
     if (
       question.seen.filter(seen => seen.user.toString() === userData).length ===
       0
     ) {
       seenQuestion(question, userData)
-        .then(res => {
-          setTimeout(() => {
-            setQuestions([
-              ...questions.slice(0, index),
-              res.data,
-              ...questions.slice(index + 1),
-            ])
-          }, 2500)
-        })
+        .then(question.seen.push({ user: userData })) //res => {
         .catch(err => console.log(err))
     }
   }
