@@ -19,7 +19,7 @@ import './app.css'
 import GlobalStyle from './GlobalStyle'
 
 dayjs.extend(relativeTime)
-const socket = io('http://172.16.100.141:4000')
+const socket = io('http://localhost:4000')
 
 export default function App() {
   const [sortCriteria, setSortCriteria] = useState('recent')
@@ -50,10 +50,6 @@ export default function App() {
   useEffect(() => {
     try {
       getAllQuestions().then(res => setQuestions(res.data))
-      //socket.emit('load questions')
-      //socket.on('questions are here', questions => {
-      //   setQuestions(questions)
-      // })
       socket.on('newQuestion', res => handleNewQuestion(res))
       socket.on('newLike', res => handleNewLike(res))
     } catch (error) {
