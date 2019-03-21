@@ -47,6 +47,7 @@ const ModalCriteria = styled.div`
   color: rgba(0, 0, 0, 0.7);
   padding: 16px 20px 16px 20px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+
   @media (hover: hover) {
     &:hover {
       transition: all 0.3s ease;
@@ -56,12 +57,14 @@ const ModalCriteria = styled.div`
 `
 const Criteria = styled.div`
   margin: auto;
-  padding: 0;
   width: 100%;
   max-width: 650px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  @media (min-width: 651px) {
+    padding: 0px 20px 0px 20px;
+  }
 `
 
 const Backdrop = styled.div`
