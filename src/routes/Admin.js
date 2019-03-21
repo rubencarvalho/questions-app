@@ -5,6 +5,8 @@ import Icons from '../utilities/Icons'
 const ContentContainer = styled.div`
   margin: 0 auto;
   display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
   max-width: 1140px;
 `
@@ -18,14 +20,6 @@ const SectionHeader = styled.p`
   transition: color 0.3s linear;
 `
 
-const SectionFooter = styled.p`
-  padding-top: 15px;
-  font-weight: 300;
-  font-size: 20px;
-  text-align: center;
-  color: rgba(0, 0, 0, 0.4);
-  transition: color 0.3s linear;
-`
 const HeroSection = styled.section`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(auto, 350px));
@@ -51,7 +45,7 @@ const SectionCard = styled.div`
 `
 
 const Title = styled.h2`
-  padding-top: 30px;
+  padding-top: 20px;
   padding-bottom: 15px;
   font-weight: 500;
   color: rgba(0, 0, 0, 0.75);
@@ -79,12 +73,16 @@ const StyledButton = styled.div`
   }
 `
 
+const SectionFooter = styled.p`
+  padding-top: 30px;
+  font-weight: 300;
+  font-size: 20px;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.4);
+  transition: color 0.3s linear;
+`
+
 const HelpButton = styled.div`
-  border: 1px solid #2182c4;
-  display: inline-block;
-  justify-self: center;
-  margin: 0 auto;
-  color: #2182c4;
   font-weight: 500;
   background-color: #fff;
   height: 36px;
@@ -92,6 +90,7 @@ const HelpButton = styled.div`
   font-size: 14px;
   border-radius: 100px;
   line-height: 36px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   &:hover {
     user-select: none;
     cursor: pointer;
@@ -117,18 +116,54 @@ export default function Admin({ setCurrentRoute }) {
               fill="rgba(0,0,0,.15)"
               name="questions"
             />
-            <Title>Crowdsource questions</Title>
+            <Title style={{ paddingTop: '30px' }}>Crowdsource questions</Title>
             <Description>
               Let your audience submit their questions and up-vote the best ones
             </Description>
             <StyledButton>Go to questions</StyledButton>
           </SectionCard>
-          <SectionCard>Test</SectionCard>
-          <SectionCard>Test</SectionCard>
+          <SectionCard>
+            <Icons
+              width="60px"
+              height="60px"
+              fill="rgba(0,0,0,.15)"
+              name="polls"
+            />
+            <Title>Run live polls</Title>
+            <Description>
+              Create simple multiple-choice poll, survey or stunning word clouds
+            </Description>
+            <StyledButton
+              style={{ border: '1px solid #70be4e', color: '#70be4e' }}
+            >
+              Go to polls
+            </StyledButton>
+          </SectionCard>
+          <SectionCard>
+            <Icons
+              width="60px"
+              height="60px"
+              fill="rgba(0,0,0,.15)"
+              name="analytics"
+            />
+            <Title>Get insights</Title>
+            <Description>
+              Discover how your audience uses QApp to make your events more
+              interactive
+            </Description>
+            <StyledButton
+              style={{
+                border: '1px solid rgba(0, 0, 0, 0.2)',
+                color: 'rgba(0,0,0,.75)',
+              }}
+            >
+              Go to analytics
+            </StyledButton>
+          </SectionCard>
         </HeroSection>
+        <SectionFooter>Do you have any questions?</SectionFooter>
+        <HelpButton>Get in touch</HelpButton>
       </ContentContainer>
-      <SectionFooter>Do you have any questions?</SectionFooter>
-      <HelpButton>Get in touch</HelpButton>
     </React.Fragment>
   )
 }

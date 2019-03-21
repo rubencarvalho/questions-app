@@ -64,7 +64,7 @@ export default createGlobalStyle`
     transition: all 0.3s ease;
   }
 }
-
+.polls-icon{fill:rgba(0,0,0,0);stroke:#000;stroke-width:1.5px;opacity:0.15}
 .active-item{
   color: #2182c3;
     font-weight: 700;
