@@ -63,4 +63,10 @@ export default createGlobalStyle`
     transition: all 0.3s ease;
   }
 }
+
+.active-item{
+  color: #2182c3;
+    font-weight: 700;
+    border-bottom: 3px solid #2182c3;
+}
 `

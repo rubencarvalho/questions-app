@@ -1,9 +1,9 @@
 .headroom-wrapper {
-  height: 56px !important;
+  height: 62px !important;
 }
 
 .headroom {
-  height: 56px;
+  height: 62px;
   width: 100%;
   display: flex;
   top: 0;

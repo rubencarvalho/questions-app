@@ -18,7 +18,7 @@ const Title = styled.h1`
 
 export default function AppHeader({ currentRoute }) {
   return (
-    <Headroom disableInlineStyles={true} wrapperStyle={{ height: '56px' }}>
+    <Headroom disableInlineStyles={true} wrapperStyle={{ height: '62px' }}>
       <Title>{currentRoute}</Title>
     </Headroom>
   )
