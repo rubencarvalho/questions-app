@@ -17,8 +17,13 @@ const Title = styled.h1`
 `
 
 export default function AppHeader({ currentRoute }) {
+  console.log(currentRoute)
   return (
-    <Headroom disableInlineStyles={true} wrapperStyle={{ height: '62px' }}>
+    <Headroom
+      disable={currentRoute === 'Admin' ? true : false}
+      disableInlineStyles={true}
+      wrapperStyle={{ height: '62px' }}
+    >
       <Title>{currentRoute}</Title>
     </Headroom>
   )

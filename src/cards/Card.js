@@ -12,7 +12,7 @@ const StyledCard = styled.section`
   color: #555;
   grid-gap: 8px;
   background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.11), 0 2px 4px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
   @media (min-width: 651px) {
     &:first-of-type {
       border-radius: 4px 4px 0 0;
