@@ -169,6 +169,12 @@ export default function Form({ submitForm }) {
     }
   }
 
+  function handleNameKeyUp(e) {
+    if (question.name === '') {
+      setQuestion({ ...question, color: newColor() })
+    }
+  }
+
   return (
     <React.Fragment>
       <FormHeader />
@@ -195,6 +201,7 @@ export default function Form({ submitForm }) {
           <StyledInput
             type="text"
             value={question.name}
+            onKeyUp={e => handleNameKeyUp(e)}
             onChange={e => setQuestion({ ...question, name: e.target.value })}
             placeholder="Your name (optional)"
           />
