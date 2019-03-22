@@ -11,10 +11,10 @@ export default function Home({
   questions,
   sortCriteria,
   sortData,
-  onSortClick,
   upvote,
   changeNew,
   setCurrentRoute,
+  setSortCriteria,
 }) {
   const [openModal, setOpenModal] = useState(false)
   function closeModal() {
@@ -46,6 +46,10 @@ export default function Home({
     }
   }
 
+  function onSortClick(newSortCriteria) {
+    setOpenModal(false)
+    setSortCriteria(newSortCriteria)
+  }
   function Modal() {
     if (openModal) {
       return (

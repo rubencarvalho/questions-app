@@ -94,11 +94,6 @@ export default function App() {
     }
   }
 
-  function onSortClick(newSortCriteria) {
-    setOpenModal(false)
-    setSortCriteria(newSortCriteria)
-  }
-
   function changeNew(id) {
     const question = questions.find(q => q._id === id)
     if (
@@ -127,7 +122,6 @@ export default function App() {
               setSortCriteria={setSortCriteria}
               sortCriteria={sortCriteria}
               sortData={sortData}
-              onSortClick={onSortClick}
               upvote={upvote}
               changeNew={changeNew}
             />
@@ -136,7 +130,9 @@ export default function App() {
         <Route
           exact
           path="/admin"
-          render={() => <Admin setCurrentRoute={setCurrentRoute} />}
+          render={() => (
+            <Admin questions={questions} setCurrentRoute={setCurrentRoute} />
+          )}
         />
         <GlobalStyle />
       </React.Fragment>
