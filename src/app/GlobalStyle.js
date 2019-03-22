@@ -69,5 +69,17 @@ export default createGlobalStyle`
   color: #2182c3;
     font-weight: 700;
     border-bottom: 3px solid #2182c3;
+    text-decoration-style:
+solid
+;
+}
+
+.admin-nav__active-item {
+  color: #2182c3;
+  text-decoration-style:
+solid
+;
+    font-weight: 700;
+    border-bottom: 3px solid #2182c3;
 }
 `

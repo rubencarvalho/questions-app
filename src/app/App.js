@@ -4,8 +4,8 @@ import React, { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import io from 'socket.io-client'
 import AppHeader from '../header/Header'
-import Home from '../routes/Home'
 import Admin from '../routes/Admin'
+import Home from '../routes/Home'
 import {
   getAllQuestions,
   getUserDataFromStorage,
@@ -18,7 +18,7 @@ import './app.css'
 import GlobalStyle from './GlobalStyle'
 
 dayjs.extend(relativeTime)
-const socket = io('http://192.168.1.80:4000')
+const socket = io('http://localhost:4000')
 
 export default function App() {
   const [sortCriteria, setSortCriteria] = useState('recent')
@@ -98,12 +98,6 @@ export default function App() {
     setOpenModal(false)
     setSortCriteria(newSortCriteria)
   }
-  function closeModal() {
-    setOpenModal(false)
-  }
-  function onOpenModalClick() {
-    setOpenModal(!openModal)
-  }
 
   function changeNew(id) {
     const question = questions.find(q => q._id === id)
@@ -129,12 +123,9 @@ export default function App() {
               setCurrentRoute={newRoute => setCurrentRoute(newRoute)}
               userData={userData}
               addQuestion={addQuestion}
-              onOpenModalClick={onOpenModalClick}
               questions={questions}
               sortCriteria={sortCriteria}
               sortData={sortData}
-              openModal={openModal}
-              closeModal={closeModal}
               onSortClick={onSortClick}
               upvote={upvote}
               changeNew={changeNew}

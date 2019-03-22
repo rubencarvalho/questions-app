@@ -17,7 +17,6 @@ const Title = styled.h1`
 `
 
 export default function AppHeader({ currentRoute }) {
-  console.log(currentRoute)
   return (
     <Headroom
       disable={currentRoute === 'Admin' ? true : false}

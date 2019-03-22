@@ -2,7 +2,7 @@ import axios from 'axios'
 import uid from 'uid'
 //const ip = process.env.REACT_APP_BACKEND_IP
 //const questionsPath = `http://${ip}:4000/questions`
-const questionsPath = `http://192.168.1.80:4000/questions`
+const questionsPath = `http://localhost:4000/questions`
 
 export function getDataFromStorage() {
   return getFromStorage('questions') || []

@@ -74,7 +74,7 @@ const getPath = (name, props) => {
           <g transform="translate(-409 -807)">
             <path
               {...props}
-              class="polls-icon"
+              className="polls-icon"
               d="M10169.874,2017.751v-.5h43.251v.5Zm27.252-.564V1975h11.249v42.187Zm-11.25,0v-30.937h11.25v30.937Zm-11.252,0v-16.873h11.252v16.873Z"
               transform="translate(-9746.363 -1153.653)"
             />

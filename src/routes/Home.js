@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import React from 'react'
+import React, { useState } from 'react'
 import Card from '../cards/Card'
 import CardsHeader from '../cards/CardsHeader'
 import Form from '../form/Form'
@@ -9,16 +9,20 @@ export default function Home({
   userData,
   addQuestion,
   questions,
-  onOpenModalClick,
   sortCriteria,
   sortData,
-  openModal,
-  closeModal,
   onSortClick,
   upvote,
   changeNew,
   setCurrentRoute,
 }) {
+  const [openModal, setOpenModal] = useState(false)
+  function closeModal() {
+    setOpenModal(false)
+  }
+  function onOpenModalClick() {
+    setOpenModal(!openModal)
+  }
   setCurrentRoute('Questions')
   function SortedCards() {
     if (questions.length > 0) {
