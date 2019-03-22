@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import Dashboard from '../admin/Dashboard'
 import AdminSubheader from '../header/AdminSubheader'
 import Questions from '../admin/questions/Questions'
+import Analytics from '../admin/Analytics'
+import Polls from '../admin/Polls'
 export default function Admin({ setCurrentRoute }) {
   setCurrentRoute('Admin')
   const [currentView, setCurrentView] = useState('questions')
@@ -9,13 +11,13 @@ export default function Admin({ setCurrentRoute }) {
   function ActiveView() {
     switch (currentView) {
       case 'home':
-        return <Dashboard />
+        return <Dashboard setCurrentView={setCurrentView} />
       case 'questions':
         return <Questions />
       case 'polls':
-        return <Dashboard />
+        return <Polls />
       case 'analytics':
-        return <Dashboard />
+        return <Analytics />
       default:
         return <Dashboard />
     }

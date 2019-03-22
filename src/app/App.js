@@ -124,6 +124,7 @@ export default function App() {
               userData={userData}
               addQuestion={addQuestion}
               questions={questions}
+              setSortCriteria={setSortCriteria}
               sortCriteria={sortCriteria}
               sortData={sortData}
               onSortClick={onSortClick}

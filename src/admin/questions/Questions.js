@@ -19,7 +19,7 @@ const ItemOptions = styled.div`
   align-items: center;
 `
 
-const SubmenuItem = styled.div`
+const SubmenuItem = styled.span`
   align-items: center;
   margin-right: 12px;
   font-size: 14px;

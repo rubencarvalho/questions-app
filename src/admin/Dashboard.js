@@ -99,7 +99,7 @@ const HelpButton = styled.div`
     cursor: pointer;
   }
 `
-export default function Dashboard() {
+export default function Dashboard({ setCurrentView }) {
   return (
     <React.Fragment>
       <SectionHeader>How would you like to use QAPP?</SectionHeader>
@@ -116,7 +116,9 @@ export default function Dashboard() {
             <Description>
               Let your audience submit their questions and up-vote the best ones
             </Description>
-            <StyledButton>Go to questions</StyledButton>
+            <StyledButton onClick={() => setCurrentView('questions')}>
+              Go to questions
+            </StyledButton>
           </SectionCard>
           <SectionCard>
             <Icons
@@ -130,6 +132,7 @@ export default function Dashboard() {
               Create simple multiple-choice poll, survey or stunning word clouds
             </Description>
             <StyledButton
+              onClick={() => setCurrentView('polls')}
               style={{ border: '1px solid #70be4e', color: '#70be4e' }}
             >
               Go to polls
@@ -148,6 +151,7 @@ export default function Dashboard() {
               interactive
             </Description>
             <StyledButton
+              onClick={() => setCurrentView('analytics')}
               style={{
                 border: '1px solid rgba(0, 0, 0, 0.2)',
                 color: 'rgba(0,0,0,.75)',
