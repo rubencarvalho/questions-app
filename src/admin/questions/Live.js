@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import Icon from '../../utilities/Icons'
-import { access } from 'fs'
 const IncomingContainer = styled.div`
   align-items: center;
   justify-content: center;
@@ -20,9 +19,11 @@ const Subtitle = styled.p`
   color: #9c9c9c;
   font-size: 17px;
   margin: 0;
+  padding-left: 20px;
+  padding-right: 20px;
   margin-bottom: 14px;
 `
-const ModerationButton = styled.div`
+const StyledButton = styled.div`
   line-height: 22px;
   padding: 6px 14px 6px 14px;
   user-select: none;
@@ -35,17 +36,53 @@ const ModerationButton = styled.div`
   }
   #2182c3
 `
-export default function Incoming({ questions }) {
+//Todo: export live / archive all on the kebab button
+
+export default function Live({ questions }) {
+  function Share() {
+    if (navigator.share) {
+      return (
+        <StyledButton onClick={() => onShareClick()}>
+          Share your event
+        </StyledButton>
+      )
+    } else {
+      return null
+    }
+  }
+  function onShareClick() {
+    if (navigator.share) {
+      navigator
+        .share({
+          title: 'QAPP #neuefische',
+          text: 'Ask me anything!',
+          url: 'http://localhost:3000',
+        })
+        .then(() => console.log('Successful share'))
+        .catch(error => console.log('Error sharing', error))
+    }
+  }
+  const test = 0
+  function NoQuestionsScreen() {
+    if (test === 0) {
+      return (
+        <React.Fragment>
+          <Icon name="incoming" width="60px" height="60px" />
+          <Subtitle>
+            Your audience can join at{' '}
+            <span style={{ fontWeight: '700' }}>localhost:3000</span>
+          </Subtitle>
+          <Share />
+        </React.Fragment>
+      )
+    } else {
+      return null
+    }
+  }
+
   return (
     <IncomingContainer>
-      <Icon name="incoming" width="60px" height="60px" />
-      <Title>Moderation is.</Title>
-      <Subtitle>
-        {questions.length === 0
-          ? 'Incoming questions from your audience will appear here.'
-          : 'Incoming questions will automatically appear live.'}
-      </Subtitle>
-      <ModerationButton onClick={() => console.log('Clicked')} />
+      <NoQuestionsScreen />
     </IncomingContainer>
   )
 }

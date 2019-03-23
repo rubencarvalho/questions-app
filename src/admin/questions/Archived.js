@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import Icon from '../../utilities/Icons'
-import { access } from 'fs'
+import { Hover } from '../../cards/Hover'
 const IncomingContainer = styled.div`
   align-items: center;
   justify-content: center;
@@ -18,6 +18,8 @@ const Title = styled.h3`
 `
 const Subtitle = styled.p`
   color: #9c9c9c;
+  padding-left: 20px;
+  padding-right: 20px;
   font-size: 17px;
   margin: 0;
   margin-bottom: 14px;
@@ -35,17 +37,49 @@ const ModerationButton = styled.div`
   }
   #2182c3
 `
+
+//Todo: export archived on the kebab button
+
 export default function Archived({ questions }) {
+  const test = 0
+  function NoQuestionsScreen() {
+    if (test === 0) {
+      return (
+        <React.Fragment>
+          <Hover
+            onHover={
+              <Icon
+                style={{ transition: 'fill .3s ease' }}
+                name="archived"
+                width="50px"
+                height="50px"
+                fill="#666"
+              />
+            }
+          >
+            <Icon
+              name="archived"
+              width="50px"
+              height="50px"
+              fill="#c4c4c4"
+              style={{ transition: 'fill .3s ease' }}
+            />
+          </Hover>
+
+          <Subtitle>
+            You can archive questions in the Live tab after they were answered
+            or are no longer relevant.
+          </Subtitle>
+        </React.Fragment>
+      )
+    } else {
+      return null
+    }
+  }
+
   return (
     <IncomingContainer>
-      <Icon name="incoming" width="60px" height="60px" />
-      <Title>Moderation is.</Title>
-      <Subtitle>
-        {questions.length === 0
-          ? 'Incoming questions from your audience will appear here.'
-          : 'Incoming questions will automatically appear live.'}
-      </Subtitle>
-      <ModerationButton onClick={() => console.log('Clicked')} />
+      <NoQuestionsScreen />
     </IncomingContainer>
   )
 }

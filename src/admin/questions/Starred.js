@@ -20,6 +20,8 @@ const Subtitle = styled.p`
   color: #9c9c9c;
   font-size: 17px;
   margin: 0;
+  padding-left: 20px;
+  padding-right: 20px;
   margin-bottom: 14px;
 `
 const ModerationButton = styled.div`
@@ -35,17 +37,26 @@ const ModerationButton = styled.div`
   }
   #2182c3
 `
+//Todo: export starred / archive starred on the kebab button
+
 export default function Starred({ questions }) {
+  const test = 0
+  function NoQuestionsScreen() {
+    if (test === 0) {
+      return (
+        <React.Fragment>
+          <Icon name="incoming" width="60px" height="60px" />
+          <Subtitle>All starred questions will be visible here.</Subtitle>
+        </React.Fragment>
+      )
+    } else {
+      return null
+    }
+  }
+
   return (
     <IncomingContainer>
-      <Icon name="incoming" width="60px" height="60px" />
-      <Title>Moderation is.</Title>
-      <Subtitle>
-        {questions.length === 0
-          ? 'Incoming questions from your audience will appear here.'
-          : 'Incoming questions will automatically appear live.'}
-      </Subtitle>
-      <ModerationButton onClick={() => console.log('Clicked')} />
+      <NoQuestionsScreen />
     </IncomingContainer>
   )
 }

@@ -5,6 +5,9 @@ import Icon from '../../utilities/Icons'
 import { Hover } from '../../cards/Hover'
 import Incoming from './Incoming'
 import Live from './Live'
+import Starred from './Starred'
+import Archived from './Archived'
+
 const ItemOptions = styled.div`
   display: flex;
   color: #555;
@@ -50,6 +53,10 @@ export default function Questions({ questions }) {
       )
     } else if (activeItem === 'live') {
       return <Live questions={questions} />
+    } else if (activeItem === 'starred') {
+      return <Starred questions={questions} />
+    } else if (activeItem === 'archived') {
+      return <Archived questions={questions} />
     } else {
       return null
     }
