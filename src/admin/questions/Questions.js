@@ -4,6 +4,7 @@ import Submenu from './Submenu'
 import Icon from '../../utilities/Icons'
 import { Hover } from '../../cards/Hover'
 import Incoming from './Incoming'
+import Live from './Live'
 const ItemOptions = styled.div`
   display: flex;
   color: #555;
@@ -26,18 +27,31 @@ const Container = styled.section`
   margin: 0 auto;
   max-width: 650px;
   color: #555;
+  display: flex;
   background-color: #fff;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
-  height: calc(100vh - 200px);
+  height: calc(100vh - 215px);
   overflow: scroll;
+  align-items: center;
+  justify-content: center;
 `
 
 export default function Questions({ questions }) {
-  const [activeItem, setActiveItem] = useState('live')
+  const [activeItem, setActiveItem] = useState('incoming')
   const [activeIncoming, setActiveIncoming] = useState(true)
+
   function ConditionalContainer() {
     if (activeItem === 'incoming') {
-      return <Incoming activeIncoming={activeIncoming} />
+      return (
+        <Incoming
+          setActiveIncoming={setActiveIncoming}
+          activeIncoming={activeIncoming}
+        />
+      )
+    } else if (activeItem === 'live') {
+      return <Live questions={questions} />
+    } else {
+      return null
     }
   }
   return (
@@ -66,7 +80,9 @@ export default function Questions({ questions }) {
           </Hover>
         </ItemOptions>
       </Header>
-      <Container />
+      <Container>
+        <ConditionalContainer />
+      </Container>
     </React.Fragment>
   )
 }

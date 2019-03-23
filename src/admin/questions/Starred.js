@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import Icon from '../../utilities/Icons'
+import { access } from 'fs'
 const IncomingContainer = styled.div`
   align-items: center;
   justify-content: center;
@@ -34,19 +35,17 @@ const ModerationButton = styled.div`
   }
   #2182c3
 `
-export default function Incoming({ activeIncoming, setActiveIncoming }) {
+export default function Starred({ questions }) {
   return (
     <IncomingContainer>
       <Icon name="incoming" width="60px" height="60px" />
-      <Title>Moderation is {activeIncoming ? 'on' : 'off'}.</Title>
+      <Title>Moderation is.</Title>
       <Subtitle>
-        {activeIncoming
+        {questions.length === 0
           ? 'Incoming questions from your audience will appear here.'
           : 'Incoming questions will automatically appear live.'}
       </Subtitle>
-      <ModerationButton onClick={() => setActiveIncoming(!activeIncoming)}>
-        {activeIncoming ? 'Disable' : 'Enable'} moderation
-      </ModerationButton>
+      <ModerationButton onClick={() => console.log('Clicked')} />
     </IncomingContainer>
   )
 }
