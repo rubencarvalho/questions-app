@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
-import Icon from '../../utilities/Icons'
 import { Hover } from '../../cards/Hover'
+import Icon from '../../utilities/Icons'
 const IncomingContainer = styled.div`
   align-items: center;
   justify-content: center;
@@ -11,11 +11,7 @@ const IncomingContainer = styled.div`
   flex-direction: column;
   text-align: center;
 `
-const Title = styled.h3`
-  font-size: 500;
-  color: #9c9c9c;
-  font-size: 17px;
-`
+
 const Subtitle = styled.p`
   color: #9c9c9c;
   padding-left: 20px;
@@ -23,19 +19,6 @@ const Subtitle = styled.p`
   font-size: 17px;
   margin: 0;
   margin-bottom: 14px;
-`
-const ModerationButton = styled.div`
-  line-height: 22px;
-  padding: 6px 14px 6px 14px;
-  user-select: none;
-
-  color: #2182c3;
-  border-radius: 4px;
-  border: 1px solid #2182c3;
-  &:hover {
-    cursor: pointer;
-  }
-  #2182c3
 `
 
 //Todo: export archived on the kebab button
@@ -49,7 +32,7 @@ export default function Archived({ questions }) {
           <Hover
             onHover={
               <Icon
-                style={{ marginBottom:'10px', transition: 'fill .3s ease' }}
+                style={{ marginBottom: '10px', transition: 'fill .3s ease' }}
                 name="archived"
                 width="50px"
                 height="50px"
@@ -62,7 +45,7 @@ export default function Archived({ questions }) {
               width="50px"
               height="50px"
               fill="#c4c4c4"
-              style={{ marginBottom:'10px', transition: 'fill .3s ease' }}
+              style={{ marginBottom: '10px', transition: 'fill .3s ease' }}
             />
           </Hover>
 

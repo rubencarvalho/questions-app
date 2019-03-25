@@ -22,7 +22,6 @@ const socket = io('http://localhost:4000')
 
 export default function App() {
   const [sortCriteria, setSortCriteria] = useState('recent')
-  const [openModal, setOpenModal] = useState(false)
   const [questions, setQuestions] = useState([])
   const [currentRoute, setCurrentRoute] = useState('Questions')
 

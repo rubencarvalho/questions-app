@@ -10,11 +10,7 @@ const IncomingContainer = styled.div`
   flex-direction: column;
   text-align: center;
 `
-const Title = styled.h3`
-  font-size: 500;
-  color: #9c9c9c;
-  font-size: 17px;
-`
+
 const Subtitle = styled.p`
   color: #9c9c9c;
   font-size: 17px;
@@ -54,7 +50,7 @@ export default function Live({ questions }) {
     if (navigator.share) {
       navigator
         .share({
-          title: 'QAPP #neuefische',
+          title: 'Qapp #neuefische',
           text: 'Ask me anything!',
           url: 'http://localhost:3000',
         })
@@ -67,7 +63,13 @@ export default function Live({ questions }) {
     if (test === 0) {
       return (
         <React.Fragment>
-          <Icon style={{marginBottom:'10px'}} name="live" width="50px" height="50px" fill="#7bbd5f" />
+          <Icon
+            style={{ marginBottom: '10px' }}
+            name="live"
+            width="50px"
+            height="50px"
+            fill="#7bbd5f"
+          />
           <Subtitle>
             Your audience can join at{' '}
             <span style={{ fontWeight: '700' }}>localhost:3000</span>

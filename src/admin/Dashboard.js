@@ -102,7 +102,7 @@ const HelpButton = styled.div`
 export default function Dashboard({ setCurrentView }) {
   return (
     <React.Fragment>
-      <SectionHeader>How would you like to use QAPP?</SectionHeader>
+      <SectionHeader>How would you like to use Qapp?</SectionHeader>
       <ContentContainer>
         <HeroSection>
           <SectionCard>
@@ -147,7 +147,7 @@ export default function Dashboard({ setCurrentView }) {
             />
             <Title>Get insights</Title>
             <Description>
-              Discover how your audience uses QApp to make your events more
+              Discover how your audience uses Qapp to make your events more
               interactive
             </Description>
             <StyledButton

@@ -4,6 +4,30 @@ import Card from '../cards/Card'
 import CardsHeader from '../cards/CardsHeader'
 import Form from '../form/Form'
 import Sort from '../sort/Sort'
+import styled from 'styled-components'
+import Icon from '../utilities/Icons'
+const EmptyContainer = styled.section`
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+`
+const EmptySubtitle = styled.p`
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.4);
+  margin-bottom: 6px;
+  margin-top: 0;
+`
+const EmptyTitle = styled.h3`
+  font-size: 18px;
+  font-weight: 500;
+  white-space: pre-wrap;
+  color: #5e5e5e;
+`
 
 export default function Home({
   userData,
@@ -64,6 +88,25 @@ export default function Home({
     }
   }
 
+  function EmptyState() {
+    if (questions.length === 0) {
+      return (
+        <EmptyContainer>
+          <Icon
+            style={{ marginBottom: '32px', marginTop: '64px' }}
+            height="90px"
+            width="90px"
+            name="emptyhome"
+          />
+          <EmptySubtitle>There are no questions asked yet.</EmptySubtitle>
+          <EmptyTitle>Ask the first one!</EmptyTitle>
+        </EmptyContainer>
+      )
+    } else {
+      return null
+    }
+  }
+
   return (
     <React.Fragment>
       <Form submitForm={addQuestion} />
@@ -73,7 +116,7 @@ export default function Home({
         sortCriteria={sortCriteria}
         total={sortData(sortCriteria).length}
       />
-
+      <EmptyState />
       <SortedCards />
       <Modal />
     </React.Fragment>

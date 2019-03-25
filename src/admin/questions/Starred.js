@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import Icon from '../../utilities/Icons'
-import { access } from 'fs'
 const IncomingContainer = styled.div`
   align-items: center;
   justify-content: center;
@@ -11,11 +10,6 @@ const IncomingContainer = styled.div`
   flex-direction: column;
   text-align: center;
 `
-const Title = styled.h3`
-  font-size: 500;
-  color: #9c9c9c;
-  font-size: 17px;
-`
 const Subtitle = styled.p`
   color: #9c9c9c;
   font-size: 17px;
@@ -23,19 +17,6 @@ const Subtitle = styled.p`
   padding-left: 20px;
   padding-right: 20px;
   margin-bottom: 14px;
-`
-const ModerationButton = styled.div`
-  line-height: 22px;
-  padding: 6px 14px 6px 14px;
-  user-select: none;
-
-  color: #2182c3;
-  border-radius: 4px;
-  border: 1px solid #2182c3;
-  &:hover {
-    cursor: pointer;
-  }
-  #2182c3
 `
 //Todo: export starred / archive starred on the kebab button
 
@@ -45,7 +26,13 @@ export default function Starred({ questions }) {
     if (test === 0) {
       return (
         <React.Fragment>
-          <Icon style={{ marginBottom:'10px'}} name="star" width="45px" height="45px" fill="#ffca26"/>
+          <Icon
+            style={{ marginBottom: '10px' }}
+            name="star"
+            width="45px"
+            height="45px"
+            fill="#ffca26"
+          />
           <Subtitle>All starred questions will be visible here.</Subtitle>
         </React.Fragment>
       )
