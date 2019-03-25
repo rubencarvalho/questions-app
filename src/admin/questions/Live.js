@@ -67,7 +67,7 @@ export default function Live({ questions }) {
     if (test === 0) {
       return (
         <React.Fragment>
-          <Icon name="incoming" width="60px" height="60px" />
+          <Icon style={{marginBottom:'10px'}} name="live" width="50px" height="50px" fill="#7bbd5f" />
           <Subtitle>
             Your audience can join at{' '}
             <span style={{ fontWeight: '700' }}>localhost:3000</span>

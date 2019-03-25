@@ -49,7 +49,7 @@ export default function Archived({ questions }) {
           <Hover
             onHover={
               <Icon
-                style={{ transition: 'fill .3s ease' }}
+                style={{ marginBottom:'10px', transition: 'fill .3s ease' }}
                 name="archived"
                 width="50px"
                 height="50px"
@@ -62,7 +62,7 @@ export default function Archived({ questions }) {
               width="50px"
               height="50px"
               fill="#c4c4c4"
-              style={{ transition: 'fill .3s ease' }}
+              style={{ marginBottom:'10px', transition: 'fill .3s ease' }}
             />
           </Hover>
 

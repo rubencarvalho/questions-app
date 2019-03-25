@@ -45,7 +45,7 @@ export default function Starred({ questions }) {
     if (test === 0) {
       return (
         <React.Fragment>
-          <Icon name="incoming" width="60px" height="60px" />
+          <Icon style={{ marginBottom:'10px'}} name="star" width="45px" height="45px" fill="#ffca26"/>
           <Subtitle>All starred questions will be visible here.</Subtitle>
         </React.Fragment>
       )
