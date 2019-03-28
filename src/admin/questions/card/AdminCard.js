@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
-import Icon from '../utilities/Icons.js'
+import Icon from '../../../utilities/Icons'
 const StyledCard = styled.section`
   font-size: 14px;
   display: grid;
@@ -112,17 +112,14 @@ const Votes = styled.div`
   text-align: right;
 `
 
-export default function Card({
+export default function AdminCard({
   name,
   message,
   date,
   votes,
-  liked,
   id,
   onClick,
   avatar,
-  isnew,
-  changeNew,
 }) {
   function getInitials() {
     let names = name.split(' ')
@@ -132,6 +129,7 @@ export default function Card({
     }
     return initials
   }
+
   function AvatarContent() {
     if (name !== 'Anonymous') {
       return getInitials()
@@ -141,26 +139,9 @@ export default function Card({
       )
     }
   }
-
-  useEffect(() => {
-    if (isnew) {
-      console.log(id)
-      changeNew(id)
-    }
-  }, [])
-
-  function getColor() {
-    if (liked === true) {
-      return '#2181c2'
-    } else {
-      return 'rgba(0, 0, 0, 0.4)'
-    }
-  }
-  const color = getColor()
+  const color = 'rgba(0, 0, 0, 0.4)'
   return (
-    <StyledCard
-      style={isnew ? { animation: 'card-background 2s ease-in-out' } : null}
-    >
+    <StyledCard>
       <Header>
         <Avatar
           style={name !== 'Anonymous' ? { backgroundColor: avatar } : null}
@@ -172,7 +153,7 @@ export default function Card({
           <Date>{date}</Date>
         </Items>
         <Action onClick={() => onClick(id)}>
-          <Votes style={liked ? { color } : null}>{votes}</Votes>
+          <Votes style={{ color: color }}>{votes}</Votes>
           <Icon name="upvote" fill={color} height="60%" width="60%" />
         </Action>
       </Header>

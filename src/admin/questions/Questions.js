@@ -39,9 +39,9 @@ const Container = styled.section`
   justify-content: center;
 `
 
-export default function Questions({ questions }) {
+export default function Questions({ questions, sortData }) {
   const [activeItem, setActiveItem] = useState('incoming')
-  const [activeIncoming, setActiveIncoming] = useState(true)
+  const [activeIncoming, setActiveIncoming] = useState(false)
 
   function ConditionalContainer() {
     if (activeItem === 'incoming') {
@@ -52,7 +52,7 @@ export default function Questions({ questions }) {
         />
       )
     } else if (activeItem === 'live') {
-      return <Live questions={questions} />
+      return <Live questions={questions} sortData={sortData} />
     } else if (activeItem === 'starred') {
       return <Starred questions={questions} />
     } else if (activeItem === 'archived') {

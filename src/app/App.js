@@ -130,7 +130,11 @@ export default function App() {
           exact
           path="/admin"
           render={() => (
-            <Admin questions={questions} setCurrentRoute={setCurrentRoute} />
+            <Admin
+              questions={questions}
+              setCurrentRoute={setCurrentRoute}
+              sortData={sortData}
+            />
           )}
         />
         <GlobalStyle />

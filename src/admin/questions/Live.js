@@ -1,9 +1,20 @@
 import React from 'react'
 import styled from 'styled-components'
 import Icon from '../../utilities/Icons'
+import AdminCard from '../questions/card/AdminCard'
+import dayjs from 'dayjs'
 const IncomingContainer = styled.div`
   align-items: center;
-  justify-content: center;
+  justify-content: start;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+`
+
+const CardsContainer = styled.div`
+  display: grid;
   width: 100%;
   height: 100%;
   display: flex;
@@ -34,7 +45,7 @@ const StyledButton = styled.div`
 `
 //Todo: export live / archive all on the kebab button
 
-export default function Live({ questions }) {
+export default function Live({ questions, sortData }) {
   function Share() {
     if (navigator.share) {
       return (
@@ -58,9 +69,8 @@ export default function Live({ questions }) {
         .catch(error => console.log('Error sharing', error))
     }
   }
-  const test = 0
   function NoQuestionsScreen() {
-    if (test === 0) {
+    if (questions.length === 0) {
       return (
         <React.Fragment>
           <Icon
@@ -82,9 +92,29 @@ export default function Live({ questions }) {
     }
   }
 
+  function SortedCards() {
+    if (questions.length > 0) {
+      return sortData('recent').map(question => (
+        <AdminCard
+          key={question._id}
+          avatar={question.color}
+          id={question._id}
+          name={question.name}
+          message={question.message}
+          date={dayjs().to(question.date)}
+          votes={question.votes.length}
+        />
+      ))
+    } else {
+      return null
+    }
+  }
+
   return (
     <IncomingContainer>
       <NoQuestionsScreen />
+
+      <SortedCards />
     </IncomingContainer>
   )
 }

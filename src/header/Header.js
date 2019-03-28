@@ -24,7 +24,7 @@ export default function AppHeader({ currentRoute }) {
       disableInlineStyles={true}
       wrapperStyle={{ height: '62px' }}
     >
-      <img style={{ height: '36px' }} src={logo} alt={'logo'} />
+      <img style={{ height: '26px' }} src={logo} alt={'logo'} />
     </Headroom>
   )
 }
