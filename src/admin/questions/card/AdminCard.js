@@ -12,7 +12,10 @@ const StyledCard = styled.section`
   color: #555;
   grid-gap: 8px;
   background-color: #fff;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.02);
+    transition: background-color 0.1s;
+  }
   @media (min-width: 651px) {
     &:first-of-type {
       border-radius: 4px 4px 0 0;
@@ -63,13 +66,15 @@ const Items = styled.div`
 const Author = styled.div`
   display: flex;
   width: 100%;
-  font-weight: 500;
+  font-weight: 600;
+  color: rgba(0, 0, 0, 0.6);
 `
 const Date = styled.div`
   display: flex;
   width: 100%;
   color: rgba(0, 0, 0, 0.4);
-  font-size: 12px;
+  font-size: 14px;
+  align-items: center;
 `
 
 const Action = styled.div`
@@ -111,6 +116,13 @@ const Votes = styled.div`
   min-width: 16px;
   text-align: right;
 `
+const Like = styled.div`
+  min-width: 16px;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+`
 
 export default function AdminCard({
   name,
@@ -135,7 +147,7 @@ export default function AdminCard({
       return getInitials()
     } else {
       return (
-        <Icon name="user" fill="rgba(0,0,0,0.4)" height="65%" width="65%" />
+        <Icon name="user" fill="rgba(0,0,0,0.6)" height="65%" width="65%" />
       )
     }
   }
@@ -150,12 +162,20 @@ export default function AdminCard({
         </Avatar>
         <Items>
           <Author>{name}</Author>
-          <Date>{date}</Date>
+          <Date>
+            {votes}
+            <Like>
+              <Icon
+                name="upvote"
+                style={{ justifyContent: 'center', alignItem: 'center' }}
+                fill={color}
+                height="10px"
+                width="10px"
+              />
+            </Like>
+            <div>• {date}</div>
+          </Date>
         </Items>
-        <Action onClick={() => onClick(id)}>
-          <Votes style={{ color: color }}>{votes}</Votes>
-          <Icon name="upvote" fill={color} height="60%" width="60%" />
-        </Action>
       </Header>
       <Message>{message}</Message>
     </StyledCard>

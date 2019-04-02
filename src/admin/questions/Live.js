@@ -63,7 +63,7 @@ export default function Live({ questions, sortData }) {
         .share({
           title: 'Qapp #neuefische',
           text: 'Ask me anything!',
-          url: 'http://localhost:3000',
+          url: 'http://172.16.100.177:3000',
         })
         .then(() => console.log('Successful share'))
         .catch(error => console.log('Error sharing', error))
@@ -81,8 +81,8 @@ export default function Live({ questions, sortData }) {
             fill="#7bbd5f"
           />
           <Subtitle>
-            Your audience can join at{' '}
-            <span style={{ fontWeight: '700' }}>localhost:3000</span>
+            Your audience can join at
+            <span style={{ fontWeight: '700' }}>172.16.100.177:3000</span>
           </Subtitle>
           <Share />
         </React.Fragment>
@@ -101,7 +101,7 @@ export default function Live({ questions, sortData }) {
           id={question._id}
           name={question.name}
           message={question.message}
-          date={dayjs().to(question.date)}
+          date={dayjs(question.date).format('DD MMM, HH:mm')}
           votes={question.votes.length}
         />
       ))
