@@ -93,7 +93,7 @@ export default function Home({
       return (
         <EmptyContainer>
           <Icon
-            style={{ marginBottom: '32px', marginTop: '64px' }}
+            style={{ marginBottom: '32px', marginTop: '32px' }}
             height="90px"
             width="90px"
             name="emptyhome"

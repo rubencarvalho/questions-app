@@ -11,7 +11,6 @@ export default createGlobalStyle`
     font-family: Roboto, sans-serif;
     line-height: 1.5;
     background: #f2f2f2;
-    margin: 0 0 40px 0;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
@@ -72,6 +71,15 @@ export default createGlobalStyle`
     text-decoration-style:
 solid
 ;
+}
+
+.hidden-icon {
+    opacity: 0;
+    transition: opacity .1s linear;
+    transition-property: opacity;
+    transition-duration: 0.1s;
+    transition-timing-function: linear;
+    transition-delay: 0s;
 }
 
 .admin-nav__active-item {

@@ -22,7 +22,7 @@ const Header = styled.div`
   margin: 0 auto;
   max-width: 650px;
   line-height: 17.5px;
-  padding: 25px 16px 0 16px;
+  padding: 16px 16px 0 16px;
   justify-content: space-between;
   align-items: center;
 `
@@ -33,14 +33,18 @@ const Container = styled.section`
   display: flex;
   background-color: #fff;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
-  height: calc(100vh - 215px);
+  @media (min-width: 651px) {
+    height: calc(100vh - 193px);
+    border-radius: 4px;
+  }
+  height: calc(100vh - 173px);
   overflow: scroll;
   align-items: center;
   justify-content: center;
 `
 
 export default function Questions({ questions, sortData }) {
-  const [activeItem, setActiveItem] = useState('incoming')
+  const [activeItem, setActiveItem] = useState('live')
   const [activeIncoming, setActiveIncoming] = useState(false)
 
   function ConditionalContainer() {

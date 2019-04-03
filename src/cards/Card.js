@@ -19,6 +19,7 @@ const StyledCard = styled.section`
     }
     &:last-of-type {
       border-radius: 0 0 4px 4px;
+      margin-bottom: 40px;
     }
   }
 

@@ -9,6 +9,7 @@ const IncomingContainer = styled.div`
   display: flex;
   flex-direction: column;
   text-align: center;
+  padding: 20px;
 `
 const Title = styled.h3`
   font-size: 500;
@@ -32,7 +33,6 @@ const ModerationButton = styled.div`
   &:hover {
     cursor: pointer;
   }
-  #2182c3
 `
 export default function Incoming({ activeIncoming, setActiveIncoming }) {
   return (

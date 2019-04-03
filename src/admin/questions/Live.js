@@ -10,16 +10,6 @@ const IncomingContainer = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  text-align: center;
-`
-
-const CardsContainer = styled.div`
-  display: grid;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
 `
 
 const Subtitle = styled.p`
@@ -41,7 +31,6 @@ const StyledButton = styled.div`
   &:hover {
     cursor: pointer;
   }
-  #2182c3
 `
 //Todo: export live / archive all on the kebab button
 
@@ -63,16 +52,25 @@ export default function Live({ questions, sortData }) {
         .share({
           title: 'Qapp #neuefische',
           text: 'Ask me anything!',
-          url: 'http://172.16.100.177:3000',
+          url: 'http://localhost:3000',
         })
         .then(() => console.log('Successful share'))
         .catch(error => console.log('Error sharing', error))
     }
   }
+
+  const EmptyPlaceholder = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+  `
+
   function NoQuestionsScreen() {
     if (questions.length === 0) {
       return (
-        <React.Fragment>
+        <EmptyPlaceholder>
           <Icon
             style={{ marginBottom: '10px' }}
             name="live"
@@ -81,11 +79,11 @@ export default function Live({ questions, sortData }) {
             fill="#7bbd5f"
           />
           <Subtitle>
-            Your audience can join at
-            <span style={{ fontWeight: '700' }}>172.16.100.177:3000</span>
+            <span>Your audience can join at </span>
+            <span style={{ fontWeight: '700' }}>localhost:3000</span>
           </Subtitle>
           <Share />
-        </React.Fragment>
+        </EmptyPlaceholder>
       )
     } else {
       return null
@@ -113,7 +111,6 @@ export default function Live({ questions, sortData }) {
   return (
     <IncomingContainer>
       <NoQuestionsScreen />
-
       <SortedCards />
     </IncomingContainer>
   )
