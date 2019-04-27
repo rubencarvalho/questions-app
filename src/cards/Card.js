@@ -158,7 +158,7 @@ export default function Card({
   return (
     <StyledCard
       style={
-        isnew === true ? { animation: 'card-background 2s ease-in-out' } : null
+        isnew === true ? { animation: 'card-background 1s ease-in-out' } : null
       }
     >
       <Header>
