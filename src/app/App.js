@@ -11,8 +11,8 @@ import {
   getUserDataFromStorage,
   postNewQuestion,
   saveUserDataToStorage,
-  seenQuestion,
   voteQuestion,
+  updateSeen,
 } from '../services'
 import './app.css'
 import GlobalStyle from './GlobalStyle'
@@ -45,11 +45,15 @@ export default function App() {
 
   function handleNewQuestion(res) {
     setQuestions(questions => [res, ...questions])
+    socket.emit('newSeen', { question: res, userid: userData })
   }
 
   useEffect(() => {
     try {
-      getAllQuestions().then(res => setQuestions(res.data))
+      getAllQuestions().then(res => {
+        updateSeen(res.data.map(question => question._id), userData)
+        setQuestions(res.data)
+      })
       socket.on('newQuestion', res => handleNewQuestion(res))
       socket.on('newLike', res => handleNewLike(res))
     } catch (error) {
@@ -58,6 +62,7 @@ export default function App() {
   }, [])
 
   useEffect(() => {
+    updateSeen(questions.map(question => question._id), userData)
     if (!userData) {
       getUserDataFromStorage()
     }
@@ -99,9 +104,7 @@ export default function App() {
       question.seen.filter(seen => seen.user.toString() === userData).length ===
       0
     ) {
-      seenQuestion(question, userData)
-        .then(question.seen.push({ user: userData }))
-        .catch(err => console.log(err))
+      question.seen.push({ user: userData })
     }
   }
 

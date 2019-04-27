@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import Icon from '../../../utilities/Icons'
 const StyledCard = styled.section`
@@ -14,12 +14,12 @@ const StyledCard = styled.section`
   background-color: #fff;
   &:hover {
     .hidden-icon {
-    opacity: 1;
-    transition: opacity .1s linear;
-    transition-property: opacity;
-    transition-duration: 0.1s;
-    transition-timing-function: linear;
-    transition-delay: 0s;
+      opacity: 1;
+      transition: opacity 0.1s linear;
+      transition-property: opacity;
+      transition-duration: 0.1s;
+      transition-timing-function: linear;
+      transition-delay: 0s;
     }
     background-color: rgba(0, 0, 0, 0.02);
     transition: background-color 0.1s;
@@ -57,8 +57,8 @@ const Header = styled.div`
 `
 
 const ActionItems = styled.div`
-display: grid;
-grid-template-columns: 56px 56px 56px 28px;
+  display: grid;
+  grid-template-columns: 56px 56px 56px 28px;
   align-items: center;
 `
 const Avatar = styled.div`
@@ -195,17 +195,7 @@ const Like = styled.div`
   justify-content: center;
 `
 
-const Tooltip = styled.div`
-
-`
-
-export default function AdminCard({
-  name,
-  message,
-  date,
-  votes,
-  avatar,
-}) {
+export default function AdminCard({ name, message, date, votes, avatar }) {
   function getInitials() {
     let names = name.split(' ')
     let initials = names[0].substring(0, 1).toUpperCase()
@@ -250,34 +240,29 @@ export default function AdminCard({
           </Date>
         </Items>
         <ActionItems className="hidden-icon">
-        <Star>
-          <Icon name="star" fill={color} height="50%" width="50%" />
-        </Star>
-        <Highlight>
-          <Icon
-            name="highlight"
-            fill={'#4285f4'}
-            height="100%"
-            width="100%"
-          />
-        </Highlight>
-        <Archive>
-          <Icon
-            name="archived"
-            fill={color}
-            height="100%"
-            width="100%"
-          />
-        </Archive>
-        <Options>
-          <Icon
-            style={{ cursor: 'pointer' }}
-            name="options"
-            fill={'rgba(0, 0, 0, 0.3)'}
-            height="14px"
-            width="14px"
-          />
-        </Options>
+          <Star>
+            <Icon name="star" fill={color} height="50%" width="50%" />
+          </Star>
+          <Highlight>
+            <Icon
+              name="highlight"
+              fill={'#4285f4'}
+              height="100%"
+              width="100%"
+            />
+          </Highlight>
+          <Archive>
+            <Icon name="archived" fill={color} height="100%" width="100%" />
+          </Archive>
+          <Options>
+            <Icon
+              style={{ cursor: 'pointer' }}
+              name="options"
+              fill={'rgba(0, 0, 0, 0.3)'}
+              height="14px"
+              width="14px"
+            />
+          </Options>
         </ActionItems>
       </Header>
       <Message>{message}</Message>

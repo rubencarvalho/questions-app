@@ -82,6 +82,15 @@ solid
     transition-delay: 0s;
 }
 
+.hidden-tooltip {
+    opacity: 0;
+    transition: opacity .3s linear;
+    transition-property: opacity;
+    transition-duration: 0.3s;
+    transition-timing-function: linear;
+    transition-delay: 0s;
+}
+
 .admin-nav__active-item {
   color: #2182c3;
   text-decoration-style:

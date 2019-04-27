@@ -14,7 +14,7 @@ const ModalSort = styled.section`
   bottom: 0;
   max-height: 80%;
   overflow-y: auto;
-  /* @keyframes slide {
+  @keyframes slide {
     0% {
       transform: translateY(100%);
     }
@@ -22,7 +22,7 @@ const ModalSort = styled.section`
       transform: translateY(0);
     }
   }
-  animation: slide 0.2s linear;*/
+  animation: slide 0.2s linear;
 `
 
 const ModalTitle = styled.div`
@@ -75,7 +75,7 @@ const Backdrop = styled.div`
   right: 0;
   bottom: 0;
   left: 0;
-  /* @keyframes modalBackdrop {
+   @keyframes modalBackdrop {
     0% {
       background-color: transparent;
     }
@@ -88,7 +88,7 @@ const Backdrop = styled.div`
 
 export default function Sort({ activeCriteria, onSortClick, closeModal }) {
   return (
-    <Backdrop onClick={closeModal}>
+    <Backdrop onClick={() => closeModal()}>
       <ModalSort>
         <ModalTitle onClick={e => e.stopPropagation()}>
           Sort questions

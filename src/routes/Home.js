@@ -52,15 +52,18 @@ export default function Home({
     if (questions.length > 0) {
       return sortData(sortCriteria).map(question => (
         <Card
+          question={question}
           key={question._id}
           avatar={question.color}
           id={question._id}
+          userData={userData}
           name={question.name}
           message={question.message}
           date={dayjs().to(question.date)}
           votes={question.votes.length}
           liked={question.votes.some(item => item.user === userData)}
           onClick={upvote}
+          seen={question.seen}
           isnew={!question.seen.some(item => item.user === userData)}
           changeNew={changeNew}
         />
