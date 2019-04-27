@@ -12,13 +12,14 @@ const StyledCard = styled.section`
   color: #555;
   grid-gap: 8px;
   background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.11), 0 2px 4px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
   @media (min-width: 651px) {
     &:first-of-type {
       border-radius: 4px 4px 0 0;
     }
     &:last-of-type {
       border-radius: 0 0 4px 4px;
+      margin-bottom: 40px;
     }
   }
 
@@ -121,8 +122,8 @@ export default function Card({
   id,
   onClick,
   avatar,
-  isnew,
   changeNew,
+  isnew,
 }) {
   function getInitials() {
     let names = name.split(' ')
@@ -141,14 +142,11 @@ export default function Card({
       )
     }
   }
-
   useEffect(() => {
-    if (isnew) {
-      console.log(id)
+    if (isnew === true) {
       changeNew(id)
     }
   }, [])
-
   function getColor() {
     if (liked === true) {
       return '#2181c2'
@@ -159,7 +157,9 @@ export default function Card({
   const color = getColor()
   return (
     <StyledCard
-      style={isnew ? { animation: 'card-background 2s ease-in-out' } : null}
+      style={
+        isnew === true ? { animation: 'card-background 1s ease-in-out' } : null
+      }
     >
       <Header>
         <Avatar

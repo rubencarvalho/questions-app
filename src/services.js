@@ -2,7 +2,7 @@ import axios from 'axios'
 import uid from 'uid'
 //const ip = process.env.REACT_APP_BACKEND_IP
 //const questionsPath = `http://${ip}:4000/questions`
-const questionsPath = `http://172.16.100.141:4000/questions`
+const questionsPath = `http://localhost:4000/questions`
 
 export function getDataFromStorage() {
   return getFromStorage('questions') || []
@@ -34,13 +34,12 @@ export function getFromStorage(name) {
   }
 }
 
-export function getAllQuestions() {
-  return axios.get(questionsPath)
+export async function getAllQuestions() {
+  return await axios.get(questionsPath)
 }
 
 export function postNewQuestion(question, userData) {
   question.authorid = userData
-  console.log(question)
   return axios.post(questionsPath, question)
 }
 
@@ -49,7 +48,15 @@ export function voteQuestion(question, userData) {
   return axios.post(`${questionsPath}/${question._id}`, question)
 }
 
-export function seenQuestion(question, userData) {
+export async function seenQuestion(question, userData) {
   question.userid = userData
-  return axios.post(`${questionsPath}/seen/${question._id}`, question)
+  return await axios.post(`${questionsPath}/seen/${question._id}`, question)
+}
+
+export async function updateSeen(questions, userData) {
+  questions.userid = userData
+  return await axios.put(`${questionsPath}/update/`, {
+    questions,
+    userid: userData,
+  })
 }
