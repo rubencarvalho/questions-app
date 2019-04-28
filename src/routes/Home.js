@@ -48,24 +48,26 @@ export default function Home({
   }
   function SortedCards() {
     if (questions.length > 0) {
-      return sortData(sortCriteria).map(question => (
-        <Card
-          question={question}
-          key={question._id}
-          avatar={question.color}
-          id={question._id}
-          userData={userData}
-          name={question.name}
-          message={question.message}
-          date={dayjs().to(question.date)}
-          votes={question.votes.length}
-          liked={question.votes.some(item => item.user === userData)}
-          onClick={upvote}
-          seen={question.seen}
-          isnew={!question.seen.some(item => item.user === userData)}
-          changeNew={changeNew}
-        />
-      ))
+      return sortData(sortCriteria)
+        .filter(question => question.status.archive === false)
+        .map(question => (
+          <Card
+            question={question}
+            key={question._id}
+            avatar={question.color}
+            id={question._id}
+            userData={userData}
+            name={question.name}
+            message={question.message}
+            date={dayjs().to(question.date)}
+            votes={question.votes.length}
+            liked={question.votes.some(item => item.user === userData)}
+            onClick={upvote}
+            seen={question.seen}
+            isnew={!question.seen.some(item => item.user === userData)}
+            changeNew={changeNew}
+          />
+        ))
     } else {
       return null
     }
@@ -112,10 +114,16 @@ export default function Home({
     <React.Fragment>
       <Form submitForm={addQuestion} />
       <CardsHeader
-        questions={questions}
+        questions={questions.filter(
+          question => question.status.archive === false
+        )}
         onOpenModalClick={onOpenModalClick}
         sortCriteria={sortCriteria}
-        total={sortData(sortCriteria).length}
+        total={
+          sortData(sortCriteria).filter(
+            question => question.status.archive === false
+          ).length
+        }
       />
       <EmptyState />
       <SortedCards />

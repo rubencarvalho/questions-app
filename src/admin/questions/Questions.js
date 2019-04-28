@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import styled from 'styled-components'
 import Submenu from './Submenu'
 import Icon from '../../utilities/Icons'
@@ -43,10 +43,14 @@ const Container = styled.section`
   justify-content: center;
 `
 
-export default function Questions({ questions, sortData, userData }) {
-  const [activeItem, setActiveItem] = useState('live')
+export default function Questions({
+  activeItem,
+  setActiveItem,
+  questions,
+  sortData,
+  userData,
+}) {
   const [activeIncoming, setActiveIncoming] = useState(false)
-
   function ConditionalContainer() {
     if (activeItem === 'incoming') {
       return (

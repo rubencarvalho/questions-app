@@ -6,6 +6,7 @@ import Analytics from '../admin/Analytics'
 import Polls from '../admin/Polls'
 export default function Admin({ questions, sortData, userData }) {
   const [currentView, setCurrentView] = useState('home')
+  const [activeItem, setActiveItem] = useState('incoming')
 
   function ActiveView() {
     switch (currentView) {
@@ -14,6 +15,8 @@ export default function Admin({ questions, sortData, userData }) {
       case 'questions':
         return (
           <Questions
+            activeItem={activeItem}
+            setActiveItem={setActiveItem}
             userData={userData}
             sortData={sortData}
             questions={questions}

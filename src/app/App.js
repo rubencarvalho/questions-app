@@ -25,7 +25,6 @@ export default function App() {
   const [questions, setQuestions] = useState([])
   const [userData] = useState(getUserDataFromStorage())
   function handleNewStatus(res) {
-    console.log('status', res)
     const questionToUpdate = questions.find(q => q._id === res._id)
     if (res.status !== questionToUpdate) {
       setQuestions(questions => [
@@ -136,7 +135,9 @@ export default function App() {
             <Home
               userData={userData}
               addQuestion={addQuestion}
-              questions={questions}
+              questions={questions.filter(
+                question => question.status.archive === false
+              )}
               setSortCriteria={setSortCriteria}
               sortCriteria={sortCriteria}
               sortData={sortData}
