@@ -48,10 +48,16 @@ export function voteQuestion(question, userData) {
   return axios.post(`${questionsPath}/${question._id}`, question)
 }
 
-export async function seenQuestion(question, userData) {
+export function updateStatus(question, userData, newStatus) {
   question.userid = userData
-  return await axios.post(`${questionsPath}/seen/${question._id}`, question)
+  question.status = newStatus
+  return axios.put(`${questionsPath}/status/${question._id}`, question)
 }
+
+// export async function seenQuestion(question, userData) {
+//   question.userid = userData
+//   return await axios.post(`${questionsPath}/seen/${question._id}`, question)
+// }
 
 export async function updateSeen(questions, userData) {
   questions.userid = userData

@@ -37,7 +37,6 @@ export default function Home({
   sortData,
   upvote,
   changeNew,
-  setCurrentRoute,
   setSortCriteria,
 }) {
   const [openModal, setOpenModal] = useState(false)
@@ -47,7 +46,6 @@ export default function Home({
   function onOpenModalClick() {
     setOpenModal(!openModal)
   }
-  setCurrentRoute('Questions')
   function SortedCards() {
     if (questions.length > 0) {
       return sortData(sortCriteria).map(question => (

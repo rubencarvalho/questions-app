@@ -162,7 +162,15 @@ export default function Dashboard({ setCurrentView }) {
           </SectionCard>
         </HeroSection>
         <SectionFooter>Do you have any questions?</SectionFooter>
-        <HelpButton>Get in touch</HelpButton>
+
+        <HelpButton>
+          <a
+            style={{ textDecoration: 'none', color: 'rgba(0, 0, 0, 0.75)' }}
+            href="mailto:hi@ruben.one"
+          >
+            Get in touch
+          </a>
+        </HelpButton>
       </ContentContainer>
     </React.Fragment>
   )

@@ -1,7 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import Icon from '../utilities/Icons'
-import { Hover } from './Hover'
 
 const Header = styled.div`
   margin: 0;

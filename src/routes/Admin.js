@@ -4,16 +4,21 @@ import AdminSubheader from '../header/AdminSubheader'
 import Questions from '../admin/questions/Questions'
 import Analytics from '../admin/Analytics'
 import Polls from '../admin/Polls'
-export default function Admin({ setCurrentRoute, questions, sortData }) {
-  setCurrentRoute('Admin')
-  const [currentView, setCurrentView] = useState('questions')
+export default function Admin({ questions, sortData, userData }) {
+  const [currentView, setCurrentView] = useState('home')
 
   function ActiveView() {
     switch (currentView) {
       case 'home':
         return <Dashboard setCurrentView={setCurrentView} />
       case 'questions':
-        return <Questions sortData={sortData} questions={questions} />
+        return (
+          <Questions
+            userData={userData}
+            sortData={sortData}
+            questions={questions}
+          />
+        )
       case 'polls':
         return <Polls />
       case 'analytics':

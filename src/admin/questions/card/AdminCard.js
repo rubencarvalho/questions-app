@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import Icon from '../../../utilities/Icons'
+import Questions from '../Questions'
+import { updateStatus } from '../../../services'
 const StyledCard = styled.section`
   font-size: 14px;
   display: grid;
@@ -195,7 +197,16 @@ const Like = styled.div`
   justify-content: center;
 `
 
-export default function AdminCard({ name, message, date, votes, avatar }) {
+export default function AdminCard({
+  question,
+  name,
+  message,
+  date,
+  votes,
+  avatar,
+  userData,
+}) {
+  let status = question.status
   function getInitials() {
     let names = name.split(' ')
     let initials = names[0].substring(0, 1).toUpperCase()
@@ -215,8 +226,30 @@ export default function AdminCard({ name, message, date, votes, avatar }) {
     }
   }
   const color = 'rgba(0, 0, 0, 0.4)'
+
+  function changeStatus(newStatus) {
+    if (newStatus === 'star') {
+      status = { ...status, star: !status.star }
+    } else if (newStatus === 'highlight') {
+      status = { ...status, highlight: !status.highlight }
+    } else if (newStatus === 'archive') {
+      status = { ...status, archive: !status.archive }
+    }
+    updateStatus(question, userData, status)
+  }
+
+  function getBackgroundColor() {
+    if (status.highlight === true) {
+      return '#f0f5fe'
+    } else if (status.star === true) {
+      return 'rgba(254,248,202,0.6)'
+    } else {
+      return '#fff'
+    }
+  }
+  console.log(status)
   return (
-    <StyledCard>
+    <StyledCard style={{ backgroundColor: getBackgroundColor() }}>
       <Header>
         <Avatar
           style={name !== 'Anonymous' ? { backgroundColor: avatar } : null}
@@ -240,10 +273,19 @@ export default function AdminCard({ name, message, date, votes, avatar }) {
           </Date>
         </Items>
         <ActionItems className="hidden-icon">
-          <Star>
-            <Icon name="star" fill={color} height="50%" width="50%" />
+          <Star onClick={() => changeStatus('star')}>
+            {status.star === true ? (
+              <Icon
+                name="star-filled"
+                fill={'#ffc107'}
+                height="50%"
+                width="50%"
+              />
+            ) : (
+              <Icon name="star" fill={color} height="50%" width="50%" />
+            )}
           </Star>
-          <Highlight>
+          <Highlight onClick={() => changeStatus('highlight')}>
             <Icon
               name="highlight"
               fill={'#4285f4'}
@@ -251,7 +293,7 @@ export default function AdminCard({ name, message, date, votes, avatar }) {
               width="100%"
             />
           </Highlight>
-          <Archive>
+          <Archive onClick={() => changeStatus('archive')}>
             <Icon name="archived" fill={color} height="100%" width="100%" />
           </Archive>
           <Options>
