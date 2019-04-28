@@ -20,45 +20,9 @@ const Subtitle = styled.p`
   padding-right: 20px;
   margin-bottom: 14px;
 `
-const StyledButton = styled.div`
-  line-height: 22px;
-  padding: 6px 14px 6px 14px;
-  user-select: none;
-
-  color: #2182c3;
-  border-radius: 4px;
-  border: 1px solid #2182c3;
-  &:hover {
-    cursor: pointer;
-  }
-`
 //Todo: export live / archive all on the kebab button
 
-export default function Live({ questions, sortData, userData }) {
-  function Share() {
-    if (navigator.share) {
-      return (
-        <StyledButton onClick={() => onShareClick()}>
-          Share your event
-        </StyledButton>
-      )
-    } else {
-      return null
-    }
-  }
-  function onShareClick() {
-    if (navigator.share) {
-      navigator
-        .share({
-          title: 'Qapp #neuefische',
-          text: 'Ask me anything!',
-          url: 'http://localhost:3000',
-        })
-        .then(() => console.log('Successful share'))
-        .catch(error => console.log('Error sharing', error))
-    }
-  }
-
+export default function Star({ questions, sortData, userData }) {
   const EmptyPlaceholder = styled.div`
     display: flex;
     justify-content: center;
@@ -68,21 +32,19 @@ export default function Live({ questions, sortData, userData }) {
   `
 
   function NoQuestionsScreen() {
-    if (questions.length === 0) {
+    if (
+      questions.filter(question => question.status.star === true).length === 0
+    ) {
       return (
         <EmptyPlaceholder>
           <Icon
             style={{ marginBottom: '10px' }}
-            name="live"
-            width="50px"
-            height="50px"
-            fill="#7bbd5f"
+            name="star"
+            width="45px"
+            height="45px"
+            fill="#ffca26"
           />
-          <Subtitle>
-            <span>Your audience can join at </span>
-            <span style={{ fontWeight: '700' }}>localhost:3000</span>
-          </Subtitle>
-          <Share />
+          <Subtitle>All starred questions will be visible here.</Subtitle>
         </EmptyPlaceholder>
       )
     } else {
@@ -93,9 +55,10 @@ export default function Live({ questions, sortData, userData }) {
   function SortedCards() {
     if (questions.length > 0) {
       return sortData('recent')
-        .filter(question => question.status.archive === false)
+        .filter(question => question.status.star === true)
         .map(question => (
           <AdminCard
+            route={'star'}
             userData={userData}
             question={question}
             key={question._id}
