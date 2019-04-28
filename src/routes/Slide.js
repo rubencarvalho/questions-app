@@ -121,7 +121,11 @@ export default function Slide({ questions, sortData, userData }) {
     <Background>
       <Container>
         <Sidebar>
-          <img style={{ width: '160px' }} src={logo} alt={'logo'} />
+          <img
+            style={{ width: '160px', marginBottom: '40px' }}
+            src={logo}
+            alt={'logo'}
+          />
           <div>
             <Join> Join at</Join>
             <Join style={{ fontWeight: '900' }}> tryqapp.com</Join>
