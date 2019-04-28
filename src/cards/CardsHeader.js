@@ -66,6 +66,9 @@ export default function CardsHeader({
     sort = 'My questions'
   }
   function Total() {
+    if (total === 0) {
+      return null
+    }
     if (total === 1) {
       return <TotalText>1 question</TotalText>
     } else {

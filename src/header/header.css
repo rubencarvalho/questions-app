@@ -1,14 +1,17 @@
 .headroom-wrapper {
-  height: 56px !important;
+  height: 62px !important;
+  width: 100% !important;
+  top: 0;
+  left: 0;
+  overflow: hidden;
 }
 
 .headroom {
-  height: 56px;
+  height: 62px;
   width: 100%;
   display: flex;
   top: 0;
   left: 0;
-  position: fixed;
   align-items: center;
   justify-content: center;
   color: #fff;
