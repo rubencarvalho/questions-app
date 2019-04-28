@@ -3,9 +3,9 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 import React, { useEffect, useState } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import io from 'socket.io-client'
-import AppHeader from '../header/Header'
 import Admin from '../routes/Admin'
 import Home from '../routes/Home'
+import Slide from '../routes/Slide'
 import {
   getAllQuestions,
   getUserDataFromStorage,
@@ -18,7 +18,7 @@ import './app.css'
 import GlobalStyle from './GlobalStyle'
 
 dayjs.extend(relativeTime)
-const socket = io('http://localhost:4000')
+const socket = io('http://192.168.178.122:4000')
 
 export default function App() {
   const [sortCriteria, setSortCriteria] = useState('recent')
@@ -65,14 +65,10 @@ export default function App() {
 
   useEffect(() => {
     try {
-<<<<<<< HEAD
-      getAllQuestions().then(res => setQuestions(res.data))
-=======
       getAllQuestions().then(res => {
         updateSeen(res.data.map(question => question._id), userData)
         setQuestions(res.data)
       })
->>>>>>> 642109642add2fc76c2a2f32fdc558c4c0b484af
       socket.on('newQuestion', res => handleNewQuestion(res))
       socket.on('newLike', res => handleNewLike(res))
       socket.on('newStatus', res => handleNewStatus(res))
@@ -131,7 +127,6 @@ export default function App() {
   return (
     <Router>
       <React.Fragment>
-        <AppHeader />
         <Route
           exact
           path="/"
@@ -160,6 +155,11 @@ export default function App() {
               sortData={sortData}
             />
           )}
+        />
+        <Route
+          exact
+          path="/slide"
+          render={() => <Slide questions={questions} sortData={sortData} />}
         />
         <GlobalStyle />
       </React.Fragment>

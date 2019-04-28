@@ -4,6 +4,8 @@ import AdminSubheader from '../header/AdminSubheader'
 import Questions from '../admin/questions/Questions'
 import Analytics from '../admin/Analytics'
 import Polls from '../admin/Polls'
+import AppHeader from '../header/Header'
+
 export default function Admin({ questions, sortData, userData }) {
   const [currentView, setCurrentView] = useState('home')
   const [activeItem, setActiveItem] = useState('incoming')
@@ -33,6 +35,7 @@ export default function Admin({ questions, sortData, userData }) {
 
   return (
     <React.Fragment>
+      <AppHeader />
       <AdminSubheader
         currentView={currentView}
         setCurrentView={setCurrentView}

@@ -6,6 +6,8 @@ import Form from '../form/Form'
 import Sort from '../sort/Sort'
 import styled from 'styled-components'
 import Icon from '../utilities/Icons'
+import AppHeader from '../header/Header'
+
 const EmptyContainer = styled.section`
   text-align: center;
   align-items: center;
@@ -112,6 +114,8 @@ export default function Home({
 
   return (
     <React.Fragment>
+      <AppHeader />
+
       <Form submitForm={addQuestion} />
       <CardsHeader
         questions={questions.filter(

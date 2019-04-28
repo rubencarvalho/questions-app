@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import Submenu from './Submenu'
 import Icon from '../../utilities/Icons'

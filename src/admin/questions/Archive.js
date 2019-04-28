@@ -18,6 +18,7 @@ const Subtitle = styled.p`
   color: #9c9c9c;
   font-size: 17px;
   margin: 0;
+  text-align: center;
   padding-left: 20px;
   padding-right: 20px;
   margin-bottom: 14px;
