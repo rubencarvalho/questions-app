@@ -76,6 +76,7 @@ export default function Slide({ questions, sortData, userData }) {
             avatar={question.color}
             id={question._id}
             userData={userData}
+            status={question.status}
             name={question.name}
             message={question.message}
             date={dayjs().to(question.date)}
@@ -102,6 +103,7 @@ export default function Slide({ questions, sortData, userData }) {
             id={question._id}
             userData={userData}
             name={question.name}
+            status={question.status}
             message={question.message}
             date={dayjs().to(question.date)}
             votes={question.votes.length}

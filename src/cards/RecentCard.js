@@ -12,23 +12,15 @@ const StyledCard = styled.section`
   color: white;
   min-height: 160px;
   grid-gap: 8px;
-  background-color: rgba(0, 0, 0, 0.3);
+  background-color: ${p => {
+    if (p.status.highlight === true) {
+      return '#4285f4'
+    } else return 'rgba(0, 0, 0, 0.3)'
+  }};
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
   @media (min-width: 651px) {
     border-radius: 4px;
     margin-bottom: 20px;
-  }
-
-  @keyframes card-background {
-    0% {
-      background-color: #fef8ca;
-    }
-    70% {
-      background-color: #fef8ca;
-    }
-    100% {
-      background-color: white;
-    }
   }
 
   &:not(:last-child) {
@@ -86,7 +78,7 @@ const Message = styled.div`
   word-break: break-word;
 `
 
-export default function RecentCard({ name, message, date, avatar }) {
+export default function RecentCard({ name, message, date, avatar, status }) {
   function getInitials() {
     let names = name.split(' ')
     let initials = names[0].substring(0, 1).toUpperCase()
@@ -107,7 +99,7 @@ export default function RecentCard({ name, message, date, avatar }) {
   useEffect(() => {}, [])
 
   return (
-    <StyledCard>
+    <StyledCard status={status}>
       <Header>
         <Avatar
           style={

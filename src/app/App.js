@@ -18,7 +18,7 @@ import './app.css'
 import GlobalStyle from './GlobalStyle'
 
 dayjs.extend(relativeTime)
-const socket = io('http://192.168.178.122:4000')
+const socket = io('http://tryqapp.com:4000')
 
 export default function App() {
   const [sortCriteria, setSortCriteria] = useState('recent')
