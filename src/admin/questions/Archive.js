@@ -1,8 +1,10 @@
 import React from 'react'
 import styled from 'styled-components'
 import Icon from '../../utilities/Icons'
-import AdminCard from '../questions/card/AdminCard'
+import ArchiveCard from '../questions/card/ArchiveCard'
 import dayjs from 'dayjs'
+import { Hover } from '../../cards/Hover'
+
 const IncomingContainer = styled.div`
   align-items: center;
   justify-content: start;
@@ -20,45 +22,9 @@ const Subtitle = styled.p`
   padding-right: 20px;
   margin-bottom: 14px;
 `
-const StyledButton = styled.div`
-  line-height: 22px;
-  padding: 6px 14px 6px 14px;
-  user-select: none;
-
-  color: #2182c3;
-  border-radius: 4px;
-  border: 1px solid #2182c3;
-  &:hover {
-    cursor: pointer;
-  }
-`
 //Todo: export live / archive all on the kebab button
 
-export default function Live({ questions, sortData, userData }) {
-  function Share() {
-    if (navigator.share) {
-      return (
-        <StyledButton onClick={() => onShareClick()}>
-          Share your event
-        </StyledButton>
-      )
-    } else {
-      return null
-    }
-  }
-  function onShareClick() {
-    if (navigator.share) {
-      navigator
-        .share({
-          title: 'Qapp #neuefische',
-          text: 'Ask me anything!',
-          url: 'http://localhost:3000',
-        })
-        .then(() => console.log('Successful share'))
-        .catch(error => console.log('Error sharing', error))
-    }
-  }
-
+export default function Archive({ questions, sortData, userData }) {
   const EmptyPlaceholder = styled.div`
     display: flex;
     justify-content: center;
@@ -68,21 +34,36 @@ export default function Live({ questions, sortData, userData }) {
   `
 
   function NoQuestionsScreen() {
-    if (questions.length === 0) {
+    if (
+      questions.filter(question => question.status.archive === true).length ===
+      0
+    ) {
       return (
         <EmptyPlaceholder>
-          <Icon
-            style={{ marginBottom: '10px' }}
-            name="live"
-            width="50px"
-            height="50px"
-            fill="#7bbd5f"
-          />
+          <Hover
+            onHover={
+              <Icon
+                style={{ marginBottom: '10px', transition: 'fill .3s ease' }}
+                name="archived"
+                width="50px"
+                height="50px"
+                fill="#666"
+              />
+            }
+          >
+            <Icon
+              name="archived"
+              width="50px"
+              height="50px"
+              fill="#c4c4c4"
+              style={{ marginBottom: '10px', transition: 'fill .3s ease' }}
+            />
+          </Hover>
+
           <Subtitle>
-            <span>Your audience can join at </span>
-            <span style={{ fontWeight: '700' }}>localhost:3000</span>
+            You can archive questions in the Live tab after they were answered
+            or are no longer relevant.
           </Subtitle>
-          <Share />
         </EmptyPlaceholder>
       )
     } else {
@@ -93,9 +74,9 @@ export default function Live({ questions, sortData, userData }) {
   function SortedCards() {
     if (questions.length > 0) {
       return sortData('recent')
-        .filter(question => question.status.archive === false)
+        .filter(question => question.status.archive === true)
         .map(question => (
-          <AdminCard
+          <ArchiveCard
             userData={userData}
             question={question}
             key={question._id}

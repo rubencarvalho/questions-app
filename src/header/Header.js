@@ -17,13 +17,9 @@ import logo from '../utilities/logo.png'
 //   align-items: center;
 // `
 
-export default function AppHeader({ currentRoute }) {
+export default function AppHeader() {
   return (
-    <Headroom
-      disable={currentRoute === 'Admin' ? true : false}
-      disableInlineStyles={true}
-      wrapperStyle={{ height: '62px' }}
-    >
+    <Headroom disableInlineStyles={true} wrapperStyle={{ height: '62px' }}>
       <img style={{ height: '26px' }} src={logo} alt={'logo'} />
     </Headroom>
   )

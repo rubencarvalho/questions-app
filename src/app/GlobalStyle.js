@@ -14,6 +14,7 @@ export default createGlobalStyle`
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     touch-action: manipulation;
     -webkit-tap-highlight-color: transparent;
+    margin: 0;
     @media (max-width: 651px) { 
       margin: 0;
      }

@@ -23,10 +23,25 @@ const socket = io('http://localhost:4000')
 export default function App() {
   const [sortCriteria, setSortCriteria] = useState('recent')
   const [questions, setQuestions] = useState([])
-  const [currentRoute, setCurrentRoute] = useState('Questions')
-
   const [userData] = useState(getUserDataFromStorage())
-
+  function handleNewStatus(res) {
+    const questionToUpdate = questions.find(q => q._id === res._id)
+    if (res.status !== questionToUpdate) {
+      setQuestions(questions => [
+        ...questions.slice(
+          0,
+          questions.indexOf(questions.find(q => q._id === res._id))
+        ),
+        {
+          ...questions.find(q => q._id === res._id),
+          ...res,
+        },
+        ...questions.slice(
+          questions.indexOf(questions.find(q => q._id === res._id)) + 1
+        ),
+      ])
+    }
+  }
   function handleNewLike(res) {
     setQuestions(questions => [
       ...questions.slice(
@@ -56,6 +71,7 @@ export default function App() {
       })
       socket.on('newQuestion', res => handleNewQuestion(res))
       socket.on('newLike', res => handleNewLike(res))
+      socket.on('newStatus', res => handleNewStatus(res))
     } catch (error) {
       console.log(error)
     }
@@ -111,16 +127,17 @@ export default function App() {
   return (
     <Router>
       <React.Fragment>
-        <AppHeader currentRoute={currentRoute} />
+        <AppHeader />
         <Route
           exact
           path="/"
           render={() => (
             <Home
-              setCurrentRoute={newRoute => setCurrentRoute(newRoute)}
               userData={userData}
               addQuestion={addQuestion}
-              questions={questions}
+              questions={questions.filter(
+                question => question.status.archive === false
+              )}
               setSortCriteria={setSortCriteria}
               sortCriteria={sortCriteria}
               sortData={sortData}
@@ -134,8 +151,8 @@ export default function App() {
           path="/admin"
           render={() => (
             <Admin
+              userData={userData}
               questions={questions}
-              setCurrentRoute={setCurrentRoute}
               sortData={sortData}
             />
           )}

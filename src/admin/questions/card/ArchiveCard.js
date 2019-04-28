@@ -13,9 +13,7 @@ const StyledCard = styled.section`
   color: #555;
   grid-gap: 8px;
   background-color: ${p => {
-    if (p.status.highlight === true) {
-      return '#f0f5fe'
-    } else if (p.status.star === true && p.route !== 'star') {
+    if (p.status.star === true) {
       return 'rgba(254,248,202,0.6)'
     } else {
       return ''
@@ -67,7 +65,7 @@ const Header = styled.div`
 
 const ActionItems = styled.div`
   display: grid;
-  grid-template-columns: 56px 56px 56px 28px;
+  grid-template-columns: 56px 56px 28px;
   align-items: center;
 `
 const Avatar = styled.div`
@@ -157,34 +155,6 @@ const Archive = styled.div`
   }
 `
 
-const Highlight = styled.div`
-  width: 100%;
-  display: flex;
-  width: 32px;
-  height: 32px;
-  line-height: 32px;
-  font-size: 12px;
-  color: rgba(0, 0, 0, 0.4);
-  -webkit-appearance: none;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  margin: 0 auto;
-  border-radius: 50%;
-  @media (hover: hover) {
-    &:hover {
-      transition: all 0.3s ease;
-
-      cursor: pointer;
-      background: rgba(0, 0, 0, 0.05);
-    }
-  }
-
-  &:focus {
-    outline: none;
-  }
-`
-
 const Message = styled.div`
   display: flex;
   width: 100%;
@@ -212,7 +182,6 @@ export default function AdminCard({
   votes,
   avatar,
   userData,
-  route,
 }) {
   let status = question.status
   function getInitials() {
@@ -247,7 +216,7 @@ export default function AdminCard({
   }
 
   return (
-    <StyledCard route={route} status={question.status}>
+    <StyledCard status={question.status}>
       <Header>
         <Avatar
           style={name !== 'Anonymous' ? { backgroundColor: avatar } : null}
@@ -283,25 +252,8 @@ export default function AdminCard({
               <Icon name="star" fill={color} height="50%" width="50%" />
             )}
           </Star>
-          <Highlight onClick={() => changeStatus('highlight')}>
-            {status.highlight === true ? (
-              <Icon
-                name="unhighlight"
-                fill={'#4285f4'}
-                height="100%"
-                width="100%"
-              />
-            ) : (
-              <Icon
-                name="highlight"
-                fill={'#4285f4'}
-                height="100%"
-                width="100%"
-              />
-            )}
-          </Highlight>
           <Archive onClick={() => changeStatus('archive')}>
-            <Icon name="archived" fill={color} height="100%" width="100%" />
+            <Icon name="restore" fill={color} height="100%" width="100%" />
           </Archive>
           <Options>
             <Icon

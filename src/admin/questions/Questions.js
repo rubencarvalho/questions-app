@@ -1,12 +1,12 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import styled from 'styled-components'
 import Submenu from './Submenu'
 import Icon from '../../utilities/Icons'
 import { Hover } from '../../cards/Hover'
 import Incoming from './Incoming'
 import Live from './Live'
-import Starred from './Starred'
-import Archived from './Archived'
+import Star from './Star'
+import Archive from './Archive'
 
 const ItemOptions = styled.div`
   display: flex;
@@ -43,10 +43,14 @@ const Container = styled.section`
   justify-content: center;
 `
 
-export default function Questions({ questions, sortData }) {
-  const [activeItem, setActiveItem] = useState('live')
+export default function Questions({
+  activeItem,
+  setActiveItem,
+  questions,
+  sortData,
+  userData,
+}) {
   const [activeIncoming, setActiveIncoming] = useState(false)
-
   function ConditionalContainer() {
     if (activeItem === 'incoming') {
       return (
@@ -56,11 +60,29 @@ export default function Questions({ questions, sortData }) {
         />
       )
     } else if (activeItem === 'live') {
-      return <Live questions={questions} sortData={sortData} />
+      return (
+        <Live userData={userData} questions={questions} sortData={sortData} />
+      )
     } else if (activeItem === 'starred') {
-      return <Starred questions={questions} />
+      return (
+        <Star
+          sortData={sortData}
+          userData={userData}
+          questions={questions.filter(
+            question => question.status.star === true
+          )}
+        />
+      )
     } else if (activeItem === 'archived') {
-      return <Archived questions={questions} />
+      return (
+        <Archive
+          sortData={sortData}
+          userData={userData}
+          questions={questions.filter(
+            question => question.status.archive === true
+          )}
+        />
+      )
     } else {
       return null
     }
