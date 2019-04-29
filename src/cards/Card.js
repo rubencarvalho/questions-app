@@ -11,7 +11,13 @@ const StyledCard = styled.section`
   padding: 16px 20px 16px 20px;
   color: #555;
   grid-gap: 8px;
-  background-color: #fff;
+  background-color: ${p => {
+    if (p.status.highlight === true) {
+      return '#f0f5fe'
+    } else {
+      return '#fff'
+    }
+  }};
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.1);
   @media (min-width: 651px) {
     &:first-of-type {
@@ -124,6 +130,7 @@ export default function Card({
   avatar,
   changeNew,
   isnew,
+  question,
 }) {
   function getInitials() {
     let names = name.split(' ')
@@ -157,6 +164,7 @@ export default function Card({
   const color = getColor()
   return (
     <StyledCard
+      status={question.status}
       style={
         isnew === true ? { animation: 'card-background 1s ease-in-out' } : null
       }
