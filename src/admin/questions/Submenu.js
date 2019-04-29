@@ -35,6 +35,12 @@ export default function Submenu({ activeItem, setActiveItem }) {
         Live
       </SubmenuItem>
       <SubmenuItem
+        className={activeItem === 'popular' ? 'admin-nav__active-item' : null}
+        onClick={() => setActiveItem('popular')}
+      >
+        Popular
+      </SubmenuItem>
+      <SubmenuItem
         className={activeItem === 'starred' ? 'admin-nav__active-item' : null}
         onClick={() => setActiveItem('starred')}
       >

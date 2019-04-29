@@ -34,7 +34,7 @@ const StyledButton = styled.div`
 `
 //Todo: export live / archive all on the kebab button
 
-export default function Live({ questions, sortData, userData }) {
+export default function Popular({ questions, sortData, userData }) {
   function Share() {
     if (navigator.share) {
       return (
@@ -92,7 +92,7 @@ export default function Live({ questions, sortData, userData }) {
 
   function SortedCards() {
     if (questions.length > 0) {
-      return sortData('recent')
+      return sortData('popular')
         .filter(question => question.status.archive === false)
         .map(question => (
           <AdminCard

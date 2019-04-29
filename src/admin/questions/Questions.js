@@ -5,6 +5,7 @@ import Icon from '../../utilities/Icons'
 import { Hover } from '../../cards/Hover'
 import Incoming from './Incoming'
 import Live from './Live'
+import Popular from './Popular'
 import Star from './Star'
 import Archive from './Archive'
 
@@ -71,6 +72,14 @@ export default function Questions({
           questions={questions.filter(
             question => question.status.star === true
           )}
+        />
+      )
+    } else if (activeItem === 'popular') {
+      return (
+        <Popular
+          userData={userData}
+          questions={questions}
+          sortData={sortData}
         />
       )
     } else if (activeItem === 'archived') {
