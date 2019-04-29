@@ -11,6 +11,7 @@ const Background = styled.div`
   height: 100%;
   width: 100%;
   position: fixed;
+  z-index: -1;
 `
 const Container = styled.div`
   display: grid;
@@ -118,7 +119,8 @@ export default function Slide({ questions, sortData, userData }) {
   }
 
   return (
-    <Background>
+    <React.Fragment>
+      <Background />
       <Container>
         <Sidebar>
           <img
@@ -140,6 +142,6 @@ export default function Slide({ questions, sortData, userData }) {
           <RecentCards />
         </MainSection>
       </Container>
-    </Background>
+    </React.Fragment>
   )
 }

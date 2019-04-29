@@ -80,7 +80,7 @@ export default function Live({ questions, sortData, userData }) {
           />
           <Subtitle>
             <span>Your audience can join at </span>
-            <span style={{ fontWeight: '700' }}>localhost:3000</span>
+            <span style={{ fontWeight: '700' }}>tryqapp.com</span>
           </Subtitle>
           <Share />
         </EmptyPlaceholder>
@@ -91,7 +91,9 @@ export default function Live({ questions, sortData, userData }) {
   }
 
   function SortedCards() {
-    if (questions.length > 0) {
+    if (
+      questions.filter(question => question.status.archive === false).length > 0
+    ) {
       return sortData('recent')
         .filter(question => question.status.archive === false)
         .map(question => (

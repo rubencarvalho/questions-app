@@ -3,14 +3,13 @@ import styled from 'styled-components'
 import Icon from '../utilities/Icons.js'
 
 const StyledCard = styled.section`
-  font-size: 22px;
+  font-size: 20px;
   display: grid;
   grid-template-rows: 40px auto;
   width: 100%;
   margin: 0 auto;
   padding: 16px 20px 16px 20px;
   color: white;
-  min-height: 160px;
   grid-gap: 8px;
   background-color: ${p => {
     if (p.status.highlight === true) {
